@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist/Cameronsite/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
