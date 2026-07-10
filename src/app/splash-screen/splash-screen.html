@@ -1,0 +1,21 @@
+@if (isVisible()) {
+  <div 
+    animate.enter="splash-movie-enter"
+    animate.leave="splash-movie-leave"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-slate-900 overflow-hidden"
+  >
+    <div class="flex flex-col items-center space-y-6 p-6 text-center select-none">
+      <div class="relative flex h-28 w-28 items-center justify-center rounded-3xl bg-gradient-to-tr from-slate-900 to-indigo-950 shadow-2xl shadow-indigo-950/20 animate-pulse">
+        <span class="text-4xl font-black tracking-wider text-white">C.C</span>
+      </div>
+      <div>
+        <h1 class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 bg-clip-text text-4xl font-black tracking-tight text-transparent">
+          PORTFOLIO PREVIEW
+        </h1>
+        <p class="mt-2 text-xs font-bold tracking-[0.3em] text-indigo-600 uppercase">
+          Loading Material & Assets
+        </p>
+      </div>
+    </div>
+  </div>
+}
