@@ -17,6 +17,8 @@ export class HomeComponent implements AfterViewInit {
   score = 0;
   gameOver = false;
 
+  private levelStartScore = 0; // ← saves score at the start of each level
+
   private ctx!: CanvasRenderingContext2D;
   private player = { x: 50, y: 280, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
   private keys: { [key: string]: boolean } = {};
@@ -83,6 +85,7 @@ export class HomeComponent implements AfterViewInit {
     this.showGame = true;
     this.level = 1;
     this.score = 0;
+    this.levelStartScore = 0;
     this.gameOver = false;
     setTimeout(() => this.startGame(), 100);
   }
@@ -116,6 +119,9 @@ export class HomeComponent implements AfterViewInit {
     this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
     this.gameOver = false;
 
+    // Save the score at the beginning of this level
+    this.levelStartScore = this.score;
+
     // Ground
     this.platforms = [
       { x: 0, y: 320, width: 800, height: 80 },
@@ -137,7 +143,7 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Spikes (more as level increases)
+    // Spikes
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
@@ -172,6 +178,8 @@ export class HomeComponent implements AfterViewInit {
 
   private die() {
     this.gameOver = true;
+    // Reset score back to what it was at the start of this level
+    this.score = this.levelStartScore;
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
@@ -278,7 +286,6 @@ export class HomeComponent implements AfterViewInit {
     // Spikes
     this.ctx.fillStyle = '#ef4444';
     for (const s of this.spikes) {
-      // Draw triangle spikes
       this.ctx.beginPath();
       this.ctx.moveTo(s.x, s.y + 20);
       this.ctx.lineTo(s.x + s.width / 2, s.y);
@@ -327,6 +334,7 @@ export class HomeComponent implements AfterViewInit {
 
     // Retry on R key
     if (this.gameOver && (this.keys['r'] || this.keys['R'])) {
+      this.score = this.levelStartScore; // restore score
       this.loadLevel(this.level);
     }
 
