@@ -19,7 +19,7 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  acceptAllCookies() {
+  acceptAll() {
     localStorage.setItem('cookieConsent', 'accepted');
     this.hideBanner();
   }
@@ -27,6 +27,30 @@ export class HomeComponent implements AfterViewInit {
   rejectNonEssential() {
     localStorage.setItem('cookieConsent', 'rejected-non-essential');
     this.hideBanner();
+  }
+
+  managePreferences() {
+    const choice = confirm(
+      "Cookie Preferences\n\n" +
+      "• Essential Cookies: Always required\n" +
+      "• Analytics Cookies: Not currently used\n\n" +
+      "Would you like to accept all cookies?"
+    );
+
+    if (choice) {
+      this.acceptAll();
+    } else {
+      this.rejectNonEssential();
+    }
+  }
+
+  // This is the function you need for the Cookie Policy page
+  openCookieSettings() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) {
+      banner.classList.remove('hidden');
+      localStorage.removeItem('cookieConsent'); // Allows user to choose again
+    }
   }
 
   private hideBanner() {
