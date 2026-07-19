@@ -350,9 +350,17 @@
 <section id="cookie-policy" class="mx-auto max-w-3xl px-6 py-24">
 
   <div class="max-w-2xl">
-    <h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-2">🍫 Cookie Policy</h1>
-    <p class="text-sm text-slate-500">Last updated: July 19, 2026</p>
+  <div class="flex items-center gap-3">
+    <h1 class="text-4xl font-bold tracking-tight text-slate-900">Cookie Policy</h1>
+    <span 
+      (click)="toggleEasterEgg()" 
+      class="text-3xl cursor-pointer hover:scale-125 transition-transform select-none"
+      title="???">
+      🍫
+    </span>
   </div>
+  <p class="text-sm text-slate-500 mt-1">Last updated: July 19, 2026</p>
+</div>
 
   <!-- Cookie Settings Button -->
   <div class="mt-10 mb-12">
@@ -415,5 +423,22 @@
         Accept All
       </button>
     </div>
+  </div>
+</div>
+
+<!-- ==================== EASTER EGG PLATFORMER ==================== -->
+<div *ngIf="showGame" class="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center">
+  <div class="bg-slate-900 rounded-3xl p-6 max-w-[850px] w-full mx-4">
+    <div class="flex justify-between items-center mb-4 text-white">
+      <h2 class="text-2xl font-bold">🍫 Cookie Runner</h2>
+      <div class="text-emerald-400 font-medium">Level {{ level }} / 10</div>
+      <button (click)="closeGame()" class="text-2xl hover:text-red-400 transition">✕</button>
+    </div>
+
+    <canvas #gameCanvas width="800" height="400" class="bg-slate-950 rounded-2xl w-full"></canvas>
+
+    <p class="text-center text-slate-400 text-sm mt-4">
+      ← → or A/D to move • Space / W to jump • Reach the yellow goal
+    </p>
   </div>
 </div>
