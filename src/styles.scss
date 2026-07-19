@@ -53,3 +53,23 @@
 .submenu-fade {
   animation: subMenuFadeDown 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+/* Continuous Green Border Animation */
+.cookie-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.cookie-btn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid #10b981;
+  border-radius: 9999px;
+  animation: borderSpin 3s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes borderSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

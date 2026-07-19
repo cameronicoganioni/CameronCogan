@@ -346,6 +346,7 @@
   </div>
 
 </section>
+<!-- ==================== COOKIE POLICY SECTION ==================== -->
 <section id="cookie-policy" class="mx-auto max-w-3xl px-6 py-24">
 
   <div class="max-w-2xl">
@@ -353,63 +354,59 @@
     <p class="text-sm text-slate-500">Last updated: July 19, 2026</p>
   </div>
 
-  <!-- Improved Button -->
+  <!-- Cookie Settings Button -->
   <div class="mt-10 mb-12">
-    <button (click)="openCookieSettings()" 
-            class="group flex items-center gap-3 px-7 py-4 bg-white border border-slate-200 hover:border-emerald-200 rounded-3xl text-slate-700 font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
-      <span class="text-xl">⚙️</span>
-      <span>Manage Cookie Preferences</span>
-    </button>
-  </div>
+  <button (click)="openCookieSettings()" 
+          class="cookie-btn flex items-center gap-3 px-7 py-4 bg-white border border-slate-200 rounded-3xl text-slate-700 font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
+    <span class="text-xl">⚙️</span>
+    <span>Manage Cookie Preferences</span>
+  </button>
+</div>
 
   <div class="prose prose-slate max-w-none">
 
     <h2 class="text-2xl font-semibold mt-12 mb-4">1. What Are Cookies?</h2>
-    <p>Cookies are small text files placed on your device to help websites function and provide better user experiences. They allow us to remember your preferences and improve site performance.</p>
+    <p>Cookies are small text files placed on your device to help websites function and provide better user experiences.</p>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">2. Cookies I Use</h2>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">2. Cookies We Use</h2>
     
     <div class="grid md:grid-cols-2 gap-8 mt-8">
       <div>
         <h3 class="font-semibold text-lg mb-2">Essential Cookies</h3>
-        <p class="text-slate-600">Required for basic site functionality such as navigation and mobile menu. These cannot be disabled.</p>
+        <p class="text-slate-600">Required for the site to work (navigation, mobile menu). Cannot be disabled.</p>
       </div>
       <div>
         <h3 class="font-semibold text-lg mb-2">Analytics Cookies</h3>
-        <p class="text-slate-600">Help people to understand how visitors use the site. These are optional and used only to improve the website.</p>
+        <p class="text-slate-600">Optional. Help understand how visitors use the site to improve it.</p>
       </div>
     </div>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">3. Your Rights & Choices</h2>
-    <p>You can change your cookie preferences at any time using the button above. You can also clear cookies through your browser settings.</p>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">3. Your Choices</h2>
+    <p>You can change your preferences anytime using the button above.</p>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">4. Questions?</h2>
-    <p>If you have any questions regarding this Cookie Policy, please feel free to <a href="#contact" class="text-emerald-600 hover:underline">contact me</a>.</p>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">4. Contact</h2>
+    <p>If you have questions, feel free to <a href="#contact" class="text-emerald-600 hover:underline">contact me</a>.</p>
 
   </div>
 
 </section>
-<!-- Cookie Banner -->
+
+<!-- Cookie Consent Banner -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-slate-200 shadow-2xl hidden">
-  <div class="max-w-7xl mx-auto px-6 py-6">
-    <div class="flex flex-col md:flex-row gap-6 items-start">
+  <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-center justify-between">
 
-      <div class="flex-1 text-sm text-slate-600">
-        I use <strong>essential cookies</strong> to make the site work and <strong>analytics cookies</strong> to understand traffic. 
-        You can choose your preferences below.
-      </div>
+    <div class="text-sm text-slate-600 max-w-lg">
+      This website uses essential cookies to function and optional analytics cookies. 
+      You can choose your preferences.
+    </div>
 
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button (click)="managePreferences()" class="px-5 py-3 text-sm border border-slate-300 rounded-2xl hover:bg-slate-50">
-          Customize
-        </button>
-        <button (click)="rejectNonEssential()" class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200">
-          Reject Non-Essential
-        </button>
-        <button (click)="acceptAll()" class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700">
-          Accept All
-        </button>
-      </div>
+    <div class="flex gap-3">
+      <button (click)="rejectNonEssential()" class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200">
+        Reject Non-Essential
+      </button>
+      <button (click)="acceptAll()" class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700">
+        Accept All
+      </button>
     </div>
   </div>
 </div>
