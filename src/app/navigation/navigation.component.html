@@ -1,70 +1,149 @@
-<header class="w-full border-b border-black bg-amber-50 shadow-sm select-none">
+<header class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-    
-    <div class="flex flex-col sm:flex-row sm:items-baseline sm:space-x-4 select-none">
-    <span class="text-xl font-black tracking-[0.25em] text-slate-900 uppercase">
-        Portfolio
-    </span>
-    
-    <span class="bg-gradient-to-r from-emerald-700 to-emerald-400 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+
+    <!-- Logo / Name -->
+    <a href="#" class="flex flex-col">
+      <span class="text-xl font-semibold tracking-tight text-slate-900">
         Cameron Cogan
-    </span>
-    </div>
+      </span>
 
-    <nav class="hidden md:flex items-center space-x-8">
-      <a href="#" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Home</a>
-      
-      <div class="group relative py-2">
-        <button class="flex items-center space-x-1 text-sm font-semibold text-slate-600 group-hover:text-indigo-600 transition-colors">
-          <span>Examples</span>
-          <svg class="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-        </button>
-        <div class="absolute left-0 top-full z-10 hidden w-48 rounded-xl border border-slate-100 bg-white p-2 shadow-xl group-hover:block submenu-fade">
-          <a href="#" class="block rounded-lg px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-indigo-600">Analytics</a>
-          <a href="#" class="block rounded-lg px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 hover:text-indigo-600">Web Development</a>
-        </div>
-      </div>
+      <span class="text-sm text-slate-500">
+        International Business Administration
+      </span>
+    </a>
 
-      <a href="#" class="text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-colors">Reviews</a>
+    <!-- Desktop Navigation -->
+    <nav class="hidden items-center gap-8 md:flex">
+      <a
+        href="#about"
+        class="text-sm font-medium text-slate-600 transition hover:text-emerald-600"
+      >
+        About
+      </a>
+
+      <a
+        href="#projects"
+        class="text-sm font-medium text-slate-600 transition hover:text-emerald-600"
+      >
+        Projects
+      </a>
+
+      <a
+        href="#experience"
+        class="text-sm font-medium text-slate-600 transition hover:text-emerald-600"
+      >
+        Experience
+      </a>
+
+      <a
+        href="#contact"
+        class="text-sm font-medium text-slate-600 transition hover:text-emerald-600"
+      >
+        Contact
+      </a>
     </nav>
 
-    <button (click)="toggleMenu()" class="rounded-lg p-2 text-slate-600 hover:bg-slate-50 md:hidden">
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <!-- Mobile Button -->
+    <button
+      (click)="toggleMenu()"
+      class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
+    >
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
     </button>
 
   </div>
 </header>
 
 @if (isMenuOpen()) {
-  <div class="fixed inset-0 z-40 bg-slate-900/30 backdrop-blur-sm md:hidden" (click)="toggleMenu()"></div>
 
-  <div 
-    animate.enter="menu-bounce-enter"
-    animate.leave="menu-bounce-leave"
-    class="fixed bottom-0 right-0 top-0 z-50 w-full max-w-sm bg-white p-6 shadow-2xl md:hidden"
-  >
-    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-      <span class="font-black text-slate-900">Navigation</span>
-      <button (click)="toggleMenu()" class="rounded-lg p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-600">
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
+<div
+  class="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+  (click)="toggleMenu()"
+></div>
+
+<div
+  animate.enter="menu-bounce-enter"
+  animate.leave="menu-bounce-leave"
+  class="fixed right-0 top-0 z-50 h-full w-80 bg-white p-8 shadow-2xl md:hidden"
+>
+
+  <div class="flex items-center justify-between border-b border-slate-200 pb-5">
+
+    <div>
+      <h2 class="text-lg font-semibold text-slate-900">
+        Cameron Cogan
+      </h2>
+
+      <p class="text-sm text-slate-500">
+        International Business Administration
+      </p>
     </div>
 
-    <nav class="mt-6 space-y-4">
-      <a href="#" class="block rounded-xl px-4 py-3 font-bold text-slate-700 hover:bg-slate-50 hover:text-indigo-600">Dashboard</a>
-      
-      <div class="group">
-        <button class="flex w-full items-center justify-between rounded-xl px-4 py-3 font-bold text-slate-700 hover:bg-slate-50">
-          <span>Projects</span>
-          <svg class="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-        </button>
-        <div class="hidden mt-1 ml-4 space-y-1 group-hover:block submenu-fade">
-          <a href="#" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-indigo-600">Active Logs</a>
-          <a href="#" class="block rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-500 hover:bg-slate-50 hover:text-indigo-600">Archived Series</a>
-        </div>
-      </div>
+    <button
+      (click)="toggleMenu()"
+      class="rounded-lg p-2 text-slate-500 hover:bg-slate-100"
+    >
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
 
-      <a href="#" class="block rounded-xl px-4 py-3 font-bold text-slate-700 hover:bg-slate-50 hover:text-indigo-600">Settings</a>
-    </nav>
   </div>
+
+  <nav class="mt-8 space-y-2">
+
+    <a
+      href="#about"
+      class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600"
+    >
+      About
+    </a>
+
+    <a
+      href="#projects"
+      class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600"
+    >
+      Projects
+    </a>
+
+    <a
+      href="#experience"
+      class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600"
+    >
+      Experience
+    </a>
+
+    <a
+      href="#contact"
+      class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600"
+    >
+      Contact
+    </a>
+
+  </nav>
+
+</div>
+
 }
