@@ -25,6 +25,8 @@ export class HomeComponent implements AfterViewInit {
   private animationId: number | null = null;
 
   private playerImage = new Image();
+  private backgroundImage = new Image();
+
   private platforms: { x: number; y: number; width: number; height: number }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number }[] = [];
@@ -106,7 +108,11 @@ export class HomeComponent implements AfterViewInit {
     if (!canvas) return;
 
     this.ctx = canvas.getContext('2d')!;
+
+    // Load images
     this.playerImage.src = './img/panda.webp';
+    this.backgroundImage.src = './img/background.webp';
+
     this.loadLevel(this.level);
 
     window.addEventListener('keydown', this.onKeyDown);
@@ -141,7 +147,7 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Bamboo (formerly spikes)
+    // Bamboo
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
@@ -267,12 +273,17 @@ export class HomeComponent implements AfterViewInit {
     // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
-    // Background
-    const gradient = this.ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, '#0f172a');
-    gradient.addColorStop(1, '#1e293b');
-    this.ctx.fillStyle = gradient;
-    this.ctx.fillRect(0, 0, 800, 400);
+    // Background image
+    if (this.backgroundImage.complete && this.backgroundImage.naturalWidth > 0) {
+      this.ctx.drawImage(this.backgroundImage, 0, 0, 800, 400);
+    } else {
+      // Fallback gradient
+      const gradient = this.ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, '#0f172a');
+      gradient.addColorStop(1, '#1e293b');
+      this.ctx.fillStyle = gradient;
+      this.ctx.fillRect(0, 0, 800, 400);
+    }
 
     // Platforms
     this.ctx.fillStyle = '#64748b';
