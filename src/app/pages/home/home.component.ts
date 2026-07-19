@@ -17,7 +17,7 @@ export class HomeComponent implements AfterViewInit {
   score = 0;
   gameOver = false;
 
-  private levelStartScore = 0; // ← saves score at the start of each level
+  private levelStartScore = 0;
 
   private ctx!: CanvasRenderingContext2D;
   private player = { x: 50, y: 280, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
@@ -118,8 +118,6 @@ export class HomeComponent implements AfterViewInit {
   private loadLevel(level: number) {
     this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
     this.gameOver = false;
-
-    // Save the score at the beginning of this level
     this.levelStartScore = this.score;
 
     // Ground
@@ -143,7 +141,7 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Spikes
+    // Bamboo (formerly spikes)
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
@@ -178,7 +176,6 @@ export class HomeComponent implements AfterViewInit {
 
   private die() {
     this.gameOver = true;
-    // Reset score back to what it was at the start of this level
     this.score = this.levelStartScore;
     this.ngZone.run(() => this.cdr.detectChanges());
   }
@@ -224,7 +221,7 @@ export class HomeComponent implements AfterViewInit {
         this.die();
       }
 
-      // Spike collision
+      // Bamboo collision
       for (const s of this.spikes) {
         if (
           this.player.x < s.x + s.width &&
@@ -283,14 +280,29 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
     }
 
-    // Spikes
-    this.ctx.fillStyle = '#ef4444';
+    // Bamboo
     for (const s of this.spikes) {
+      // Main bamboo stalk
+      this.ctx.fillStyle = '#4ade80';
+      this.ctx.fillRect(s.x + s.width / 2 - 4, s.y - 15, 8, 35);
+
+      // Bamboo segments
+      this.ctx.strokeStyle = '#166534';
+      this.ctx.lineWidth = 1.5;
       this.ctx.beginPath();
-      this.ctx.moveTo(s.x, s.y + 20);
-      this.ctx.lineTo(s.x + s.width / 2, s.y);
-      this.ctx.lineTo(s.x + s.width, s.y + 20);
-      this.ctx.closePath();
+      this.ctx.moveTo(s.x + s.width / 2 - 4, s.y);
+      this.ctx.lineTo(s.x + s.width / 2 + 4, s.y);
+      this.ctx.moveTo(s.x + s.width / 2 - 4, s.y + 10);
+      this.ctx.lineTo(s.x + s.width / 2 + 4, s.y + 10);
+      this.ctx.stroke();
+
+      // Leaves
+      this.ctx.fillStyle = '#22c55e';
+      this.ctx.beginPath();
+      this.ctx.ellipse(s.x + s.width / 2 - 10, s.y - 8, 10, 4, -0.5, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.ellipse(s.x + s.width / 2 + 10, s.y - 5, 10, 4, 0.5, 0, Math.PI * 2);
       this.ctx.fill();
     }
 
@@ -308,7 +320,7 @@ export class HomeComponent implements AfterViewInit {
     this.ctx.fillStyle = '#ca8a04';
     this.ctx.fillRect(755, 260, 15, 25);
 
-    // Player
+    // Player (Panda)
     if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
       this.ctx.drawImage(this.playerImage, this.player.x, this.player.y, this.player.width, this.player.height);
     } else {
@@ -334,7 +346,7 @@ export class HomeComponent implements AfterViewInit {
 
     // Retry on R key
     if (this.gameOver && (this.keys['r'] || this.keys['R'])) {
-      this.score = this.levelStartScore; // restore score
+      this.score = this.levelStartScore;
       this.loadLevel(this.level);
     }
 
