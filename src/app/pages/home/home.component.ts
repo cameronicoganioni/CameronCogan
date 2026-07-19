@@ -17,7 +17,13 @@ export class HomeComponent implements AfterViewInit {
   score = 0;
   gameOver = false;
 
+  // Mobile controls
+  mobileLeft = false;
+  mobileRight = false;
+  mobileJump = false;
+
   private levelStartScore = 0;
+  private facingRight = true;
 
   private ctx!: CanvasRenderingContext2D;
   private player = { x: 50, y: 280, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
@@ -95,6 +101,9 @@ export class HomeComponent implements AfterViewInit {
   closeGame() {
     this.showGame = false;
     this.gameOver = false;
+    this.mobileLeft = false;
+    this.mobileRight = false;
+    this.mobileJump = false;
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
@@ -109,7 +118,6 @@ export class HomeComponent implements AfterViewInit {
 
     this.ctx = canvas.getContext('2d')!;
 
-    // Load images
     this.playerImage.src = './img/panda.webp';
     this.backgroundImage.src = './img/background.webp';
 
@@ -125,13 +133,12 @@ export class HomeComponent implements AfterViewInit {
     this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
     this.gameOver = false;
     this.levelStartScore = this.score;
+    this.facingRight = true;
 
-    // Ground
     this.platforms = [
       { x: 0, y: 320, width: 800, height: 80 },
     ];
 
-    // Platforms
     const platformCount = Math.min(4 + Math.floor(level * 0.8), 11);
     const heightVariation = 40 + level * 4;
 
@@ -147,7 +154,6 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Bamboo
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
@@ -159,7 +165,6 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Chocolates
     this.chocolates = [];
     const chocolateCount = 5 + Math.floor(level / 1.5);
 
@@ -190,12 +195,19 @@ export class HomeComponent implements AfterViewInit {
     if (!this.showGame) return;
 
     if (!this.gameOver) {
-      // Movement
+      // Movement (keyboard + mobile)
       this.player.vx = 0;
-      if (this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A']) this.player.vx = -5.5;
-      if (this.keys['ArrowRight'] || this.keys['d'] || this.keys['D']) this.player.vx = 5.5;
 
-      if ((this.keys[' '] || this.keys['ArrowUp'] || this.keys['w'] || this.keys['W']) && !this.player.jumping) {
+      if (this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A'] || this.mobileLeft) {
+        this.player.vx = -5.5;
+        this.facingRight = false;
+      }
+      if (this.keys['ArrowRight'] || this.keys['d'] || this.keys['D'] || this.mobileRight) {
+        this.player.vx = 5.5;
+        this.facingRight = true;
+      }
+
+      if ((this.keys[' '] || this.keys['ArrowUp'] || this.keys['w'] || this.keys['W'] || this.mobileJump) && !this.player.jumping) {
         this.player.vy = -15;
         this.player.jumping = true;
       }
@@ -239,14 +251,16 @@ export class HomeComponent implements AfterViewInit {
         }
       }
 
-      // Collect chocolates
+      // Collect chocolates (fixed score update)
       for (const c of this.chocolates) {
         if (!c.collected &&
             this.player.x < c.x + 20 &&
             this.player.x + this.player.width > c.x &&
             this.player.y < c.y + 20 &&
             this.player.y + this.player.height > c.y) {
+          
           c.collected = true;
+
           this.ngZone.run(() => {
             this.score += 10;
             this.cdr.detectChanges();
@@ -273,11 +287,10 @@ export class HomeComponent implements AfterViewInit {
     // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
-    // Background image
+    // Background
     if (this.backgroundImage.complete && this.backgroundImage.naturalWidth > 0) {
       this.ctx.drawImage(this.backgroundImage, 0, 0, 800, 400);
     } else {
-      // Fallback gradient
       const gradient = this.ctx.createLinearGradient(0, 0, 0, 400);
       gradient.addColorStop(0, '#0f172a');
       gradient.addColorStop(1, '#1e293b');
@@ -286,18 +299,25 @@ export class HomeComponent implements AfterViewInit {
     }
 
     // Platforms
-    this.ctx.fillStyle = '#64748b';
     for (const p of this.platforms) {
+      if (p.y >= 320) {
+        this.ctx.fillStyle = '#14532d';
+      } else {
+        this.ctx.fillStyle = '#5c4033';
+      }
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
+
+      if (p.y < 320) {
+        this.ctx.fillStyle = '#7a5c45';
+        this.ctx.fillRect(p.x, p.y, p.width, 3);
+      }
     }
 
     // Bamboo
     for (const s of this.spikes) {
-      // Main bamboo stalk
       this.ctx.fillStyle = '#4ade80';
       this.ctx.fillRect(s.x + s.width / 2 - 4, s.y - 15, 8, 35);
 
-      // Bamboo segments
       this.ctx.strokeStyle = '#166534';
       this.ctx.lineWidth = 1.5;
       this.ctx.beginPath();
@@ -307,7 +327,6 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.lineTo(s.x + s.width / 2 + 4, s.y + 10);
       this.ctx.stroke();
 
-      // Leaves
       this.ctx.fillStyle = '#22c55e';
       this.ctx.beginPath();
       this.ctx.ellipse(s.x + s.width / 2 - 10, s.y - 8, 10, 4, -0.5, 0, Math.PI * 2);
@@ -331,15 +350,23 @@ export class HomeComponent implements AfterViewInit {
     this.ctx.fillStyle = '#ca8a04';
     this.ctx.fillRect(755, 260, 15, 25);
 
-    // Player (Panda)
+    // Player (with mirroring)
     if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
-      this.ctx.drawImage(this.playerImage, this.player.x, this.player.y, this.player.width, this.player.height);
+      this.ctx.save();
+      if (this.facingRight) {
+        this.ctx.translate(this.player.x + this.player.width, this.player.y);
+        this.ctx.scale(-1, 1);
+        this.ctx.drawImage(this.playerImage, 0, 0, this.player.width, this.player.height);
+      } else {
+        this.ctx.drawImage(this.playerImage, this.player.x, this.player.y, this.player.width, this.player.height);
+      }
+      this.ctx.restore();
     } else {
       this.ctx.fillStyle = '#10b981';
       this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
     }
 
-    // Game Over screen
+    // Game Over
     if (this.gameOver) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(0, 0, 800, 400);
@@ -351,11 +378,11 @@ export class HomeComponent implements AfterViewInit {
 
       this.ctx.fillStyle = 'white';
       this.ctx.font = '24px Arial';
-      this.ctx.fillText('Press R to Retry', 400, 240);
+      this.ctx.fillText('Press R or tap Retry', 400, 240);
       this.ctx.textAlign = 'left';
     }
 
-    // Retry on R key
+    // Retry
     if (this.gameOver && (this.keys['r'] || this.keys['R'])) {
       this.score = this.levelStartScore;
       this.loadLevel(this.level);

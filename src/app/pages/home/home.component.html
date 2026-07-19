@@ -428,17 +428,56 @@
 
 <!-- ==================== EASTER EGG PLATFORMER ==================== -->
 <div *ngIf="showGame" class="fixed inset-0 bg-black/95 z-[200] flex items-center justify-center">
-  <div class="bg-slate-900 rounded-3xl p-6 max-w-[850px] w-full mx-4">
-    <div class="flex justify-between items-center mb-4 text-white">
-      <h2 class="text-2xl font-bold">🍫 Cookie Runner</h2>
-      <div class="text-emerald-400 font-medium">Level {{ level }} / 10</div>
+  <div class="bg-slate-900 rounded-3xl p-4 max-w-[850px] w-full mx-4">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-3 text-white">
+      <h2 class="text-xl font-bold">🍫 Brookie Panda </h2>
+      <div class="flex gap-4 text-emerald-400 font-medium text-sm">
+        <span>Level {{ level }} / 10</span>
+        <span>Score: {{ score }}</span>
+      </div>
       <button (click)="closeGame()" class="text-2xl hover:text-red-400 transition">✕</button>
     </div>
 
+    <!-- Canvas -->
     <canvas #gameCanvas width="800" height="400" class="bg-slate-950 rounded-2xl w-full"></canvas>
 
-    <p class="text-center text-slate-400 text-sm mt-4">
-      ← → or A/D to move • Space / W to jump • Reach the yellow goal
+    <!-- Mobile Controls -->
+    <div class="flex justify-between items-center mt-4 px-2 md:hidden">
+      <!-- Left / Right -->
+      <div class="flex gap-3">
+        <button 
+          (touchstart)="mobileLeft = true" 
+          (touchend)="mobileLeft = false"
+          (mousedown)="mobileLeft = true" 
+          (mouseup)="mobileLeft = false"
+          class="w-16 h-16 bg-slate-700 active:bg-emerald-600 rounded-2xl text-white text-2xl flex items-center justify-center select-none">
+          ←
+        </button>
+        <button 
+          (touchstart)="mobileRight = true" 
+          (touchend)="mobileRight = false"
+          (mousedown)="mobileRight = true" 
+          (mouseup)="mobileRight = false"
+          class="w-16 h-16 bg-slate-700 active:bg-emerald-600 rounded-2xl text-white text-2xl flex items-center justify-center select-none">
+          →
+        </button>
+      </div>
+
+      <!-- Jump -->
+      <button 
+        (touchstart)="mobileJump = true" 
+        (touchend)="mobileJump = false"
+        (mousedown)="mobileJump = true" 
+        (mouseup)="mobileJump = false"
+        class="w-20 h-16 bg-emerald-600 active:bg-emerald-500 rounded-2xl text-white text-lg font-bold flex items-center justify-center select-none">
+        JUMP
+      </button>
+    </div>
+
+    <p class="text-center text-slate-400 text-xs mt-3 hidden md:block">
+      ← → or A/D to move • Space / W to jump
     </p>
   </div>
 </div>
