@@ -346,3 +346,54 @@
   </div>
 
 </section>
+<section id="cookie-policy" class="mx-auto max-w-3xl px-6 py-24">
+
+  <h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-8">Cookie Policy</h1>
+  
+  <p class="text-sm text-slate-500 mb-8">Last updated: July 19, 2026</p>
+
+  <div class="prose prose-slate">
+
+    <h2 class="text-2xl font-semibold mt-10 mb-4">1. What Are Cookies?</h2>
+    <p>Cookies are small text files that are stored on your device when you visit a website. They help the site remember your preferences and improve your experience.</p>
+
+    <h2 class="text-2xl font-semibold mt-10 mb-4">2. Cookies We Use</h2>
+    
+    <h3 class="text-xl font-medium mt-6">Essential Cookies</h3>
+    <p>These are necessary for the website to function properly (e.g., navigation, mobile menu). These cannot be disabled.</p>
+
+    <h3 class="text-xl font-medium mt-6">Analytics Cookies (Optional)</h3>
+    <p>We use analytics cookies to understand how visitors interact with the site (e.g., which pages are most visited). These help us improve the website.</p>
+
+    <h2 class="text-2xl font-semibold mt-10 mb-4">3. Your Choices</h2>
+    <p>You can manage your cookie preferences at any time by clicking the cookie icon in the footer or by clearing your browser cookies.</p>
+
+    <h2 class="text-2xl font-semibold mt-10 mb-4">4. Contact</h2>
+    <p>If you have any questions about our cookie policy, feel free to <a href="#contact" class="text-emerald-600">contact me</a>.</p>
+
+  </div>
+
+</section>
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-slate-200 shadow-2xl hidden">
+  <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+
+    <div class="text-sm text-slate-600 max-w-lg">
+      This website uses essential cookies to function properly and optional analytics cookies to understand visitor traffic. 
+      You can choose your preferences below. For more information, please see our 
+      <a href="#" class="text-emerald-600 underline">Cookie Policy</a>.
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      <button (click)="rejectNonEssential()" 
+              class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200 transition whitespace-nowrap">
+        Reject Non-Essential
+      </button>
+      
+      <button (click)="acceptAllCookies()" 
+              class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700 transition whitespace-nowrap">
+        Accept All Cookies
+      </button>
+    </div>
+  </div>
+</div>
