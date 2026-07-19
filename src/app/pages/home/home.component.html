@@ -393,18 +393,25 @@
 
 <!-- Cookie Consent Banner -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-slate-200 shadow-2xl hidden">
-  <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-center justify-between">
+  <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
 
     <div class="text-sm text-slate-600 max-w-lg">
-      This website uses essential cookies to function and optional analytics cookies. 
-      You can choose your preferences.
+      This website uses essential cookies to function properly and optional analytics cookies to understand visitor traffic. 
+      You can choose your preferences below. For more details, see our 
+      <a href="#cookie-policy" class="text-emerald-600 underline hover:no-underline">Cookie Policy</a>.
     </div>
 
-    <div class="flex gap-3">
-      <button (click)="rejectNonEssential()" class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200">
+    <div class="flex flex-col sm:flex-row gap-3">
+      <button (click)="managePreferences()" 
+              class="px-6 py-3 text-sm border border-slate-300 rounded-2xl hover:bg-slate-50 transition">
+        Customize
+      </button>
+      <button (click)="rejectNonEssential()" 
+              class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200 transition">
         Reject Non-Essential
       </button>
-      <button (click)="acceptAll()" class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700">
+      <button (click)="acceptAll()" 
+              class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700 transition">
         Accept All
       </button>
     </div>
