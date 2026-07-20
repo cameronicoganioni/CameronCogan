@@ -235,7 +235,7 @@ export class HomeComponent implements AfterViewInit {
       // Project 1
       project1Category: 'Business Analytics',
       project1Title: 'Export Analytics Dashboard',
-      project1Text: 'Dieses Diagramm wurde mit importierten Google- und LinkedIn-Analytics erstellt, um die Website-Nutzung im Verhältnis zu Follow-Einladungen für deCogan zu beobachten. Die Ergebnisse zeigen eine Korrelation zwischen aktiven Nutzern einer Website und akzeptierten Einladungen. Eine eigene Website kann die Erfolgsquote von Follow-Einladungen erhöhen.',
+      project1Text: 'Dieses Diagramm wurde mit importierten Google und LinkedIn-Analytics erstellt, um die Website-Nutzung im Verhältnis zu Follow-Einladungen für deCogan zu beobachten. Die Ergebnisse zeigen eine Korrelation zwischen aktiven Nutzern einer Website und akzeptierten Einladungen. Eine eigene Website kann die Erfolgsquote von Follow-Einladungen erhöhen.',
       project1Tag1: 'Google Sheets',
       project1Tag2: 'Datenvisualisierung',
       project1Tag3: 'Google Analytics Export',
@@ -254,7 +254,7 @@ export class HomeComponent implements AfterViewInit {
       // Experience 1
       exp1Title: 'Assistent Marketing und Kommunikation, deCogan',
       exp1Date: '06/26-08/26 (3 Monate)',
-      exp1Text: 'Unterstützung von Marketingstrategien und Kommunikationsinitiativen, Verwaltung von Social Media und LinkedIn-Outreach bei deCogan. Fokus auf Content-Erstellung, CRM, Markenentwicklung und datengetriebene Insights (inkl. Google- & LinkedIn-Analytics) sowie SEO – damit erfüllte ich die Anforderungen meines ersten Studienjahres.',
+      exp1Text: 'Unterstützung von Marketingstrategien und Kommunikationsinitiativen, Verwaltung von Social Media und LinkedIn-Outreach bei deCogan. Fokus auf Content-Erstellung, CRM, Markenentwicklung und datengetriebene Insights (inkl. Google- & LinkedIn-Analytics) sowie SEO, damit erfüllte ich die Anforderungen meines ersten Studienjahres.',
       exp1Tag1: 'Digitales Marketing',
       exp1Tag2: 'Content-Erstellung',
       exp1Tag3: 'Analytics',
