@@ -229,6 +229,11 @@ export class HomeComponent implements AfterViewInit {
     setTimeout(() => this.playTone(700, 0.1, 'square'), 200);
     setTimeout(() => this.playTone(900, 0.25, 'square'), 300);
   }
+  private playMunchSound() {
+  // Short munch / bite sound
+    this.playTone(180, 0.06, 'square', 0.09);
+    setTimeout(() => this.playTone(140, 0.08, 'square', 0.07), 50);
+  }
 
   // ==================== EASTER EGG ====================
   toggleEasterEgg() {
@@ -435,13 +440,17 @@ export class HomeComponent implements AfterViewInit {
         }
       }
 
+// Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
-            this.player.x < c.x + 20 &&
-            this.player.x + this.player.width > c.x &&
-            this.player.y < c.y + 20 &&
-            this.player.y + this.player.height > c.y) {
+          this.player.x < c.x + 20 &&
+          this.player.x + this.player.width > c.x &&
+          this.player.y < c.y + 20 &&
+          this.player.y + this.player.height > c.y) {
+    
           c.collected = true;
+          this.playMunchSound();          // ← add this line
+
           this.ngZone.run(() => {
             this.score += 10;
             this.cdr.detectChanges();
