@@ -13,19 +13,19 @@
     <!-- Text -->
     <div class="max-w-xl">
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        International Business Administration
+        {{ t.aboutLabel }}
       </p>
 
       <h1 class="mt-3 text-5xl font-bold tracking-tight text-slate-900">
-        Cameron Cogan
+        {{ t.aboutTitle }}
       </h1>
 
       <h2 class="mt-2 text-2xl font-medium text-slate-700">
-        Top 12% of Cohort • Montpellier Business School
+        {{ t.aboutSubtitle }}
       </h2>
 
       <p class="mt-6 leading-8 text-slate-600">
-        I am currently pursuing a Bachelor of International Business Administration at Montpellier Business School. My studies encompass a broad range of disciplines, including artificial intelligence, business ethics, business law, consumer behaviour, digital tools, financial accounting, globalisation and geopolitics, intercultural management, leadership, macroeconomics, management, marketing, quantitative methods and statistics, and professional development. Through coursework, collaborative projects, and a professional internship, I have developed strong analytical, communication, problem-solving, and cross-cultural skills, preparing me to address business challenges in an international environment.
+        {{ t.aboutText }}
       </p>
     </div>
 
@@ -34,10 +34,10 @@
 
 <section id="projects" class="mx-auto max-w-7xl px-6 py-24">
   <div class="mb-16">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Projects</p>
-    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Featured Work</h2>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">{{ t.projectsLabel }}</p>
+    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">{{ t.projectsTitle }}</h2>
     <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-      A selection of projects demonstrating my experience in business analytics, marketing strategy, and development.
+      {{ t.projectsIntro }}
     </p>
   </div>
 
@@ -45,16 +45,16 @@
   <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
     <img src="./img/exportanalytics.webp" alt="Export Analytics Dashboard" class="w-full rounded-2xl border border-slate-200 object-cover shadow-lg" />
     <div>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Business Analytics</p>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">Export Analytics Dashboard</h3>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">{{ t.project1Category }}</p>
+      <h3 class="mt-3 text-3xl font-bold text-slate-900">{{ t.project1Title }}</h3>
       <p class="mt-6 leading-8 text-slate-600">
-        This graph was created using imported Google and LinkedIn analytics to observe website use in relation to invites to follow deCogan. Results show a correlation between active users on a site and accepted invitations to follow. Results show that having a website could lead to higher success rates in follow invites.
+        {{ t.project1Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Google Sheets</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Data Visualisation</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Google Analytics Export</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">LinkedIn Analytics Export</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project1Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project1Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project1Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project1Tag4 }}</span>
       </div>
     </div>
   </div>
@@ -63,29 +63,32 @@
   <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
     <img src="./img/Googleanalytics.webp" alt="Google Analytics Dashboard" class="w-full rounded-2xl border border-slate-200 object-cover shadow-lg" />
     <div>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Web Analytics</p>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">Google Analytics Setup on cameroncogan.com</h3>
+      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">{{ t.project2Category }}</p>
+      <h3 class="mt-3 text-3xl font-bold text-slate-900">{{ t.project2Title }}</h3>
       <p class="mt-6 leading-8 text-slate-600">
-        This image shows detailed custom event tracking.
+        {{ t.project2Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Google Analytics</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Event Tracking</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">User Behaviour</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Traffic Analysis</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project2Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project2Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project2Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.project2Tag4 }}</span>
       </div>
     </div>
   </div>
 </section>
+
 <section id="experience" class="mx-auto max-w-7xl px-6 py-24">
   <div class="mb-16">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Experience</p>
-    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Professional Journey</h2>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">{{ t.experienceLabel }}</p>
+    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">{{ t.experienceTitle }}</h2>
     <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-      Roles and contributions in marketing, communications, and international business.
+      {{ t.experienceIntro }}
     </p>
   </div>
-<div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+
+  <!-- Experience Entry 1 - deCogan -->
+  <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
     <img
       src="./img/logo.webp"
       alt="Cameron C. - Assistant Marketing & Communications at deCogan"
@@ -93,24 +96,24 @@
     />
     <div>
       <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        Assistant Marketing and Communication, <strong>deCogan</strong>
+        {{ t.exp1Title }}
       </h3>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        06/26-08/26 (3 months)
+        {{ t.exp1Date }}
       </p>
       <p class="mt-6 leading-8 text-slate-600">
-        Supporting marketing strategies and communication initiatives, managing social media and completed LinkedIn outreach at deCogan. 
-        Focused on content creation, CRM, brand development and data-driven insights 
-        (including Google & LinkedIn analytics), SEO- thereby meeting my first year study requirements.
+        {{ t.exp1Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Digital Marketing</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Content Creation</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Analytics</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Brand Development</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag4 }}</span>
       </div>
     </div>
   </div>
+
+  <!-- Experience Entry 2 - TourPourLaVie -->
   <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
     <img
       src="./img/TourPourLaVie.webp"
@@ -119,24 +122,24 @@
     />
     <div>
       <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        Ticket Sales Volunteer, Photos & Videos, <strong>TourPourLaVie</strong>
+        {{ t.exp2Title }}
       </h3>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        16/05/26
+        {{ t.exp2Date }}
       </p>
       <p class="mt-6 leading-8 text-slate-600">
-        Volunteered as Ticket Sales Assistant for a charity car exhibition benefiting sick and disabled children. 
-        Managed ticket sales and visitor flow while also helping the promotional videos and photographs of the displayed vehicles. 
-        The event was organized by TourPourLaVie to raise funds for <strong>Sourire à la Vie</strong>.
+        {{ t.exp2Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Event Setup</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Ticket Sales</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Photography & Videography</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Volunteering</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag4 }}</span>
       </div>
     </div>
   </div>
+
+  <!-- Experience Entry 3 - Complical -->
   <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
     <img
       src="./img/complical.webp"
@@ -145,23 +148,24 @@
     />
     <div>
       <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        Application Tester (Skill-based Volunteering), <strong>Complical</strong>
+        {{ t.exp3Title }}
       </h3>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        04/25-05/25
+        {{ t.exp3Date }}
       </p>
       <p class="mt-6 leading-8 text-slate-600">
-        Provided user-based feedback and identified bugs while testing the Complical site. 
-        Used Jira as the main project management tool to document issues, track tasks, and contribute to product improvements.
+        {{ t.exp3Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">User Testing</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Jira</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Bug Reporting</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Quality Assurance</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag4 }}</span>
       </div>
     </div>
   </div>
+
+  <!-- Experience Entry 4 - Aeternum -->
   <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
     <img
       src="./img/YE.webp"
@@ -170,19 +174,19 @@
     />
     <div>
       <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        Marketing Director, <strong>Aeternum</strong>
+        {{ t.exp4Title }}
       </h3>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        09/22-06/23
+        {{ t.exp4Date }}
       </p>
       <p class="mt-6 leading-8 text-slate-600">
-        Acted as Marketing Director in a high school business project competition. Contributed skills in graphic design to media displays and social media. Participated in the West Berkshire round of Young Enterprise competition. Completed market research, attended trade fairs, managed YouTube account.
+        {{ t.exp4Text }}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Media Creation Tools</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Market Research</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Sales</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Customer Profiles</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag1 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag2 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag3 }}</span>
+        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag4 }}</span>
       </div>
     </div>
   </div>
@@ -190,10 +194,10 @@
 
 <section id="contact" class="mx-auto max-w-7xl px-6 py-24 bg-slate-50">
   <div class="max-w-2xl mx-auto text-center">
-    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">Contact</p>
-    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">Let's Connect!</h2>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">{{ t.contactLabel }}</p>
+    <h2 class="mt-3 text-4xl font-bold tracking-tight text-slate-900">{{ t.contactTitle }}</h2>
     <p class="mt-6 text-lg leading-8 text-slate-600">
-      I'm always open to new opportunities and collaborations. Feel free to reach out!
+      {{ t.contactText }}
     </p>
 
     <div class="mt-10 flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -218,44 +222,44 @@
 <section id="cookie-policy" class="mx-auto max-w-3xl px-6 py-24">
   <div class="max-w-2xl">
     <div class="flex items-center gap-3">
-      <h1 class="text-4xl font-bold tracking-tight text-slate-900">Cookie Policy</h1>
+      <h1 class="text-4xl font-bold tracking-tight text-slate-900">{{ t.cookieTitle }}</h1>
       <span (click)="toggleEasterEgg()" 
             class="text-3xl cursor-pointer hover:scale-125 transition-transform select-none" title="???">
         🍫
       </span>
     </div>
-    <p class="text-sm text-slate-500 mt-1">Last updated: July 19, 2026</p>
+    <p class="text-sm text-slate-500 mt-1">{{ t.cookieLastUpdated }}</p>
   </div>
 
   <div class="mt-10 mb-12">
     <button (click)="openCookieSettings()" 
             class="cookie-btn flex items-center gap-3 px-7 py-4 bg-white border border-slate-200 rounded-3xl text-slate-700 font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
       <span class="text-xl">⚙️</span>
-      <span>Manage Cookie Preferences</span>
+      <span>{{ t.manageCookies }}</span>
     </button>
   </div>
 
   <div class="prose prose-slate max-w-none">
-    <h2 class="text-2xl font-semibold mt-12 mb-4">1. What Are Cookies?</h2>
-    <p>Cookies are small text files placed on your device to help websites function and provide better user experiences.</p>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieWhatTitle }}</h2>
+    <p>{{ t.cookieWhatText }}</p>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">2. Cookies We Use</h2>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieTypesTitle }}</h2>
     <div class="grid md:grid-cols-2 gap-8 mt-8">
       <div>
-        <h3 class="font-semibold text-lg mb-2">Essential Cookies</h3>
-        <p class="text-slate-600">Required for the site to work (navigation, mobile menu). Cannot be disabled.</p>
+        <h3 class="font-semibold text-lg mb-2">{{ t.cookieEssentialTitle }}</h3>
+        <p class="text-slate-600">{{ t.cookieEssentialText }}</p>
       </div>
       <div>
-        <h3 class="font-semibold text-lg mb-2">Analytics Cookies</h3>
-        <p class="text-slate-600">Optional. Help me understand how visitors use the site to improve it.</p>
+        <h3 class="font-semibold text-lg mb-2">{{ t.cookieAnalyticsTitle }}</h3>
+        <p class="text-slate-600">{{ t.cookieAnalyticsText }}</p>
       </div>
     </div>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">3. Your Choices</h2>
-    <p>You can change your preferences anytime using the button above.</p>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieChoicesTitle }}</h2>
+    <p>{{ t.cookieChoicesText }}</p>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">4. Contact</h2>
-    <p>If you have questions, feel free to <a href="#contact" class="text-emerald-600 hover:underline">contact me</a>.</p>
+    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieContactTitle }}</h2>
+    <p>{{ t.cookieContactText }} <a href="#contact" class="text-emerald-600 hover:underline">{{ t.cookieContactLink }}</a>.</p>
   </div>
 </section>
 
@@ -263,20 +267,19 @@
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-slate-200 shadow-2xl hidden">
   <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
     <div class="text-sm text-slate-600 max-w-lg">
-      This website uses essential cookies to function properly and optional analytics cookies to understand visitor traffic. 
-      You can choose your preferences below. For more details, see our 
-      <a href="#cookie-policy" class="text-emerald-600 underline hover:no-underline">Cookie Policy</a>.
+      {{ t.bannerText }}
+      <a href="#cookie-policy" class="text-emerald-600 underline hover:no-underline">{{ t.cookieTitle }}</a>.
     </div>
 
     <div class="flex flex-col sm:flex-row gap-3">
       <button (click)="managePreferences()" class="px-6 py-3 text-sm border border-slate-300 rounded-2xl hover:bg-slate-50 transition">
-        Customize
+        {{ t.bannerCustomize }}
       </button>
       <button (click)="rejectNonEssential()" class="px-6 py-3 bg-slate-100 text-slate-700 rounded-2xl text-sm font-medium hover:bg-slate-200 transition">
-        Reject Non-Essential
+        {{ t.bannerReject }}
       </button>
       <button (click)="acceptAll()" class="px-6 py-3 bg-emerald-600 text-white rounded-2xl text-sm font-medium hover:bg-emerald-700 transition">
-        Accept All
+        {{ t.bannerAccept }}
       </button>
     </div>
   </div>
@@ -287,8 +290,8 @@
   <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full mx-4 overflow-hidden">
     
     <div class="px-6 py-5 border-b border-slate-100">
-      <h3 class="text-xl font-bold text-slate-900">Cookie Preferences</h3>
-      <p class="text-sm text-slate-500 mt-1">Manage your cookie settings</p>
+      <h3 class="text-xl font-bold text-slate-900">{{ t.prefTitle }}</h3>
+      <p class="text-sm text-slate-500 mt-1">{{ t.prefSubtitle }}</p>
     </div>
 
     <div class="px-6 py-5 space-y-5">
@@ -299,9 +302,9 @@
                  class="w-5 h-5 rounded border-slate-300 text-emerald-600 cursor-not-allowed">
         </div>
         <div>
-          <p class="font-medium text-slate-900">Essential Cookies</p>
+          <p class="font-medium text-slate-900">{{ t.cookieEssentialTitle }}</p>
           <p class="text-sm text-slate-500 mt-0.5">
-            Required for the website to function properly. These cannot be disabled.
+            {{ t.cookieEssentialText }}
           </p>
         </div>
       </div>
@@ -313,9 +316,9 @@
                  class="w-5 h-5 rounded border-slate-300 text-emerald-600 cursor-pointer">
         </div>
         <div>
-          <p class="font-medium text-slate-900">Analytics Cookies</p>
+          <p class="font-medium text-slate-900">{{ t.cookieAnalyticsTitle }}</p>
           <p class="text-sm text-slate-500 mt-0.5">
-            Help us understand how visitors use the site so we can improve it. Optional.
+            {{ t.cookieAnalyticsText }}
           </p>
         </div>
       </div>
@@ -324,11 +327,11 @@
     <div class="px-6 py-4 bg-slate-50 flex flex-col sm:flex-row gap-3">
       <button (click)="savePreferences()"
               class="flex-1 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-2xl transition">
-        Save Preferences
+        {{ t.prefSave }}
       </button>
       <button (click)="closePreferences()"
               class="flex-1 px-5 py-3 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium rounded-2xl transition">
-        Cancel
+        {{ t.prefCancel }}
       </button>
     </div>
   </div>
@@ -340,10 +343,10 @@
     
     <!-- Header -->
     <div class="flex justify-between items-center mb-3 text-white">
-      <h2 class="text-xl font-bold">🍫 Brookie Panda</h2>
+      <h2 class="text-xl font-bold">🍫 {{ t.gameTitle }}</h2>
       <div class="flex gap-4 text-emerald-400 font-medium text-sm">
-        <span>Level {{ level }} / 10</span>
-        <span>Score: {{ score }}</span>
+        <span>{{ t.gameLevel }} {{ level }} / 10</span>
+        <span>{{ t.gameScore }}: {{ score }}</span>
       </div>
       <button (click)="closeGame()" class="text-2xl hover:text-red-400 transition">✕</button>
     </div>
@@ -359,15 +362,15 @@
         
         <h1 class="text-5xl md:text-6xl font-black text-yellow-400 drop-shadow-[0_0_15px_rgba(250,204,21,0.8)] tracking-wider mb-4"
             style="font-family: 'Press Start 2P', system-ui, sans-serif; text-shadow: 4px 4px 0 #000;">
-          BROOKIE PANDA
+          {{ t.gameTitle }}
         </h1>
 
         <p class="text-2xl md:text-3xl font-bold text-white animate-pulse mt-6"
            style="font-family: 'Press Start 2P', system-ui, sans-serif; text-shadow: 3px 3px 0 #000;">
-          CLICK TO START
+          {{ t.gameClickToStart }}
         </p>
 
-        <p class="text-slate-300 text-sm mt-10">Collect 🍫 • Avoid the Bamboo</p>
+        <p class="text-slate-300 text-sm mt-10">{{ t.gameInstructions }}</p>
       </div>
     </div>
 
@@ -389,7 +392,7 @@
       <button (touchstart)="mobileJump = true" (touchend)="mobileJump = false"
               (mousedown)="mobileJump = true" (mouseup)="mobileJump = false"
               class="w-20 h-16 bg-emerald-600 active:bg-emerald-500 rounded-2xl text-white text-lg font-bold flex items-center justify-center select-none">
-        JUMP
+        {{ t.gameJump }}
       </button>
     </div>
 
@@ -397,12 +400,12 @@
     <div *ngIf="gameOver" class="flex justify-center mt-6">
       <button (click)="retryLevel()"
               class="px-10 py-4 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white text-lg font-bold rounded-2xl transition">
-        Retry Level
+        {{ t.gameRetry }}
       </button>
     </div>
 
     <p class="text-center text-slate-400 text-xs mt-3 hidden md:block">
-      ← → or A/D to move • Space / W to jump • R to retry
+      {{ t.gameControls }}
     </p>
   </div>
 </div>

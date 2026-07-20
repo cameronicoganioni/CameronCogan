@@ -28,6 +28,304 @@ export class HomeComponent implements AfterViewInit {
   showPreferences = false;
   analyticsEnabled = false;
 
+  // Language
+  currentLang: 'en' | 'fr' | 'de' = 'en';
+
+  translations = {
+    en: {
+      aboutLabel: 'International Business Administration',
+      aboutTitle: 'Cameron Cogan',
+      aboutSubtitle: 'Top 12% of Cohort • Montpellier Business School',
+      aboutText: 'I am currently pursuing a Bachelor of International Business Administration at Montpellier Business School. My studies encompass a broad range of disciplines, including artificial intelligence, business ethics, business law, consumer behaviour, digital tools, financial accounting, globalisation and geopolitics, intercultural management, leadership, macroeconomics, management, marketing, quantitative methods and statistics, and professional development. Through coursework, collaborative projects, and a professional internship, I have developed strong analytical, communication, problem-solving, and cross-cultural skills, preparing me to address business challenges in an international environment.',
+      projectsLabel: 'Projects',
+      projectsTitle: 'Featured Work',
+      projectsIntro: 'A selection of projects demonstrating my experience in business analytics, marketing strategy, and development.',
+      // Project 1
+      project1Category: 'Business Analytics',
+      project1Title: 'Export Analytics Dashboard',
+      project1Text: 'This graph was created using imported Google and LinkedIn analytics to observe website use in relation to invites to follow deCogan. Results show a correlation between active users on a site and accepted invitations to follow. Results show that having a website could lead to higher success rates in follow invites.',
+      project1Tag1: 'Google Sheets',
+      project1Tag2: 'Data Visualisation',
+      project1Tag3: 'Google Analytics Export',
+      project1Tag4: 'LinkedIn Analytics Export',
+      // Project 2
+      project2Category: 'Web Analytics',
+      project2Title: 'Google Analytics Setup on cameroncogan.com',
+      project2Text: 'This image shows detailed custom event tracking.',
+      project2Tag1: 'Google Analytics',
+      project2Tag2: 'Event Tracking',
+      project2Tag3: 'User Behaviour',
+      project2Tag4: 'Traffic Analysis',
+      experienceLabel: 'Experience',
+      experienceTitle: 'Professional Journey',
+      experienceIntro: 'Roles and contributions in marketing, communications, and international business.',
+      // Experience 1 - deCogan
+      exp1Title: 'Assistant Marketing and Communication, deCogan',
+      exp1Date: '06/26-08/26 (3 months)',
+      exp1Text: 'Supporting marketing strategies and communication initiatives, managing social media and completed LinkedIn outreach at deCogan. Focused on content creation, CRM, brand development and data-driven insights (including Google & LinkedIn analytics), SEO- thereby meeting my first year study requirements.',
+      exp1Tag1: 'Digital Marketing',
+      exp1Tag2: 'Content Creation',
+      exp1Tag3: 'Analytics',
+      exp1Tag4: 'Brand Development',
+      // Experience 2 - TourPourLaVie
+      exp2Title: 'Ticket Sales Volunteer, Photos & Videos, TourPourLaVie',
+      exp2Date: '16/05/26',
+      exp2Text: 'Volunteered as Ticket Sales Assistant for a charity car exhibition benefiting sick and disabled children. Managed ticket sales and visitor flow while also helping the promotional videos and photographs of the displayed vehicles. The event was organized by TourPourLaVie to raise funds for Sourire à la Vie.',
+      exp2Tag1: 'Event Setup',
+      exp2Tag2: 'Ticket Sales',
+      exp2Tag3: 'Photography & Videography',
+      exp2Tag4: 'Volunteering',
+      // Experience 3 - Complical
+      exp3Title: 'Application Tester (Skill-based Volunteering), Complical',
+      exp3Date: '04/25-05/25',
+      exp3Text: 'Provided user-based feedback and identified bugs while testing the Complical site. Used Jira as the main project management tool to document issues, track tasks, and contribute to product improvements.',
+      exp3Tag1: 'User Testing',
+      exp3Tag2: 'Jira',
+      exp3Tag3: 'Bug Reporting',
+      exp3Tag4: 'Quality Assurance',
+      // Experience 4 - Aeternum
+      exp4Title: 'Marketing Director, Aeternum',
+      exp4Date: '09/22-06/23',
+      exp4Text: 'Acted as Marketing Director in a high school business project competition. Contributed skills in graphic design to media displays and social media. Participated in the West Berkshire round of Young Enterprise competition. Completed market research, attended trade fairs, managed YouTube account.',
+      exp4Tag1: 'Media Creation Tools',
+      exp4Tag2: 'Market Research',
+      exp4Tag3: 'Sales',
+      exp4Tag4: 'Customer Profiles',
+      contactLabel: 'Contact',
+      contactTitle: "Let's Connect!",
+      contactText: "I'm always open to new opportunities and collaborations. Feel free to reach out!",
+      cookieTitle: 'Cookie Policy',
+      manageCookies: 'Manage Cookie Preferences',
+      cookieLastUpdated: 'Last updated: July 19, 2026',
+      cookieWhatTitle: '1. What Are Cookies?',
+      cookieWhatText: 'Cookies are small text files placed on your device to help websites function and provide better user experiences.',
+      cookieTypesTitle: '2. Cookies We Use',
+      cookieEssentialTitle: 'Essential Cookies',
+      cookieEssentialText: 'Required for the site to work (navigation, mobile menu). Cannot be disabled.',
+      cookieAnalyticsTitle: 'Analytics Cookies',
+      cookieAnalyticsText: 'Optional. Help me understand how visitors use the site to improve it.',
+      cookieChoicesTitle: '3. Your Choices',
+      cookieChoicesText: 'You can change your preferences anytime using the button above.',
+      cookieContactTitle: '4. Contact',
+      cookieContactText: 'If you have questions, feel free to',
+      cookieContactLink: 'contact me',
+      bannerText: 'This website uses essential cookies to function properly and optional analytics cookies to understand visitor traffic. You can choose your preferences below. For more details, see our',
+      bannerCustomize: 'Customize',
+      bannerReject: 'Reject Non-Essential',
+      bannerAccept: 'Accept All',
+      prefTitle: 'Cookie Preferences',
+      prefSubtitle: 'Manage your cookie settings',
+      prefSave: 'Save Preferences',
+      prefCancel: 'Cancel',
+      gameTitle: 'BROOKIE PANDA',
+      gameLevel: 'Level',
+      gameScore: 'Score',
+      gameClickToStart: 'CLICK TO START',
+      gameInstructions: 'Collect 🍫 • Avoid the Bamboo',
+      gameJump: 'JUMP',
+      gameRetry: 'Retry Level',
+      gameControls: '← → or A/D to move • Space / W to jump • R to retry',
+      gameOver: 'GAME OVER',
+      gameOverHint: 'Tap the Retry button below'
+    },
+    fr: {
+      aboutLabel: 'Administration des Affaires Internationales',
+      aboutTitle: 'Cameron Cogan',
+      aboutSubtitle: 'Top 12% de la promotion • Montpellier Business School',
+      aboutText: 'Je poursuis actuellement un Bachelor en Administration des Affaires Internationales à Montpellier Business School. Mes études couvrent un large éventail de disciplines, notamment l\'intelligence artificielle, l\'éthique des affaires, le droit des affaires, le comportement du consommateur, les outils numériques, la comptabilité financière, la mondialisation et la géopolitique, le management interculturel, le leadership, la macroéconomie, le management, le marketing, les méthodes quantitatives et statistiques, ainsi que le développement professionnel. Grâce aux cours, aux projets collaboratifs et à un stage professionnel, j\'ai développé de solides compétences analytiques, de communication, de résolution de problèmes et interculturelles.',
+      projectsLabel: 'Projets',
+      projectsTitle: 'Travaux sélectionnés',
+      projectsIntro: 'Une sélection de projets démontrant mon expérience en analyse commerciale, stratégie marketing et développement.',
+      // Project 1
+      project1Category: 'Analyse commerciale',
+      project1Title: 'Tableau de bord Export Analytics',
+      project1Text: 'Ce graphique a été créé à partir d\'analytics Google et LinkedIn importés pour observer l\'utilisation du site par rapport aux invitations à suivre deCogan. Les résultats montrent une corrélation entre les utilisateurs actifs d\'un site et les invitations acceptées. Avoir un site web pourrait ainsi augmenter le taux de succès des invitations.',
+      project1Tag1: 'Google Sheets',
+      project1Tag2: 'Visualisation de données',
+      project1Tag3: 'Export Google Analytics',
+      project1Tag4: 'Export LinkedIn Analytics',
+      // Project 2
+      project2Category: 'Analyse web',
+      project2Title: 'Configuration Google Analytics sur cameroncogan.com',
+      project2Text: 'Cette image montre le suivi détaillé d\'événements personnalisés.',
+      project2Tag1: 'Google Analytics',
+      project2Tag2: 'Suivi d\'événements',
+      project2Tag3: 'Comportement utilisateur',
+      project2Tag4: 'Analyse du trafic',
+      experienceLabel: 'Expérience',
+      experienceTitle: 'Parcours professionnel',
+      experienceIntro: 'Rôles et contributions en marketing, communication et commerce international.',
+      // Experience 1
+      exp1Title: 'Assistant Marketing et Communication, deCogan',
+      exp1Date: '06/26-08/26 (3 mois)',
+      exp1Text: 'Soutien aux stratégies marketing et initiatives de communication, gestion des réseaux sociaux et outreach LinkedIn chez deCogan. Axé sur la création de contenu, le CRM, le développement de la marque et les insights data-driven (Google & LinkedIn analytics), ainsi que le SEO — répondant ainsi aux exigences de ma première année d\'études.',
+      exp1Tag1: 'Marketing digital',
+      exp1Tag2: 'Création de contenu',
+      exp1Tag3: 'Analytics',
+      exp1Tag4: 'Développement de marque',
+      // Experience 2
+      exp2Title: 'Bénévole billetterie, photos & vidéos, TourPourLaVie',
+      exp2Date: '16/05/26',
+      exp2Text: 'Bénévole en tant qu\'assistant billetterie pour une exposition automobile caritative au profit d\'enfants malades et handicapés. Gestion des ventes de billets et du flux de visiteurs, tout en aidant aux vidéos promotionnelles et photographies des véhicules exposés. L\'événement était organisé par TourPourLaVie pour collecter des fonds en faveur de Sourire à la Vie.',
+      exp2Tag1: 'Organisation d\'événement',
+      exp2Tag2: 'Vente de billets',
+      exp2Tag3: 'Photo & Vidéo',
+      exp2Tag4: 'Bénévolat',
+      // Experience 3
+      exp3Title: 'Testeur d\'application (bénévolat de compétences), Complical',
+      exp3Date: '04/25-05/25',
+      exp3Text: 'Fourniture de retours utilisateurs et identification de bugs lors des tests du site Complical. Utilisation de Jira comme outil principal de gestion de projet pour documenter les problèmes, suivre les tâches et contribuer aux améliorations du produit.',
+      exp3Tag1: 'Tests utilisateurs',
+      exp3Tag2: 'Jira',
+      exp3Tag3: 'Rapport de bugs',
+      exp3Tag4: 'Assurance qualité',
+      // Experience 4
+      exp4Title: 'Directeur Marketing, Aeternum',
+      exp4Date: '09/22-06/23',
+      exp4Text: 'Directeur Marketing dans un projet entrepreneurial au lycée. Contribution en design graphique pour les supports médias et les réseaux sociaux. Participation à la phase West Berkshire du concours Young Enterprise. Réalisation d\'études de marché, participation à des salons professionnels et gestion du compte YouTube.',
+      exp4Tag1: 'Outils de création média',
+      exp4Tag2: 'Étude de marché',
+      exp4Tag3: 'Ventes',
+      exp4Tag4: 'Profils clients',
+      contactLabel: 'Contact',
+      contactTitle: 'Restons en contact !',
+      contactText: "Je suis toujours ouvert à de nouvelles opportunités et collaborations. N'hésitez pas à me contacter !",
+      cookieTitle: 'Politique de cookies',
+      manageCookies: 'Gérer les préférences de cookies',
+      cookieLastUpdated: 'Dernière mise à jour : 19 juillet 2026',
+      cookieWhatTitle: '1. Que sont les cookies ?',
+      cookieWhatText: 'Les cookies sont de petits fichiers texte placés sur votre appareil pour aider les sites web à fonctionner et à offrir une meilleure expérience utilisateur.',
+      cookieTypesTitle: '2. Cookies que nous utilisons',
+      cookieEssentialTitle: 'Cookies essentiels',
+      cookieEssentialText: 'Nécessaires au fonctionnement du site (navigation, menu mobile). Ne peuvent pas être désactivés.',
+      cookieAnalyticsTitle: 'Cookies analytiques',
+      cookieAnalyticsText: 'Optionnels. Ils m\'aident à comprendre comment les visiteurs utilisent le site afin de l\'améliorer.',
+      cookieChoicesTitle: '3. Vos choix',
+      cookieChoicesText: 'Vous pouvez modifier vos préférences à tout moment en utilisant le bouton ci-dessus.',
+      cookieContactTitle: '4. Contact',
+      cookieContactText: 'Si vous avez des questions, n\'hésitez pas à',
+      cookieContactLink: 'me contacter',
+      bannerText: 'Ce site utilise des cookies essentiels pour fonctionner correctement et des cookies analytiques optionnels pour comprendre le trafic. Vous pouvez choisir vos préférences ci-dessous. Pour plus de détails, consultez notre',
+      bannerCustomize: 'Personnaliser',
+      bannerReject: 'Refuser les non-essentiels',
+      bannerAccept: 'Tout accepter',
+      prefTitle: 'Préférences de cookies',
+      prefSubtitle: 'Gérez vos paramètres de cookies',
+      prefSave: 'Enregistrer les préférences',
+      prefCancel: 'Annuler',
+      gameTitle: 'BROOKIE PANDA',
+      gameLevel: 'Niveau',
+      gameScore: 'Score',
+      gameClickToStart: 'CLIQUEZ POUR COMMENCER',
+      gameInstructions: 'Collectez 🍫 • Évitez le bambou',
+      gameJump: 'SAUTER',
+      gameRetry: 'Réessayer le niveau',
+      gameControls: '← → ou A/D pour bouger • Espace / W pour sauter • R pour réessayer',
+      gameOver: 'GAME OVER',
+      gameOverHint: 'Appuyez sur le bouton Réessayer ci-dessous'
+    },
+    de: {
+      aboutLabel: 'International Business Administration',
+      aboutTitle: 'Cameron Cogan',
+      aboutSubtitle: 'Top 12% des Jahrgangs • Montpellier Business School',
+      aboutText: 'Ich studiere derzeit einen Bachelor in International Business Administration an der Montpellier Business School. Mein Studium umfasst ein breites Spektrum an Disziplinen, darunter künstliche Intelligenz, Wirtschaftsethik, Wirtschaftsrecht, Konsumverhalten, digitale Tools, Finanzbuchhaltung, Globalisierung und Geopolitik, interkulturelles Management, Leadership, Makroökonomie, Management, Marketing, quantitative Methoden und Statistik sowie berufliche Entwicklung. Durch Kursarbeit, gemeinsame Projekte und ein Praktikum habe ich starke analytische, kommunikative, problemlösende und interkulturelle Fähigkeiten entwickelt.',
+      projectsLabel: 'Projekte',
+      projectsTitle: 'Ausgewählte Arbeiten',
+      projectsIntro: 'Eine Auswahl an Projekten, die meine Erfahrung in Business Analytics, Marketingstrategie und Entwicklung zeigen.',
+      // Project 1
+      project1Category: 'Business Analytics',
+      project1Title: 'Export Analytics Dashboard',
+      project1Text: 'Dieses Diagramm wurde mit importierten Google- und LinkedIn-Analytics erstellt, um die Website-Nutzung im Verhältnis zu Follow-Einladungen für deCogan zu beobachten. Die Ergebnisse zeigen eine Korrelation zwischen aktiven Nutzern einer Website und akzeptierten Einladungen. Eine eigene Website kann die Erfolgsquote von Follow-Einladungen erhöhen.',
+      project1Tag1: 'Google Sheets',
+      project1Tag2: 'Datenvisualisierung',
+      project1Tag3: 'Google Analytics Export',
+      project1Tag4: 'LinkedIn Analytics Export',
+      // Project 2
+      project2Category: 'Web Analytics',
+      project2Title: 'Google Analytics Setup auf cameroncogan.com',
+      project2Text: 'Dieses Bild zeigt detailliertes Custom-Event-Tracking.',
+      project2Tag1: 'Google Analytics',
+      project2Tag2: 'Event-Tracking',
+      project2Tag3: 'Nutzerverhalten',
+      project2Tag4: 'Traffic-Analyse',
+      experienceLabel: 'Erfahrung',
+      experienceTitle: 'Beruflicher Werdegang',
+      experienceIntro: 'Rollen und Beiträge in Marketing, Kommunikation und internationalem Business.',
+      // Experience 1
+      exp1Title: 'Assistent Marketing und Kommunikation, deCogan',
+      exp1Date: '06/26-08/26 (3 Monate)',
+      exp1Text: 'Unterstützung von Marketingstrategien und Kommunikationsinitiativen, Verwaltung von Social Media und LinkedIn-Outreach bei deCogan. Fokus auf Content-Erstellung, CRM, Markenentwicklung und datengetriebene Insights (inkl. Google- & LinkedIn-Analytics) sowie SEO – damit erfüllte ich die Anforderungen meines ersten Studienjahres.',
+      exp1Tag1: 'Digitales Marketing',
+      exp1Tag2: 'Content-Erstellung',
+      exp1Tag3: 'Analytics',
+      exp1Tag4: 'Markenentwicklung',
+      // Experience 2
+      exp2Title: 'Ticketverkauf-Volunteer, Fotos & Videos, TourPourLaVie',
+      exp2Date: '16/05/26',
+      exp2Text: 'Ehrenamtlicher Einsatz als Ticketverkaufs-Assistent bei einer Charity-Autoausstellung zugunsten kranker und behinderter Kinder. Verwaltung des Ticketverkaufs und des Besucherflusses sowie Unterstützung bei Werbevideos und Fotografien der ausgestellten Fahrzeuge. Die Veranstaltung wurde von TourPourLaVie organisiert, um Spenden für Sourire à la Vie zu sammeln.',
+      exp2Tag1: 'Event-Organisation',
+      exp2Tag2: 'Ticketverkauf',
+      exp2Tag3: 'Fotografie & Videografie',
+      exp2Tag4: 'Ehrenamt',
+      // Experience 3
+      exp3Title: 'Application Tester (kompetenzbasiertes Volunteering), Complical',
+      exp3Date: '04/25-05/25',
+      exp3Text: 'Bereitstellung von Nutzerfeedback und Identifikation von Bugs beim Testen der Complical-Website. Verwendung von Jira als zentrales Projektmanagement-Tool zur Dokumentation von Problemen, Nachverfolgung von Aufgaben und Beitrag zu Produktverbesserungen.',
+      exp3Tag1: 'Usertests',
+      exp3Tag2: 'Jira',
+      exp3Tag3: 'Bug-Reporting',
+      exp3Tag4: 'Qualitätssicherung',
+      // Experience 4
+      exp4Title: 'Marketing Director, Aeternum',
+      exp4Date: '09/22-06/23',
+      exp4Text: 'Marketing Director in einem schulischen Unternehmensprojekt-Wettbewerb. Beitrag mit Grafikdesign-Kenntnissen für Mediendisplays und Social Media. Teilnahme an der West-Berkshire-Runde des Young-Enterprise-Wettbewerbs. Durchführung von Marktforschung, Besuch von Messen und Verwaltung des YouTube-Kanals.',
+      exp4Tag1: 'Medien-Erstellungstools',
+      exp4Tag2: 'Marktforschung',
+      exp4Tag3: 'Verkauf',
+      exp4Tag4: 'Kundenprofile',
+      contactLabel: 'Kontakt',
+      contactTitle: 'Lass uns verbinden!',
+      contactText: 'Ich bin immer offen für neue Möglichkeiten und Kooperationen. Melde dich gerne!',
+      cookieTitle: 'Cookie-Richtlinie',
+      manageCookies: 'Cookie-Einstellungen verwalten',
+      cookieLastUpdated: 'Zuletzt aktualisiert: 19. Juli 2026',
+      cookieWhatTitle: '1. Was sind Cookies?',
+      cookieWhatText: 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, um Websites zu ermöglichen und bessere Nutzererfahrungen zu bieten.',
+      cookieTypesTitle: '2. Welche Cookies wir verwenden',
+      cookieEssentialTitle: 'Essenzielle Cookies',
+      cookieEssentialText: 'Erforderlich, damit die Website funktioniert (Navigation, mobiles Menü). Können nicht deaktiviert werden.',
+      cookieAnalyticsTitle: 'Analyse-Cookies',
+      cookieAnalyticsText: 'Optional. Helfen mir zu verstehen, wie Besucher die Website nutzen, um sie zu verbessern.',
+      cookieChoicesTitle: '3. Ihre Auswahl',
+      cookieChoicesText: 'Sie können Ihre Einstellungen jederzeit über die Schaltfläche oben ändern.',
+      cookieContactTitle: '4. Kontakt',
+      cookieContactText: 'Bei Fragen können Sie mich gerne',
+      cookieContactLink: 'kontaktieren',
+      bannerText: 'Diese Website verwendet essenzielle Cookies für den ordnungsgemäßen Betrieb und optionale Analyse-Cookies, um den Besucherverkehr zu verstehen. Sie können Ihre Einstellungen unten wählen. Weitere Details finden Sie in unserer',
+      bannerCustomize: 'Anpassen',
+      bannerReject: 'Nicht-essenzielle ablehnen',
+      bannerAccept: 'Alle akzeptieren',
+      prefTitle: 'Cookie-Einstellungen',
+      prefSubtitle: 'Verwalten Sie Ihre Cookie-Einstellungen',
+      prefSave: 'Einstellungen speichern',
+      prefCancel: 'Abbrechen',
+      gameTitle: 'BROOKIE PANDA',
+      gameLevel: 'Level',
+      gameScore: 'Punkte',
+      gameClickToStart: 'KLICKEN ZUM STARTEN',
+      gameInstructions: 'Sammle 🍫 • Vermeide den Bambus',
+      gameJump: 'SPRINGEN',
+      gameRetry: 'Level wiederholen',
+      gameControls: '← → oder A/D zum Bewegen • Leertaste / W zum Springen • R zum Wiederholen',
+      gameOver: 'GAME OVER',
+      gameOverHint: 'Tippe unten auf den Wiederholen-Button'
+    }
+  };
+
+  get t() {
+    return this.translations[this.currentLang];
+  }
+
   private levelStartScore = 0;
   private facingRight = true;
   private trackedSections = new Set<string>();
@@ -50,12 +348,32 @@ export class HomeComponent implements AfterViewInit {
   constructor(
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    // Load language as early as possible
+    const savedLang = localStorage.getItem('preferredLang') as 'en' | 'fr' | 'de';
+    if (savedLang) {
+      this.currentLang = savedLang;
+    }
+  }
 
   ngAfterViewInit() {
-    this.checkCookieConsent();
-    this.setupScrollTracking();
-  }
+  this.checkCookieConsent();
+  this.setupScrollTracking();
+
+  // Track the language currently being used
+  this.trackEvent('engagement', 'language_view', this.currentLang);
+}
+
+  setLanguage(lang: 'en' | 'fr' | 'de') {
+  this.currentLang = lang;
+  localStorage.setItem('preferredLang', lang);
+
+  // Track language switch
+  this.trackEvent('engagement', 'language_select', lang);
+
+  // Reload so the Home component picks up the new language
+  window.location.reload();
+}
 
   // ==================== COOKIE + GOOGLE ANALYTICS ====================
   private checkCookieConsent() {
@@ -229,8 +547,8 @@ export class HomeComponent implements AfterViewInit {
     setTimeout(() => this.playTone(700, 0.1, 'square'), 200);
     setTimeout(() => this.playTone(900, 0.25, 'square'), 300);
   }
+
   private playMunchSound() {
-  // Short munch / bite sound
     this.playTone(180, 0.06, 'square', 0.09);
     setTimeout(() => this.playTone(140, 0.08, 'square', 0.07), 50);
   }
@@ -440,16 +758,17 @@ export class HomeComponent implements AfterViewInit {
         }
       }
 
-// Collect chocolates
+      // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
-          this.player.x < c.x + 20 &&
-          this.player.x + this.player.width > c.x &&
-          this.player.y < c.y + 20 &&
-          this.player.y + this.player.height > c.y) {
-    
+            this.player.x < c.x + 20 &&
+            this.player.x + this.player.width > c.x &&
+            this.player.y < c.y + 20 &&
+            this.player.y + this.player.height > c.y) {
+          
           c.collected = true;
-          this.playMunchSound();          // ← add this line
+          this.playMunchSound();
+
           this.ngZone.run(() => {
             this.score += 10;
             this.cdr.detectChanges();
@@ -583,10 +902,10 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.fillStyle = '#ef4444';
       this.ctx.font = 'bold 48px Arial';
       this.ctx.textAlign = 'center';
-      this.ctx.fillText('GAME OVER', 400, 180);
+      this.ctx.fillText(this.t.gameOver, 400, 180);
       this.ctx.fillStyle = 'white';
       this.ctx.font = '22px Arial';
-      this.ctx.fillText('Tap the Retry button below', 400, 240);
+      this.ctx.fillText(this.t.gameOverHint, 400, 240);
       this.ctx.textAlign = 'left';
     }
 
