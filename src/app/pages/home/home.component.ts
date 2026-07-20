@@ -59,6 +59,14 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Experience',
       experienceTitle: 'Professional Journey',
       experienceIntro: 'Roles and contributions in marketing, communications, and international business.',
+      // Project 3
+      project3Category: 'Interactive Marketing',
+      project3Title: 'Brookie Panda Game Easter Egg',
+      project3Text: 'An interactive 8-bit style game hidden on the website as an Easter egg. Visitors who engage with the game can unlock discount codes, turning a playful experience into a practical marketing tool that rewards attention and increases time spent on the site.',
+      project3Tag1: 'Game Development',
+      project3Tag2: 'Easter Egg',
+      project3Tag3: 'Marketing Engagement',
+      project3Tag4: 'Discount Codes',
       // Experience 1 - deCogan
       exp1Title: 'Assistant Marketing and Communication, deCogan',
       exp1Date: '06/26-08/26 (3 months)',
@@ -155,6 +163,14 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Expérience',
       experienceTitle: 'Parcours professionnel',
       experienceIntro: 'Rôles et contributions en marketing, communication et commerce international.',
+      // Project 3
+      project3Category: 'Marketing interactif',
+      project3Title: 'Jeu caché Brookie Panda',
+      project3Text: 'Un jeu interactif style 8-bit caché sur le site comme Easter egg. Les visiteurs qui y jouent peuvent débloquer des codes de réduction, transformant une expérience ludique en outil marketing qui récompense l\'attention et augmente le temps passé sur le site.',
+      project3Tag1: 'Développement de jeu',
+      project3Tag2: 'Easter Egg',
+      project3Tag3: 'Engagement marketing',
+      project3Tag4: 'Codes de réduction',
       // Experience 1
       exp1Title: 'Assistant Marketing et Communication, deCogan',
       exp1Date: '06/26-08/26 (3 mois)',
@@ -251,6 +267,14 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Erfahrung',
       experienceTitle: 'Beruflicher Werdegang',
       experienceIntro: 'Rollen und Beiträge in Marketing, Kommunikation und internationalem Business.',
+      // Project 3
+      project3Category: 'Interaktives Marketing',
+      project3Title: 'Brookie Panda Spiel-Easter-Egg',
+      project3Text: 'Ein interaktives 8-Bit-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten – so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
+      project3Tag1: 'Spieleentwicklung',
+      project3Tag2: 'Easter Egg',
+      project3Tag3: 'Marketing-Engagement',
+      project3Tag4: 'Rabattcodes',
       // Experience 1
       exp1Title: 'Assistent Marketing und Kommunikation, deCogan',
       exp1Date: '06/26-08/26 (3 Monate)',
