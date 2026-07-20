@@ -30,6 +30,7 @@ export class HomeComponent implements AfterViewInit {
 
   private levelStartScore = 0;
   private facingRight = true;
+  private trackedSections = new Set<string>(); // prevents tracking the same section multiple times
 
   private ctx!: CanvasRenderingContext2D;
   private player = { x: 50, y: 280, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
@@ -50,115 +51,146 @@ export class HomeComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.checkCookieConsent();
+    this.setupScrollTracking();
   }
 
   // ==================== COOKIE + GOOGLE ANALYTICS ====================
+  private checkCookieConsent() {
+    const consent = localStorage.getItem('cookieConsent');
+    const analytics = localStorage.getItem('analyticsCookies');
 
-private checkCookieConsent() {
-  const consent = localStorage.getItem('cookieConsent');
-  const analytics = localStorage.getItem('analyticsCookies');
+    if (!consent) {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.classList.remove('hidden');
+    } else if (analytics === 'true') {
+      this.loadGoogleAnalytics();
+    }
+  }
 
-  if (!consent) {
+  acceptAll() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    localStorage.setItem('analyticsCookies', 'true');
+    this.hideBanner();
+    this.loadGoogleAnalytics();
+  }
+
+  rejectNonEssential() {
+    localStorage.setItem('cookieConsent', 'rejected-non-essential');
+    localStorage.setItem('analyticsCookies', 'false');
+    this.hideBanner();
+  }
+
+  managePreferences() {
+    this.analyticsEnabled = localStorage.getItem('analyticsCookies') === 'true';
+    this.showPreferences = true;
+  }
+
+  savePreferences() {
+    localStorage.setItem('cookieConsent', 'custom');
+    localStorage.setItem('analyticsCookies', this.analyticsEnabled ? 'true' : 'false');
+    this.showPreferences = false;
+    this.hideBanner();
+
+    if (this.analyticsEnabled) {
+      this.loadGoogleAnalytics();
+    }
+  }
+
+  closePreferences() {
+    this.showPreferences = false;
+  }
+
+  openCookieSettings() {
+    this.managePreferences();
+  }
+
+  private hideBanner() {
     const banner = document.getElementById('cookie-banner');
-    if (banner) banner.classList.remove('hidden');
-  } else if (analytics === 'true') {
-    this.loadGoogleAnalytics();
+    if (banner) banner.classList.add('hidden');
   }
-}
 
-acceptAll() {
-  localStorage.setItem('cookieConsent', 'accepted');
-  localStorage.setItem('analyticsCookies', 'true');
-  this.hideBanner();
-  this.loadGoogleAnalytics();
-}
+  private loadGoogleAnalytics() {
+    if ((window as any).gtagLoaded) return;
+    (window as any).gtagLoaded = true;
 
-rejectNonEssential() {
-  localStorage.setItem('cookieConsent', 'rejected-non-essential');
-  localStorage.setItem('analyticsCookies', 'false');
-  this.hideBanner();
-}
+    console.log('Loading Google Analytics...');
 
-managePreferences() {
-  this.analyticsEnabled = localStorage.getItem('analyticsCookies') === 'true';
-  this.showPreferences = true;
-}
+    const w = window as any;
+    w.dataLayer = w.dataLayer || [];
+    w.gtag = function () {
+      w.dataLayer.push(arguments);
+    };
 
-savePreferences() {
-  localStorage.setItem('cookieConsent', 'custom');
-  localStorage.setItem('analyticsCookies', this.analyticsEnabled ? 'true' : 'false');
-  this.showPreferences = false;
-  this.hideBanner();
+    w.gtag('js', new Date());
+    w.gtag('config', 'G-4K67T8TTQ4');
 
-  if (this.analyticsEnabled) {
-    this.loadGoogleAnalytics();
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4K67T8TTQ4';
+    document.head.appendChild(script);
   }
-}
 
-closePreferences() {
-  this.showPreferences = false;
-}
+  trackEvent(category: string, action: string, label: string = '') {
+    if (localStorage.getItem('analyticsCookies') === 'true' && (window as any).gtag) {
+      (window as any).gtag('event', action, {
+        event_category: category,
+        event_label: label
+      });
+    }
+  }
 
-openCookieSettings() {
-  this.managePreferences();
-}
+  // ==================== SCROLL TRACKING ====================
+  private setupScrollTracking() {
+    const sections = [
+      { id: 'about', name: 'About' },
+      { id: 'projects', name: 'Projects' },
+      { id: 'experience', name: 'Experience' },
+      { id: 'contact', name: 'Contact' },
+      { id: 'cookie-policy', name: 'Cookies' }
+    ];
 
-private hideBanner() {
-  const banner = document.getElementById('cookie-banner');
-  if (banner) banner.classList.add('hidden');
-}
-
-// Load Google Analytics only after consent
-private loadGoogleAnalytics() {
-  // Prevent loading more than once
-  if ((window as any).gtagLoaded) return;
-  (window as any).gtagLoaded = true;
-
-  console.log('Loading Google Analytics...');
-
-  // 1. Define dataLayer and gtag first
-  const w = window as any;
-  w.dataLayer = w.dataLayer || [];
-  w.gtag = function () {
-    w.dataLayer.push(arguments);
-  };
-
-  // 2. Initialize
-  w.gtag('js', new Date());
-  w.gtag('config', 'G-4K67T8TTQ4');
-
-  // 3. Load the actual Google script
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4K67T8TTQ4';
-  document.head.appendChild(script);
-}
-trackEvent(category: string, action: string, label: string = '') {
-  if (localStorage.getItem('analyticsCookies') === 'true' && (window as any).gtag) {
-    (window as any).gtag('event', action, {
-      event_category: category,
-      event_label: label
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const section = sections.find(s => s.id === entry.target.id);
+          if (section && !this.trackedSections.has(section.id)) {
+            this.trackedSections.add(section.id);
+            this.trackEvent('navigation', 'section_view', section.name);
+          }
+        }
+      });
+    }, {
+      threshold: 0.4
     });
+
+    // Wait a short moment for the DOM to be ready
+    setTimeout(() => {
+      sections.forEach(section => {
+        const element = document.getElementById(section.id);
+        if (element) {
+          observer.observe(element);
+        }
+      });
+    }, 500);
   }
-}
+
   // ==================== EASTER EGG ====================
-toggleEasterEgg() {
-  this.showGame = true;
-  this.gameStarted = false;
-  this.level = 1;
-  this.score = 0;
-  this.levelStartScore = 0;
-  this.gameOver = false;
+  toggleEasterEgg() {
+    this.showGame = true;
+    this.gameStarted = false;
+    this.level = 1;
+    this.score = 0;
+    this.levelStartScore = 0;
+    this.gameOver = false;
 
-  // Track Easter egg open
-  this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
+    this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
 
-  setTimeout(() => this.startGame(), 100);
-}
+    setTimeout(() => this.startGame(), 100);
+  }
 
-startPlaying() {
-  this.gameStarted = true;
-}
+  startPlaying() {
+    this.gameStarted = true;
+  }
 
   closeGame() {
     this.showGame = false;
@@ -220,7 +252,6 @@ startPlaying() {
       });
     }
 
-    // Bamboo
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
@@ -235,7 +266,6 @@ startPlaying() {
       });
     }
 
-    // Chocolates
     this.chocolates = [];
     const chocolateCount = 5 + Math.floor(level / 1.5);
 
@@ -262,13 +292,10 @@ startPlaying() {
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
-  // ← ADD THE HELPER METHOD HERE
   private drawLargeBamboo(x: number, y: number) {
-    // Main stalk
     this.ctx.fillStyle = '#4ade80';
     this.ctx.fillRect(x, y, 18, 180);
 
-    // Segments
     this.ctx.strokeStyle = '#166534';
     this.ctx.lineWidth = 2.5;
     this.ctx.beginPath();
@@ -280,18 +307,13 @@ startPlaying() {
     this.ctx.lineTo(x + 18, y + 150);
     this.ctx.stroke();
 
-    // Leaves
     this.ctx.fillStyle = '#22c55e';
-    
-    // Left leaves
     this.ctx.beginPath();
     this.ctx.ellipse(x - 18, y + 30, 22, 8, -0.6, 0, Math.PI * 2);
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.ellipse(x - 15, y + 80, 20, 7, -0.5, 0, Math.PI * 2);
     this.ctx.fill();
-
-    // Right leaves
     this.ctx.beginPath();
     this.ctx.ellipse(x + 36, y + 45, 22, 8, 0.6, 0, Math.PI * 2);
     this.ctx.fill();
@@ -303,7 +325,6 @@ startPlaying() {
   private gameLoop = () => {
     if (!this.showGame) return;
 
-    // Game logic only after start
     if (!this.gameOver && this.gameStarted) {
       this.player.vx = 0;
 
@@ -325,7 +346,6 @@ startPlaying() {
       this.player.x += this.player.vx;
       this.player.y += this.player.vy;
 
-      // Platform collision
       this.player.jumping = true;
       for (const p of this.platforms) {
         if (
@@ -344,7 +364,6 @@ startPlaying() {
       if (this.player.x < 0) this.player.x = 0;
       if (this.player.y > 400) this.die();
 
-      // Bamboo collision
       for (const s of this.spikes) {
         const bambooTop = s.y - (s.tall ? 35 : 15);
         if (
@@ -357,7 +376,6 @@ startPlaying() {
         }
       }
 
-      // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
             this.player.x < c.x + 20 &&
@@ -372,7 +390,6 @@ startPlaying() {
         }
       }
 
-      // Win condition
       if (this.player.x > 720) {
         this.ngZone.run(() => {
           this.level++;
@@ -391,7 +408,6 @@ startPlaying() {
     // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
-    // Background
     if (this.backgroundImage.complete && this.backgroundImage.naturalWidth > 0) {
       this.ctx.drawImage(this.backgroundImage, 0, 0, 800, 400);
     } else {
@@ -402,32 +418,26 @@ startPlaying() {
       this.ctx.fillRect(0, 0, 800, 400);
     }
 
-// ===== START SCREEN =====
-if (!this.gameStarted) {
-  // Draw the ground
-  this.ctx.fillStyle = '#14532d';
-  this.ctx.fillRect(0, 320, 800, 80);
+    // START SCREEN
+    if (!this.gameStarted) {
+      this.ctx.fillStyle = '#14532d';
+      this.ctx.fillRect(0, 320, 800, 80);
 
-  // Left large bamboo
-  this.drawLargeBamboo(120, 140);
+      this.drawLargeBamboo(120, 140);
+      this.drawLargeBamboo(620, 140);
 
-  // Right large bamboo
-  this.drawLargeBamboo(620, 140);
+      if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
+        const size = 260;
+        const x = (800 - size) / 2;
+        const y = (400 - size) / 2 - 10;
+        this.ctx.globalAlpha = 0.9;
+        this.ctx.drawImage(this.playerImage, x, y, size, size);
+        this.ctx.globalAlpha = 1;
+      }
 
-  // Draw a larger centered panda
-  if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
-    const size = 260;
-    const x = (800 - size) / 2;
-    const y = (400 - size) / 2 - 10;
-
-    this.ctx.globalAlpha = 0.9;
-    this.ctx.drawImage(this.playerImage, x, y, size, size);
-    this.ctx.globalAlpha = 1;
-  }
-
-  this.animationId = requestAnimationFrame(this.gameLoop);
-  return;
-}
+      this.animationId = requestAnimationFrame(this.gameLoop);
+      return;
+    }
 
     // Platforms
     for (const p of this.platforms) {
