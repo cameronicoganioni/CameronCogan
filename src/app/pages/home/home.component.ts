@@ -139,14 +139,14 @@ export class HomeComponent implements AfterViewInit {
       // Project 1
       project1Category: 'Analyse commerciale',
       project1Title: 'Export Analytics',
-      project1Text: 'Ce graphique a été créé à partir d\'analytics Google et LinkedIn importés pour observer l\'utilisation du site par rapport aux invitations à suivre deCogan. Les résultats montrent une corrélation entre les utilisateurs actifs d\'un site et les invitations acceptées. Avoir un site web pourrait ainsi augmenter le taux de succès des invitations.',
+      project1Text: 'Ce graphique a été créé à l\'aide des données de Google Analytics et de LinkedIn afin d\'analyser le lien entre l\'activité sur le site web et les invitations à suivre la page deCogan. On observe une corrélation entre le nombre d\'utilisateurs actifs et le nombre d\'invitations acceptées. Cela laisse penser que la présence d\'un site web pourrait favoriser un meilleur taux d\'acceptation des invitations.',
       project1Tag1: 'Google Sheets',
       project1Tag2: 'Visualisation de données',
       project1Tag3: 'Export Google Analytics',
       project1Tag4: 'Export LinkedIn Analytics',
       // Project 2
       project2Category: 'Analyse web',
-      project2Title: 'Configuration Google Analytics sur cameroncogan.com',
+      project2Title: 'Mise en place Google Analytics sur cameroncogan.com',
       project2Text: 'Cette image montre le suivi détaillé d\'événements personnalisés.',
       project2Tag1: 'Google Analytics',
       project2Tag2: 'Suivi d\'événements',
