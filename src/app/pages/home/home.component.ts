@@ -133,20 +133,32 @@ private loadGoogleAnalytics() {
   script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4K67T8TTQ4';
   document.head.appendChild(script);
 }
+trackEvent(category: string, action: string, label: string = '') {
+  if (localStorage.getItem('analyticsCookies') === 'true' && (window as any).gtag) {
+    (window as any).gtag('event', action, {
+      event_category: category,
+      event_label: label
+    });
+  }
+}
   // ==================== EASTER EGG ====================
-  toggleEasterEgg() {
-    this.showGame = true;
-    this.gameStarted = false;
-    this.level = 1;
-    this.score = 0;
-    this.levelStartScore = 0;
-    this.gameOver = false;
-    setTimeout(() => this.startGame(), 100);
-  }
+toggleEasterEgg() {
+  this.showGame = true;
+  this.gameStarted = false;
+  this.level = 1;
+  this.score = 0;
+  this.levelStartScore = 0;
+  this.gameOver = false;
 
-  startPlaying() {
-    this.gameStarted = true;
-  }
+  // Track Easter egg open
+  this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
+
+  setTimeout(() => this.startGame(), 100);
+}
+
+startPlaying() {
+  this.gameStarted = true;
+}
 
   closeGame() {
     this.showGame = false;

@@ -6,7 +6,6 @@
       <span class="text-xl font-semibold tracking-tight text-slate-900">
         Cameron Cogan
       </span>
-
       <span class="text-sm text-slate-500">
         Student in International Business Administration
       </span>
@@ -14,18 +13,31 @@
 
     <!-- Desktop Navigation -->
     <nav class="hidden items-center gap-8 md:flex">
-      <a href="#about" class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">About</a>
-      <a href="#projects" class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Projects</a>
-      <a href="#experience" class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Experience</a>
-      <a href="#contact" class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Contact</a>
-      <a href="#cookie-policy" class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Cookies</a>
+      <a href="#about" 
+         (click)="trackEvent('navigation', 'section_click', 'About')"
+         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">About</a>
+
+      <a href="#projects" 
+         (click)="trackEvent('navigation', 'section_click', 'Projects')"
+         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Projects</a>
+
+      <a href="#experience" 
+         (click)="trackEvent('navigation', 'section_click', 'Experience')"
+         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Experience</a>
+
+      <a href="#contact" 
+         (click)="trackEvent('navigation', 'section_click', 'Contact')"
+         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Contact</a>
+
+      <a href="#cookie-policy" 
+         (click)="trackEvent('navigation', 'section_click', 'Cookies')"
+         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">Cookies</a>
     </nav>
 
     <!-- Mobile Button -->
     <button
       (click)="toggleMenu()"
-      class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 md:hidden"
-    >
+      class="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 md:hidden">
       <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
@@ -57,11 +69,25 @@
     </div>
 
     <nav class="mt-8 space-y-2">
-      <a href="#about" (click)="toggleMenu()" class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">About</a>
-      <a href="#projects" (click)="toggleMenu()" class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Projects</a>
-      <a href="#experience" (click)="toggleMenu()" class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Experience</a>
-      <a href="#contact" (click)="toggleMenu()" class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Contact</a>
-      <a href="#cookie-policy" (click)="toggleMenu()" class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Cookies</a>
+      <a href="#about" 
+         (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'About')"
+         class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">About</a>
+
+      <a href="#projects" 
+         (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Projects')"
+         class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Projects</a>
+
+      <a href="#experience" 
+         (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Experience')"
+         class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Experience</a>
+
+      <a href="#contact" 
+         (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Contact')"
+         class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Contact</a>
+
+      <a href="#cookie-policy" 
+         (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Cookies')"
+         class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">Cookies</a>
     </nav>
 
   </div>
