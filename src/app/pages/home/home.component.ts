@@ -390,6 +390,8 @@ export class HomeComponent implements AfterViewInit {
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
   private particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; color: string; size: number }[] = [];
+  private shakeIntensity = 0;
+  private shakeDecay = 0.82;
 
   // Audio
   private audioCtx: AudioContext | null = null;
@@ -613,6 +615,7 @@ export class HomeComponent implements AfterViewInit {
     this.showVictory = false;
     this.highScore = parseInt(localStorage.getItem('brookieHighScore') || '0', 10);
     this.particles = [];
+    this.shakeIntensity = 0;
 
     this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
 
@@ -633,6 +636,7 @@ export class HomeComponent implements AfterViewInit {
     this.mobileRight = false;
     this.mobileJump = false;
     this.particles = [];
+    this.shakeIntensity = 0;
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
@@ -655,6 +659,7 @@ export class HomeComponent implements AfterViewInit {
     this.levelStartScore = 0;
     this.gameStarted = true;
     this.particles = [];
+    this.shakeIntensity = 0;
     this.loadLevel(1);
     this.ngZone.run(() => this.cdr.detectChanges());
   }
@@ -681,6 +686,7 @@ export class HomeComponent implements AfterViewInit {
     this.levelStartScore = this.score;
     this.facingRight = true;
     this.particles = [];
+    this.shakeIntensity = 0;
 
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
@@ -743,6 +749,7 @@ export class HomeComponent implements AfterViewInit {
       '#ef4444',
       28
     );
+    this.triggerShake(9);
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
@@ -760,6 +767,10 @@ export class HomeComponent implements AfterViewInit {
         size: 6 + Math.random() * 6
       });
     }
+  }
+
+  private triggerShake(amount: number = 6) {
+    this.shakeIntensity = Math.max(this.shakeIntensity, amount);
   }
 
   private drawLargeBamboo(x: number, y: number) {
@@ -858,6 +869,7 @@ export class HomeComponent implements AfterViewInit {
           c.collected = true;
           this.playMunchSound();
           this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
+          this.triggerShake(4);
 
           this.ngZone.run(() => {
             this.score += 10;
@@ -897,6 +909,21 @@ export class HomeComponent implements AfterViewInit {
     // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
+    // Safe Screen Shake
+    let shakeX = 0;
+    let shakeY = 0;
+
+    if (this.shakeIntensity > 0.3) {
+      shakeX = (Math.random() - 0.5) * this.shakeIntensity;
+      shakeY = (Math.random() - 0.5) * this.shakeIntensity;
+      this.shakeIntensity *= this.shakeDecay;
+    } else {
+      this.shakeIntensity = 0;
+    }
+
+    this.ctx.save();
+    this.ctx.translate(shakeX, shakeY);
+
     if (this.backgroundImage.complete && this.backgroundImage.naturalWidth > 0) {
       this.ctx.drawImage(this.backgroundImage, 0, 0, 800, 400);
     } else {
@@ -924,6 +951,7 @@ export class HomeComponent implements AfterViewInit {
         this.ctx.globalAlpha = 1;
       }
 
+      this.ctx.restore(); // important!
       this.animationId = requestAnimationFrame(this.gameLoop);
       return;
     }
@@ -1039,6 +1067,7 @@ export class HomeComponent implements AfterViewInit {
       this.retryLevel();
     }
 
+    this.ctx.restore(); // always restore
     this.animationId = requestAnimationFrame(this.gameLoop);
   };
 }
