@@ -270,7 +270,7 @@ export class HomeComponent implements AfterViewInit {
       // Project 3
       project3Category: 'Interaktives Marketing',
       project3Title: 'Brookie Panda Spiel-Easter-Egg',
-      project3Text: 'Ein interaktives retro-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten – so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
+      project3Text: 'Ein interaktives retro-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten, so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
       project3Tag1: 'Spieleentwicklung',
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Marketing-Engagement',
