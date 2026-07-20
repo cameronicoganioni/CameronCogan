@@ -1,10 +1,11 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -13,6 +14,7 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('gameCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
   showGame = false;
+  gameStarted = false;
   level = 1;
   score = 0;
   gameOver = false;
@@ -21,6 +23,10 @@ export class HomeComponent implements AfterViewInit {
   mobileLeft = false;
   mobileRight = false;
   mobileJump = false;
+
+  // Cookie Preferences
+  showPreferences = false;
+  analyticsEnabled = false;
 
   private levelStartScore = 0;
   private facingRight = true;
@@ -35,7 +41,7 @@ export class HomeComponent implements AfterViewInit {
 
   private platforms: { x: number; y: number; width: number; height: number }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
-  private spikes: { x: number; y: number; width: number }[] = [];
+  private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
 
   constructor(
     private ngZone: NgZone,
@@ -46,51 +52,87 @@ export class HomeComponent implements AfterViewInit {
     this.checkCookieConsent();
   }
 
-  // ==================== COOKIE FUNCTIONS ====================
-  private checkCookieConsent() {
-    if (!localStorage.getItem('cookieConsent')) {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.classList.remove('hidden');
-    }
-  }
+  // ==================== COOKIE + GOOGLE ANALYTICS ====================
 
-  acceptAll() {
-    localStorage.setItem('cookieConsent', 'accepted');
-    this.hideBanner();
-  }
+private checkCookieConsent() {
+  const consent = localStorage.getItem('cookieConsent');
+  const analytics = localStorage.getItem('analyticsCookies');
 
-  rejectNonEssential() {
-    localStorage.setItem('cookieConsent', 'rejected-non-essential');
-    this.hideBanner();
-  }
-
-  managePreferences() {
-    const choice = confirm(
-      "Cookie Preferences\n\n" +
-      "• Essential Cookies: Always required\n" +
-      "• Analytics Cookies: Not currently used\n\n" +
-      "Would you like to accept all cookies?"
-    );
-    if (choice) this.acceptAll();
-    else this.rejectNonEssential();
-  }
-
-  openCookieSettings() {
+  if (!consent) {
     const banner = document.getElementById('cookie-banner');
-    if (banner) {
-      banner.classList.remove('hidden');
-      localStorage.removeItem('cookieConsent');
-    }
+    if (banner) banner.classList.remove('hidden');
+  } else if (analytics === 'true') {
+    this.loadGoogleAnalytics();
   }
+}
 
-  private hideBanner() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) banner.classList.add('hidden');
+acceptAll() {
+  localStorage.setItem('cookieConsent', 'accepted');
+  localStorage.setItem('analyticsCookies', 'true');
+  this.hideBanner();
+  this.loadGoogleAnalytics();
+}
+
+rejectNonEssential() {
+  localStorage.setItem('cookieConsent', 'rejected-non-essential');
+  localStorage.setItem('analyticsCookies', 'false');
+  this.hideBanner();
+}
+
+managePreferences() {
+  this.analyticsEnabled = localStorage.getItem('analyticsCookies') === 'true';
+  this.showPreferences = true;
+}
+
+savePreferences() {
+  localStorage.setItem('cookieConsent', 'custom');
+  localStorage.setItem('analyticsCookies', this.analyticsEnabled ? 'true' : 'false');
+  this.showPreferences = false;
+  this.hideBanner();
+
+  if (this.analyticsEnabled) {
+    this.loadGoogleAnalytics();
   }
+}
 
+closePreferences() {
+  this.showPreferences = false;
+}
+
+openCookieSettings() {
+  this.managePreferences();
+}
+
+private hideBanner() {
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.classList.add('hidden');
+}
+
+// Load Google Analytics only after consent
+private loadGoogleAnalytics() {
+  // Prevent loading multiple times
+  if ((window as any).gtag) return;
+
+  // Load the gtag script
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4K67T8TTQ4';
+  document.head.appendChild(script);
+
+  // Initialize gtag
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  function gtag(...args: any[]) {
+    (window as any).dataLayer.push(args);
+  }
+  (window as any).gtag = gtag;
+
+  gtag('js', new Date());
+  gtag('config', 'G-4K67T8TTQ4');
+}
   // ==================== EASTER EGG ====================
   toggleEasterEgg() {
     this.showGame = true;
+    this.gameStarted = false;
     this.level = 1;
     this.score = 0;
     this.levelStartScore = 0;
@@ -98,8 +140,13 @@ export class HomeComponent implements AfterViewInit {
     setTimeout(() => this.startGame(), 100);
   }
 
+  startPlaying() {
+    this.gameStarted = true;
+  }
+
   closeGame() {
     this.showGame = false;
+    this.gameStarted = false;
     this.gameOver = false;
     this.mobileLeft = false;
     this.mobileRight = false;
@@ -112,12 +159,17 @@ export class HomeComponent implements AfterViewInit {
     window.removeEventListener('keyup', this.onKeyUp);
   }
 
+  retryLevel() {
+    this.score = this.levelStartScore;
+    this.loadLevel(this.level);
+    this.ngZone.run(() => this.cdr.detectChanges());
+  }
+
   private startGame() {
     const canvas = this.canvasRef?.nativeElement;
     if (!canvas) return;
 
     this.ctx = canvas.getContext('2d')!;
-
     this.playerImage.src = './img/panda.webp';
     this.backgroundImage.src = './img/background.webp';
 
@@ -135,9 +187,7 @@ export class HomeComponent implements AfterViewInit {
     this.levelStartScore = this.score;
     this.facingRight = true;
 
-    this.platforms = [
-      { x: 0, y: 320, width: 800, height: 80 },
-    ];
+    this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
     const platformCount = Math.min(4 + Math.floor(level * 0.8), 11);
     const heightVariation = 40 + level * 4;
@@ -154,17 +204,22 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
+    // Bamboo
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
 
     for (let i = 0; i < spikeCount; i++) {
+      const isTall = i === 0 ? false : Math.random() > 0.45;
+
       this.spikes.push({
         x: 180 + i * (140 - level * 3),
         y: 305,
-        width: 30 + Math.random() * 20
+        width: 28 + Math.random() * 12,
+        tall: isTall
       });
     }
 
+    // Chocolates
     this.chocolates = [];
     const chocolateCount = 5 + Math.floor(level / 1.5);
 
@@ -191,11 +246,49 @@ export class HomeComponent implements AfterViewInit {
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
+  // ← ADD THE HELPER METHOD HERE
+  private drawLargeBamboo(x: number, y: number) {
+    // Main stalk
+    this.ctx.fillStyle = '#4ade80';
+    this.ctx.fillRect(x, y, 18, 180);
+
+    // Segments
+    this.ctx.strokeStyle = '#166534';
+    this.ctx.lineWidth = 2.5;
+    this.ctx.beginPath();
+    this.ctx.moveTo(x, y + 50);
+    this.ctx.lineTo(x + 18, y + 50);
+    this.ctx.moveTo(x, y + 100);
+    this.ctx.lineTo(x + 18, y + 100);
+    this.ctx.moveTo(x, y + 150);
+    this.ctx.lineTo(x + 18, y + 150);
+    this.ctx.stroke();
+
+    // Leaves
+    this.ctx.fillStyle = '#22c55e';
+    
+    // Left leaves
+    this.ctx.beginPath();
+    this.ctx.ellipse(x - 18, y + 30, 22, 8, -0.6, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.ellipse(x - 15, y + 80, 20, 7, -0.5, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // Right leaves
+    this.ctx.beginPath();
+    this.ctx.ellipse(x + 36, y + 45, 22, 8, 0.6, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.ellipse(x + 33, y + 110, 20, 7, 0.5, 0, Math.PI * 2);
+    this.ctx.fill();
+  }
+
   private gameLoop = () => {
     if (!this.showGame) return;
 
-    if (!this.gameOver) {
-      // Movement (keyboard + mobile)
+    // Game logic only after start
+    if (!this.gameOver && this.gameStarted) {
       this.player.vx = 0;
 
       if (this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A'] || this.mobileLeft) {
@@ -212,7 +305,6 @@ export class HomeComponent implements AfterViewInit {
         this.player.jumping = true;
       }
 
-      // Physics
       this.player.vy += 0.75;
       this.player.x += this.player.vx;
       this.player.y += this.player.vy;
@@ -233,34 +325,30 @@ export class HomeComponent implements AfterViewInit {
         }
       }
 
-      // Boundaries
       if (this.player.x < 0) this.player.x = 0;
-      if (this.player.y > 400) {
-        this.die();
-      }
+      if (this.player.y > 400) this.die();
 
       // Bamboo collision
       for (const s of this.spikes) {
+        const bambooTop = s.y - (s.tall ? 35 : 15);
         if (
           this.player.x < s.x + s.width &&
           this.player.x + this.player.width > s.x &&
-          this.player.y + this.player.height > s.y &&
+          this.player.y + this.player.height > bambooTop &&
           this.player.y < s.y + 20
         ) {
           this.die();
         }
       }
 
-      // Collect chocolates (fixed score update)
+      // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
             this.player.x < c.x + 20 &&
             this.player.x + this.player.width > c.x &&
             this.player.y < c.y + 20 &&
             this.player.y + this.player.height > c.y) {
-          
           c.collected = true;
-
           this.ngZone.run(() => {
             this.score += 10;
             this.cdr.detectChanges();
@@ -298,15 +386,37 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.fillRect(0, 0, 800, 400);
     }
 
+// ===== START SCREEN =====
+if (!this.gameStarted) {
+  // Draw the ground
+  this.ctx.fillStyle = '#14532d';
+  this.ctx.fillRect(0, 320, 800, 80);
+
+  // Left large bamboo
+  this.drawLargeBamboo(120, 140);
+
+  // Right large bamboo
+  this.drawLargeBamboo(620, 140);
+
+  // Draw a larger centered panda
+  if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
+    const size = 260;
+    const x = (800 - size) / 2;
+    const y = (400 - size) / 2 - 10;
+
+    this.ctx.globalAlpha = 0.9;
+    this.ctx.drawImage(this.playerImage, x, y, size, size);
+    this.ctx.globalAlpha = 1;
+  }
+
+  this.animationId = requestAnimationFrame(this.gameLoop);
+  return;
+}
+
     // Platforms
     for (const p of this.platforms) {
-      if (p.y >= 320) {
-        this.ctx.fillStyle = '#14532d';
-      } else {
-        this.ctx.fillStyle = '#5c4033';
-      }
+      this.ctx.fillStyle = p.y >= 320 ? '#14532d' : '#5c4033';
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
-
       if (p.y < 320) {
         this.ctx.fillStyle = '#7a5c45';
         this.ctx.fillRect(p.x, p.y, p.width, 3);
@@ -315,24 +425,29 @@ export class HomeComponent implements AfterViewInit {
 
     // Bamboo
     for (const s of this.spikes) {
+      const stalkHeight = s.tall ? 55 : 35;
+      const stalkY = s.y - (s.tall ? 35 : 15);
+
       this.ctx.fillStyle = '#4ade80';
-      this.ctx.fillRect(s.x + s.width / 2 - 4, s.y - 15, 8, 35);
+      this.ctx.fillRect(s.x + s.width / 2 - 4, stalkY, 8, stalkHeight);
 
       this.ctx.strokeStyle = '#166534';
       this.ctx.lineWidth = 1.5;
       this.ctx.beginPath();
-      this.ctx.moveTo(s.x + s.width / 2 - 4, s.y);
-      this.ctx.lineTo(s.x + s.width / 2 + 4, s.y);
-      this.ctx.moveTo(s.x + s.width / 2 - 4, s.y + 10);
-      this.ctx.lineTo(s.x + s.width / 2 + 4, s.y + 10);
+      this.ctx.moveTo(s.x + s.width / 2 - 4, stalkY + 15);
+      this.ctx.lineTo(s.x + s.width / 2 + 4, stalkY + 15);
+      if (s.tall) {
+        this.ctx.moveTo(s.x + s.width / 2 - 4, stalkY + 35);
+        this.ctx.lineTo(s.x + s.width / 2 + 4, stalkY + 35);
+      }
       this.ctx.stroke();
 
       this.ctx.fillStyle = '#22c55e';
       this.ctx.beginPath();
-      this.ctx.ellipse(s.x + s.width / 2 - 10, s.y - 8, 10, 4, -0.5, 0, Math.PI * 2);
+      this.ctx.ellipse(s.x + s.width / 2 - 10, stalkY + 5, 10, 4, -0.5, 0, Math.PI * 2);
       this.ctx.fill();
       this.ctx.beginPath();
-      this.ctx.ellipse(s.x + s.width / 2 + 10, s.y - 5, 10, 4, 0.5, 0, Math.PI * 2);
+      this.ctx.ellipse(s.x + s.width / 2 + 10, stalkY + 8, 10, 4, 0.5, 0, Math.PI * 2);
       this.ctx.fill();
     }
 
@@ -350,7 +465,7 @@ export class HomeComponent implements AfterViewInit {
     this.ctx.fillStyle = '#ca8a04';
     this.ctx.fillRect(755, 260, 15, 25);
 
-    // Player (with mirroring)
+    // Player
     if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
       this.ctx.save();
       if (this.facingRight) {
@@ -368,24 +483,20 @@ export class HomeComponent implements AfterViewInit {
 
     // Game Over
     if (this.gameOver) {
-      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
       this.ctx.fillRect(0, 0, 800, 400);
-
       this.ctx.fillStyle = '#ef4444';
       this.ctx.font = 'bold 48px Arial';
       this.ctx.textAlign = 'center';
       this.ctx.fillText('GAME OVER', 400, 180);
-
       this.ctx.fillStyle = 'white';
-      this.ctx.font = '24px Arial';
-      this.ctx.fillText('Press R or tap Retry', 400, 240);
+      this.ctx.font = '22px Arial';
+      this.ctx.fillText('Tap the Retry button below', 400, 240);
       this.ctx.textAlign = 'left';
     }
 
-    // Retry
     if (this.gameOver && (this.keys['r'] || this.keys['R'])) {
-      this.score = this.levelStartScore;
-      this.loadLevel(this.level);
+      this.retryLevel();
     }
 
     this.animationId = requestAnimationFrame(this.gameLoop);
