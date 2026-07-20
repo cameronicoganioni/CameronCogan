@@ -138,7 +138,7 @@ export class HomeComponent implements AfterViewInit {
       projectsIntro: 'Une sélection de projets démontrant mon expérience en analyse commerciale, stratégie marketing et développement.',
       // Project 1
       project1Category: 'Analyse commerciale',
-      project1Title: 'Tableau de bord Export Analytics',
+      project1Title: 'Export Analytics',
       project1Text: 'Ce graphique a été créé à partir d\'analytics Google et LinkedIn importés pour observer l\'utilisation du site par rapport aux invitations à suivre deCogan. Les résultats montrent une corrélation entre les utilisateurs actifs d\'un site et les invitations acceptées. Avoir un site web pourrait ainsi augmenter le taux de succès des invitations.',
       project1Tag1: 'Google Sheets',
       project1Tag2: 'Visualisation de données',
