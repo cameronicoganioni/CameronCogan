@@ -62,7 +62,7 @@ export class HomeComponent implements AfterViewInit {
       // Project 3
       project3Category: 'Interactive Marketing',
       project3Title: 'Brookie Panda Game Easter Egg',
-      project3Text: 'An interactive 8-bit style game hidden on the website as an Easter egg. Visitors who engage with the game can unlock discount codes, turning a playful experience into a practical marketing tool that rewards attention and increases time spent on the site.',
+      project3Text: 'An interactive retro style game hidden on the website as an Easter egg. Visitors who engage with the game can unlock discount codes, turning a playful experience into a practical marketing tool that rewards attention and increases time spent on the site.',
       project3Tag1: 'Game Development',
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Marketing Engagement',
@@ -166,7 +166,7 @@ export class HomeComponent implements AfterViewInit {
       // Project 3
       project3Category: 'Marketing interactif',
       project3Title: 'Jeu caché Brookie Panda',
-      project3Text: 'Un jeu interactif style 8-bit caché sur le site comme Easter egg. Les visiteurs qui y jouent peuvent débloquer des codes de réduction, transformant une expérience ludique en outil marketing qui récompense l\'attention et augmente le temps passé sur le site.',
+      project3Text: 'Un jeu interactif style retro caché sur le site comme Easter egg. Les visiteurs qui y jouent peuvent débloquer des codes de réduction, transformant une expérience ludique en outil marketing qui récompense l\'attention et augmente le temps passé sur le site.',
       project3Tag1: 'Développement de jeu',
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Engagement marketing',
@@ -270,7 +270,7 @@ export class HomeComponent implements AfterViewInit {
       // Project 3
       project3Category: 'Interaktives Marketing',
       project3Title: 'Brookie Panda Spiel-Easter-Egg',
-      project3Text: 'Ein interaktives 8-Bit-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten – so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
+      project3Text: 'Ein interaktives retro-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten – so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
       project3Tag1: 'Spieleentwicklung',
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Marketing-Engagement',
