@@ -30,7 +30,7 @@ export class HomeComponent implements AfterViewInit {
 
   private levelStartScore = 0;
   private facingRight = true;
-  private trackedSections = new Set<string>(); // prevents tracking the same section multiple times
+  private trackedSections = new Set<string>();
 
   private ctx!: CanvasRenderingContext2D;
   private player = { x: 50, y: 280, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
@@ -43,6 +43,9 @@ export class HomeComponent implements AfterViewInit {
   private platforms: { x: number; y: number; width: number; height: number }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
+
+  // Audio
+  private audioCtx: AudioContext | null = null;
 
   constructor(
     private ngZone: NgZone,
@@ -163,7 +166,6 @@ export class HomeComponent implements AfterViewInit {
       threshold: 0.4
     });
 
-    // Wait a short moment for the DOM to be ready
     setTimeout(() => {
       sections.forEach(section => {
         const element = document.getElementById(section.id);
@@ -172,6 +174,60 @@ export class HomeComponent implements AfterViewInit {
         }
       });
     }, 500);
+  }
+
+  // ==================== 8-BIT SOUNDS ====================
+  private getAudioContext(): AudioContext {
+    if (!this.audioCtx) {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return this.audioCtx;
+  }
+
+  private playTone(frequency: number, duration: number, type: OscillatorType = 'square', volume = 0.1) {
+    try {
+      const ctx = this.getAudioContext();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.type = type;
+      oscillator.frequency.value = frequency;
+
+      gainNode.gain.setValueAtTime(volume, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + duration);
+    } catch (e) {
+      // Audio not available
+    }
+  }
+
+  private playJumpSound() {
+    this.playTone(300, 0.1, 'square', 0.08);
+    setTimeout(() => this.playTone(450, 0.12, 'square', 0.06), 70);
+  }
+
+  private playStartSound() {
+    this.playTone(400, 0.1, 'square');
+    setTimeout(() => this.playTone(500, 0.1, 'square'), 100);
+    setTimeout(() => this.playTone(600, 0.15, 'square'), 200);
+  }
+
+  private playGameOverSound() {
+    this.playTone(400, 0.15, 'sawtooth', 0.1);
+    setTimeout(() => this.playTone(300, 0.15, 'sawtooth', 0.1), 150);
+    setTimeout(() => this.playTone(200, 0.3, 'sawtooth', 0.1), 300);
+  }
+
+  private playWinSound() {
+    this.playTone(500, 0.1, 'square');
+    setTimeout(() => this.playTone(600, 0.1, 'square'), 100);
+    setTimeout(() => this.playTone(700, 0.1, 'square'), 200);
+    setTimeout(() => this.playTone(900, 0.25, 'square'), 300);
   }
 
   // ==================== EASTER EGG ====================
@@ -190,6 +246,7 @@ export class HomeComponent implements AfterViewInit {
 
   startPlaying() {
     this.gameStarted = true;
+    this.playStartSound();
   }
 
   closeGame() {
@@ -289,6 +346,7 @@ export class HomeComponent implements AfterViewInit {
   private die() {
     this.gameOver = true;
     this.score = this.levelStartScore;
+    this.playGameOverSound();
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
@@ -340,6 +398,7 @@ export class HomeComponent implements AfterViewInit {
       if ((this.keys[' '] || this.keys['ArrowUp'] || this.keys['w'] || this.keys['W'] || this.mobileJump) && !this.player.jumping) {
         this.player.vy = -15;
         this.player.jumping = true;
+        this.playJumpSound();
       }
 
       this.player.vy += 0.75;
@@ -394,6 +453,8 @@ export class HomeComponent implements AfterViewInit {
         this.ngZone.run(() => {
           this.level++;
           this.cdr.detectChanges();
+
+          this.playWinSound();
 
           if (this.level > 10) {
             alert(`🎉 You completed all 10 levels!\n\nFinal Score: ${this.score}`);
