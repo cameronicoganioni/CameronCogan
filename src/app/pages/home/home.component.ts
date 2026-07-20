@@ -450,7 +450,6 @@ export class HomeComponent implements AfterViewInit {
     
           c.collected = true;
           this.playMunchSound();          // ← add this line
-
           this.ngZone.run(() => {
             this.score += 10;
             this.cdr.detectChanges();
