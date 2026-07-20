@@ -110,24 +110,28 @@ private hideBanner() {
 
 // Load Google Analytics only after consent
 private loadGoogleAnalytics() {
-  // Prevent loading multiple times
-  if ((window as any).gtag) return;
+  // Prevent loading more than once
+  if ((window as any).gtagLoaded) return;
+  (window as any).gtagLoaded = true;
 
-  // Load the gtag script
+  console.log('Loading Google Analytics...');
+
+  // 1. Define dataLayer and gtag first
+  const w = window as any;
+  w.dataLayer = w.dataLayer || [];
+  w.gtag = function () {
+    w.dataLayer.push(arguments);
+  };
+
+  // 2. Initialize
+  w.gtag('js', new Date());
+  w.gtag('config', 'G-4K67T8TTQ4');
+
+  // 3. Load the actual Google script
   const script = document.createElement('script');
   script.async = true;
   script.src = 'https://www.googletagmanager.com/gtag/js?id=G-4K67T8TTQ4';
   document.head.appendChild(script);
-
-  // Initialize gtag
-  (window as any).dataLayer = (window as any).dataLayer || [];
-  function gtag(...args: any[]) {
-    (window as any).dataLayer.push(args);
-  }
-  (window as any).gtag = gtag;
-
-  gtag('js', new Date());
-  gtag('config', 'G-4K67T8TTQ4');
 }
   // ==================== EASTER EGG ====================
   toggleEasterEgg() {
