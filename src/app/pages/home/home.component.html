@@ -421,7 +421,46 @@
         {{ t.gameRetry }}
       </button>
     </div>
+<!-- Victory Screen -->
+<div *ngIf="showVictory"
+     class="absolute inset-0 rounded-2xl flex flex-col items-center justify-center bg-black/80 text-center px-6">
 
+  <h1 class="text-4xl md:text-5xl font-black text-yellow-400 mb-2"
+      style="font-family: 'Press Start 2P', system-ui, sans-serif; text-shadow: 4px 4px 0 #000;">
+    {{ t.gameVictoryTitle }}
+  </h1>
+
+  <p class="text-emerald-400 text-lg md:text-xl mb-8">
+    {{ t.gameVictorySubtitle }}
+  </p>
+
+  <div class="bg-slate-800/80 rounded-2xl px-8 py-6 mb-8 space-y-3">
+    <p class="text-white text-xl">
+      {{ t.gameFinalScore }}: <span class="text-yellow-400 font-bold">{{ score }}</span>
+    </p>
+    <p class="text-slate-300">
+      {{ t.gameHighScore }}: <span class="text-emerald-400 font-bold">{{ highScore }}</span>
+    </p>
+
+    <div class="pt-4 border-t border-slate-600">
+      <p class="text-slate-400 text-sm mb-2">{{ t.gameDiscountUnlocked }}</p>
+      <p class="text-2xl font-mono font-bold text-yellow-300 tracking-wider">
+        {{ unlockedCode }}
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-4">
+    <button (click)="playAgain()"
+            class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl transition">
+      {{ t.gamePlayAgain }}
+    </button>
+    <button (click)="closeGame()"
+            class="px-8 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-2xl transition">
+      {{ t.gameClose }}
+    </button>
+  </div>
+</div>
     <p class="text-center text-slate-400 text-xs mt-3 hidden md:block">
       {{ t.gameControls }}
     </p>

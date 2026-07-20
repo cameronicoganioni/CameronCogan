@@ -18,6 +18,9 @@ export class HomeComponent implements AfterViewInit {
   level = 1;
   score = 0;
   gameOver = false;
+  showVictory = false;
+  highScore = 0;
+  unlockedCode = '';
 
   // Mobile controls
   mobileLeft = false;
@@ -134,7 +137,14 @@ export class HomeComponent implements AfterViewInit {
       gameRetry: 'Retry Level',
       gameControls: '← → or A/D to move • Space / W to jump • R to retry',
       gameOver: 'GAME OVER',
-      gameOverHint: 'Tap the Retry button below'
+      gameOverHint: 'Tap the Retry button below',
+      gameVictoryTitle: 'CONGRATULATIONS!',
+      gameVictorySubtitle: 'You collected all the chocolates!',
+      gameFinalScore: 'Final Score',
+      gameHighScore: 'High Score',
+      gameDiscountUnlocked: 'Discount code unlocked:',
+      gamePlayAgain: 'Play Again',
+      gameClose: 'Close',
     },
     fr: {
       aboutLabel: 'Management International des Affaires',
@@ -238,7 +248,14 @@ export class HomeComponent implements AfterViewInit {
       gameRetry: 'Réessayer le niveau',
       gameControls: '← → ou A/D pour bouger • Espace / W pour sauter • R pour réessayer',
       gameOver: 'GAME OVER',
-      gameOverHint: 'Appuyez sur le bouton Réessayer ci-dessous'
+      gameOverHint: 'Appuyez sur le bouton Réessayer ci-dessous',
+      gameVictoryTitle: 'FÉLICITATIONS !',
+      gameVictorySubtitle: 'Tu as collecté tous les chocolats !',
+      gameFinalScore: 'Score final',
+      gameHighScore: 'Meilleur score',
+      gameDiscountUnlocked: 'Code de réduction débloqué :',
+      gamePlayAgain: 'Rejouer',
+      gameClose: 'Fermer',
     },
     de: {
       aboutLabel: 'International Business Administration',
@@ -342,7 +359,14 @@ export class HomeComponent implements AfterViewInit {
       gameRetry: 'Level wiederholen',
       gameControls: '← → oder A/D zum Bewegen • Leertaste / W zum Springen • R zum Wiederholen',
       gameOver: 'GAME OVER',
-      gameOverHint: 'Tippe unten auf den Wiederholen-Button'
+      gameOverHint: 'Tippe unten auf den Wiederholen-Button',
+      gameVictoryTitle: 'GLÜCKWUNSCH!',
+      gameVictorySubtitle: 'Du hast alle Schokoladen gesammelt!',
+      gameFinalScore: 'Endpunktzahl',
+      gameHighScore: 'Highscore',
+      gameDiscountUnlocked: 'Rabattcode freigeschaltet:',
+      gamePlayAgain: 'Nochmal spielen',
+      gameClose: 'Schließen',
     }
   };
 
@@ -365,6 +389,7 @@ export class HomeComponent implements AfterViewInit {
   private platforms: { x: number; y: number; width: number; height: number }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
+  private particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; color: string; size: number }[] = [];
 
   // Audio
   private audioCtx: AudioContext | null = null;
@@ -381,23 +406,23 @@ export class HomeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-  this.checkCookieConsent();
-  this.setupScrollTracking();
+    this.checkCookieConsent();
+    this.setupScrollTracking();
 
-  // Track the language currently being used
-  this.trackEvent('engagement', 'language_view', this.currentLang);
-}
+    // Track the language currently being used
+    this.trackEvent('engagement', 'language_view', this.currentLang);
+  }
 
   setLanguage(lang: 'en' | 'fr' | 'de') {
-  this.currentLang = lang;
-  localStorage.setItem('preferredLang', lang);
+    this.currentLang = lang;
+    localStorage.setItem('preferredLang', lang);
 
-  // Track language switch
-  this.trackEvent('engagement', 'language_select', lang);
+    // Track language switch
+    this.trackEvent('engagement', 'language_select', lang);
 
-  // Reload so the Home component picks up the new language
-  window.location.reload();
-}
+    // Reload so the Home component picks up the new language
+    window.location.reload();
+  }
 
   // ==================== COOKIE + GOOGLE ANALYTICS ====================
   private checkCookieConsent() {
@@ -585,6 +610,9 @@ export class HomeComponent implements AfterViewInit {
     this.score = 0;
     this.levelStartScore = 0;
     this.gameOver = false;
+    this.showVictory = false;
+    this.highScore = parseInt(localStorage.getItem('brookieHighScore') || '0', 10);
+    this.particles = [];
 
     this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
 
@@ -600,9 +628,11 @@ export class HomeComponent implements AfterViewInit {
     this.showGame = false;
     this.gameStarted = false;
     this.gameOver = false;
+    this.showVictory = false;
     this.mobileLeft = false;
     this.mobileRight = false;
     this.mobileJump = false;
+    this.particles = [];
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
@@ -614,6 +644,18 @@ export class HomeComponent implements AfterViewInit {
   retryLevel() {
     this.score = this.levelStartScore;
     this.loadLevel(this.level);
+    this.ngZone.run(() => this.cdr.detectChanges());
+  }
+
+  playAgain() {
+    this.showVictory = false;
+    this.gameOver = false;
+    this.level = 1;
+    this.score = 0;
+    this.levelStartScore = 0;
+    this.gameStarted = true;
+    this.particles = [];
+    this.loadLevel(1);
     this.ngZone.run(() => this.cdr.detectChanges());
   }
 
@@ -638,6 +680,7 @@ export class HomeComponent implements AfterViewInit {
     this.gameOver = false;
     this.levelStartScore = this.score;
     this.facingRight = true;
+    this.particles = [];
 
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
@@ -694,7 +737,29 @@ export class HomeComponent implements AfterViewInit {
     this.gameOver = true;
     this.score = this.levelStartScore;
     this.playGameOverSound();
+    this.spawnParticles(
+      this.player.x + this.player.width / 2,
+      this.player.y + this.player.height / 2,
+      '#ef4444',
+      28
+    );
     this.ngZone.run(() => this.cdr.detectChanges());
+  }
+
+  private spawnParticles(x: number, y: number, color: string, count = 16) {
+    for (let i = 0; i < count; i++) {
+      const life = 45 + Math.random() * 35;
+      this.particles.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 10,
+        vy: (Math.random() - 0.5) * 10 - 4,
+        life,
+        maxLife: life,
+        color,
+        size: 6 + Math.random() * 6
+      });
+    }
   }
 
   private drawLargeBamboo(x: number, y: number) {
@@ -792,6 +857,7 @@ export class HomeComponent implements AfterViewInit {
           
           c.collected = true;
           this.playMunchSound();
+          this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
 
           this.ngZone.run(() => {
             this.score += 10;
@@ -808,8 +874,19 @@ export class HomeComponent implements AfterViewInit {
           this.playWinSound();
 
           if (this.level > 10) {
-            alert(`🎉 You completed all 10 levels!\n\nFinal Score: ${this.score}`);
-            this.closeGame();
+            this.showVictory = true;
+            this.gameOver = true;
+
+            if (this.score > this.highScore) {
+              this.highScore = this.score;
+              localStorage.setItem('brookieHighScore', this.highScore.toString());
+            }
+
+            // Discount codes based on performance
+            this.unlockedCode = this.score >= 300 ? 'BROOKIE20' :
+                                this.score >= 200 ? 'PANDA15' : 'CHOCO10';
+
+            this.cdr.detectChanges();
             return;
           }
           this.loadLevel(this.level);
@@ -919,8 +996,33 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
     }
 
-    // Game Over
-    if (this.gameOver) {
+    // ========== PARTICLES (update + draw) ==========
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.2; // gravity
+      p.life--;
+
+      if (p.life <= 0) {
+        this.particles.splice(i, 1);
+        continue;
+      }
+
+      const alpha = p.life / p.maxLife;
+      this.ctx.globalAlpha = alpha;
+      this.ctx.fillStyle = p.color;
+
+      // Draw as circle
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      this.ctx.globalAlpha = 1;
+    }
+
+    // Game Over (only show if not victory)
+    if (this.gameOver && !this.showVictory) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
       this.ctx.fillRect(0, 0, 800, 400);
       this.ctx.fillStyle = '#ef4444';
@@ -933,7 +1035,7 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.textAlign = 'left';
     }
 
-    if (this.gameOver && (this.keys['r'] || this.keys['R'])) {
+    if (this.gameOver && !this.showVictory && (this.keys['r'] || this.keys['R'])) {
       this.retryLevel();
     }
 
