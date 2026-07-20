@@ -134,7 +134,7 @@ export class HomeComponent implements AfterViewInit {
       aboutSubtitle: 'Top 12% de la promotion • Montpellier Business School',
       aboutText: 'Je poursuis actuellement un Bachelor en Administration des Affaires Internationales à Montpellier Business School. Mes études couvrent un large éventail de disciplines, notamment l\'intelligence artificielle, l\'éthique des affaires, le droit des affaires, le comportement du consommateur, les outils numériques, la comptabilité financière, la mondialisation et la géopolitique, le management interculturel, le leadership, la macroéconomie, le management, le marketing, les méthodes quantitatives et statistiques, ainsi que le développement professionnel. Grâce aux cours, aux projets collaboratifs et à un stage professionnel, j\'ai développé de solides compétences analytiques, de communication, de résolution de problèmes et interculturelles.',
       projectsLabel: 'Projets',
-      projectsTitle: 'Travaux sélectionnés',
+      projectsTitle: 'Portfolio',
       projectsIntro: 'Une sélection de projets démontrant mon expérience en analyse commerciale, stratégie marketing et développement.',
       // Project 1
       project1Category: 'Analyse commerciale',
@@ -158,7 +158,7 @@ export class HomeComponent implements AfterViewInit {
       // Experience 1
       exp1Title: 'Assistant Marketing et Communication, deCogan',
       exp1Date: '06/26-08/26 (3 mois)',
-      exp1Text: 'Soutien aux stratégies marketing et initiatives de communication, gestion des réseaux sociaux et outreach LinkedIn chez deCogan. Axé sur la création de contenu, le CRM, le développement de la marque et les insights data-driven (Google & LinkedIn analytics), ainsi que le SEO — répondant ainsi aux exigences de ma première année d\'études.',
+      exp1Text: 'Soutien aux stratégies marketing et initiatives de communication, gestion des réseaux sociaux et outreach LinkedIn chez deCogan. Axé sur la création de contenu, le CRM, le développement de la marque et les insights data-driven (Google & LinkedIn analytics), ainsi que le SEO, répondant ainsi aux exigences de ma première année d\'études.',
       exp1Tag1: 'Marketing digital',
       exp1Tag2: 'Création de contenu',
       exp1Tag3: 'Analytics',
