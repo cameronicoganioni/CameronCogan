@@ -129,7 +129,7 @@ export class HomeComponent implements AfterViewInit {
       gameOverHint: 'Tap the Retry button below'
     },
     fr: {
-      aboutLabel: 'Administration des Affaires Internationales',
+      aboutLabel: 'Management International des Affaires',
       aboutTitle: 'Cameron Cogan',
       aboutSubtitle: 'Top 12% de la promotion • Montpellier Business School',
       aboutText: 'Je poursuis actuellement un Bachelor en Administration des Affaires Internationales à Montpellier Business School. Mes études couvrent un large éventail de disciplines, notamment l\'intelligence artificielle, l\'éthique des affaires, le droit des affaires, le comportement du consommateur, les outils numériques, la comptabilité financière, la mondialisation et la géopolitique, le management interculturel, le leadership, la macroéconomie, le management, le marketing, les méthodes quantitatives et statistiques, ainsi que le développement professionnel. Grâce aux cours, aux projets collaboratifs et à un stage professionnel, j\'ai développé de solides compétences analytiques, de communication, de résolution de problèmes et interculturelles.',
