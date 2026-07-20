@@ -154,7 +154,7 @@ export class HomeComponent implements AfterViewInit {
       project1Tag4: 'Export LinkedIn Analytics',
       // Project 2
       project2Category: 'Analyse web',
-      project2Title: 'Mise en place Google Analytics sur cameroncogan.com',
+      project2Title: 'Mise en place de Google Analytics sur cameroncogan.com',
       project2Text: 'Cette image montre le suivi détaillé d\'événements personnalisés.',
       project2Tag1: 'Google Analytics',
       project2Tag2: 'Suivi d\'événements',
