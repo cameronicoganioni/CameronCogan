@@ -686,12 +686,18 @@ export class HomeComponent implements AfterViewInit {
   }
 
   private loadLevel(level: number) {
-    this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
-    this.gameOver = false;
-    this.levelStartScore = this.score;
-    this.facingRight = true;
-    this.particles = [];
-    this.shakeIntensity = 0;
+  // Reset inputs here - one central place
+  this.keys = {};
+  this.mobileLeft = false;
+  this.mobileRight = false;
+  this.mobileJump = false;
+
+  this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
+  this.gameOver = false;
+  this.levelStartScore = this.score;
+  this.facingRight = true;
+  this.particles = [];
+  this.shakeIntensity = 0;
 
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
