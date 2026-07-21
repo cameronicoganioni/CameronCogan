@@ -686,7 +686,6 @@ export class HomeComponent implements AfterViewInit {
   }
 
   private loadLevel(level: number) {
-  // Reset inputs here - one central place
   this.keys = {};
   this.mobileLeft = false;
   this.mobileRight = false;
@@ -698,6 +697,7 @@ export class HomeComponent implements AfterViewInit {
   this.facingRight = true;
   this.particles = [];
   this.shakeIntensity = 0;
+  this.backgroundImage.src = this.getBackgroundForLevel(level);
 
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
@@ -763,7 +763,13 @@ export class HomeComponent implements AfterViewInit {
     this.triggerShake(9);
     this.ngZone.run(() => this.cdr.detectChanges());
   }
-
+  private getBackgroundForLevel(level: number): string {
+    if (level <= 4) return './img/background2.webp';       
+    if (level <= 7) return './img/background5.webp';       
+    if (level === 8) return './img/background3.webp';      
+    if (level === 9) return './img/background4.webp';      
+    return './img/background.webp';                        
+  }
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
       const life = 45 + Math.random() * 35;
