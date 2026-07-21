@@ -29,9 +29,11 @@
          (click)="trackEvent('navigation', 'section_click', 'Contact')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.contact }}</a>
 
-      <a href="#cookie-policy" 
-         (click)="trackEvent('navigation', 'section_click', 'Cookies')"
-         class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.cookies }}</a>
+      <a href="#cookie-policy"
+      (click)="openCookiePolicy(); trackEvent('navigation', 'section_click', 'Cookies')"
+      class="...your existing classes...">
+      {{ t.cookies }}
+      </a>
 
       <!-- Language Switcher -->
       <div class="flex items-center gap-2 ml-4 text-sm font-medium">

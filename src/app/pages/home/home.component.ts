@@ -30,6 +30,7 @@ export class HomeComponent implements AfterViewInit {
   // Cookie Preferences
   showPreferences = false;
   analyticsEnabled = false;
+  showCookiePolicy = false;
 
   // Language
   currentLang: 'en' | 'fr' | 'de' = 'en';
@@ -413,6 +414,10 @@ export class HomeComponent implements AfterViewInit {
 
     // Track the language currently being used
     this.trackEvent('engagement', 'language_view', this.currentLang);
+    window.addEventListener('open-cookie-policy', () => {
+    this.showCookiePolicy = true;
+    this.cdr.detectChanges();
+});
   }
 
   setLanguage(lang: 'en' | 'fr' | 'de') {

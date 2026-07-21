@@ -140,8 +140,7 @@
     />
     <div>
       <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        {{ t.e
-          xp2Title }}
+        {{ t.exp2Title }}
       </h3>
       <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
         {{ t.exp2Date }}
@@ -237,50 +236,84 @@
   </div>
 </section>
 
-<!-- ==================== COOKIE POLICY SECTION ==================== -->
-<section id="cookie-policy" class="mx-auto max-w-3xl px-6 py-24">
-  <div class="max-w-2xl">
-    <div class="flex items-center gap-3">
-      <h1 class="text-4xl font-bold tracking-tight text-slate-900">{{ t.cookieTitle }}</h1>
-      <span (click)="toggleEasterEgg()" 
-            class="text-3xl cursor-pointer hover:scale-125 transition-transform select-none" title="???">
-        🍫
-      </span>
-    </div>
-    <p class="text-sm text-slate-500 mt-1">{{ t.cookieLastUpdated }}</p>
-  </div>
+<!-- ==================== COOKIE POLICY MODAL ==================== -->
+<div *ngIf="showCookiePolicy" 
+     class="fixed inset-0 z-[110] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+     (click)="showCookiePolicy = false">
 
-  <div class="mt-10 mb-12">
-    <button (click)="openCookieSettings()" 
-            class="cookie-btn flex items-center gap-3 px-7 py-4 bg-white border border-slate-200 rounded-3xl text-slate-700 font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
-      <span class="text-xl">⚙️</span>
-      <span>{{ t.manageCookies }}</span>
-    </button>
-  </div>
-
-  <div class="prose prose-slate max-w-none">
-    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieWhatTitle }}</h2>
-    <p>{{ t.cookieWhatText }}</p>
-
-    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieTypesTitle }}</h2>
-    <div class="grid md:grid-cols-2 gap-8 mt-8">
-      <div>
-        <h3 class="font-semibold text-lg mb-2">{{ t.cookieEssentialTitle }}</h3>
-        <p class="text-slate-600">{{ t.cookieEssentialText }}</p>
+  <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+       (click)="$event.stopPropagation()">
+    
+    <!-- Header with centered title -->
+    <div class="bg-emerald-700 px-6 py-5 rounded-t-3xl relative flex items-center justify-center">
+      <div class="flex items-center gap-3">
+        <h2 class="text-2xl font-bold text-white">{{ t.cookieTitle }}</h2>
+        <span (click)="toggleEasterEgg()" 
+              class="text-2xl cursor-pointer hover:scale-125 transition-transform select-none" 
+              title="???">
+          🍫
+        </span>
       </div>
-      <div>
-        <h3 class="font-semibold text-lg mb-2">{{ t.cookieAnalyticsTitle }}</h3>
-        <p class="text-slate-600">{{ t.cookieAnalyticsText }}</p>
-      </div>
+
+      <!-- Close button stays on the right -->
+      <button (click)="showCookiePolicy = false" 
+              class="absolute right-5 top-1/2 -translate-y-1/2 text-2xl text-white/80 hover:text-white transition">
+        ✕
+      </button>
     </div>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieChoicesTitle }}</h2>
-    <p>{{ t.cookieChoicesText }}</p>
+    <!-- Content -->
+    <div class="px-8 py-8 text-center">
+      <p class="text-sm text-slate-500 mb-8">{{ t.cookieLastUpdated }}</p>
 
-    <h2 class="text-2xl font-semibold mt-12 mb-4">{{ t.cookieContactTitle }}</h2>
-    <p>{{ t.cookieContactText }} <a href="#contact" class="text-emerald-600 hover:underline">{{ t.cookieContactLink }}</a>.</p>
+      <div class="mb-10 flex justify-center">
+        <button (click)="openCookieSettings()" 
+                class="cookie-btn flex items-center gap-3 px-7 py-4 bg-white border border-slate-200 rounded-3xl text-slate-700 font-medium transition-all hover:shadow-lg hover:-translate-y-0.5 active:scale-95">
+          <span class="text-xl">⚙️</span>
+          <span>{{ t.manageCookies }}</span>
+        </button>
+      </div>
+
+      <div class="mb-10 max-w-2xl mx-auto">
+        <h3 class="text-xl font-semibold text-slate-900 mb-3">{{ t.cookieWhatTitle }}</h3>
+        <p class="text-slate-600 leading-relaxed">{{ t.cookieWhatText }}</p>
+      </div>
+
+      <div class="mb-10">
+        <h3 class="text-xl font-semibold text-slate-900 mb-5">{{ t.cookieTypesTitle }}</h3>
+
+        <div class="grid md:grid-cols-2 gap-5 max-w-2xl mx-auto text-left">
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+            <h4 class="font-semibold text-slate-900 mb-2">{{ t.cookieEssentialTitle }}</h4>
+            <p class="text-slate-600 text-sm leading-relaxed">{{ t.cookieEssentialText }}</p>
+          </div>
+
+          <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+            <h4 class="font-semibold text-slate-900 mb-2">{{ t.cookieAnalyticsTitle }}</h4>
+            <p class="text-slate-600 text-sm leading-relaxed">{{ t.cookieAnalyticsText }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-10 max-w-2xl mx-auto">
+        <h3 class="text-xl font-semibold text-slate-900 mb-3">{{ t.cookieChoicesTitle }}</h3>
+        <p class="text-slate-600 leading-relaxed">{{ t.cookieChoicesText }}</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto">
+        <h3 class="text-xl font-semibold text-slate-900 mb-3">{{ t.cookieContactTitle }}</h3>
+        <p class="text-slate-600 leading-relaxed">
+          {{ t.cookieContactText }} 
+          <a href="#contact" 
+             (click)="showCookiePolicy = false" 
+             class="text-emerald-600 hover:underline font-medium">
+            {{ t.cookieContactLink }}
+          </a>.
+        </p>
+      </div>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- Cookie Consent Banner -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[100] bg-white border-t border-slate-200 shadow-2xl hidden">
@@ -467,3 +500,17 @@
     </p>
   </div>
 </div>
+<!-- ==================== FOOTER ==================== -->
+<footer class="border-t border-slate-300 bg-white">
+  <div class="mx-auto max-w-7xl px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-slate-500">
+      © 2026 Cameron Cogan
+    </p>
+
+    <a href="#cookie-policy"
+       (click)="showCookiePolicy = true; trackEvent('navigation', 'section_click', 'Cookies')"
+       class="text-sm text-slate-500 hover:text-emerald-600 transition">
+      {{ t.cookieTitle }}
+    </a>
+  </div>
+</footer>

@@ -73,4 +73,9 @@ export class NavigationComponent implements OnInit {
     // Reload so the Home component picks up the new language
     window.location.reload();
   }
+
+  // Open Cookie Policy modal
+  openCookiePolicy() {
+    window.dispatchEvent(new CustomEvent('open-cookie-policy'));
+  }
 }
