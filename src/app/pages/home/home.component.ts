@@ -387,7 +387,15 @@ export class HomeComponent implements AfterViewInit {
   private playerImage = new Image();
   private backgroundImage = new Image();
 
-  private platforms: { x: number; y: number; width: number; height: number }[] = [];
+  private platforms: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    vx?: number;        // horizontal speed (for moving platforms)
+    startX?: number;    // original x (to move back and forth)
+    range?: number;     // how far it can travel
+  }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
   private particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; color: string; size: number }[] = [];
@@ -699,21 +707,30 @@ export class HomeComponent implements AfterViewInit {
   this.shakeIntensity = 0;
   this.backgroundImage.src = this.getBackgroundForLevel(level);
 
-    this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
+    this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }]; // ground
 
     const platformCount = Math.min(4 + Math.floor(level * 0.8), 11);
     const heightVariation = 40 + level * 4;
 
-    for (let i = 0; i < platformCount; i++) {
-      const baseX = 100 + i * (85 + level * 4);
-      const randomOffset = (Math.random() - 0.5) * 40;
+      for (let i = 0; i < platformCount; i++) {
+        const baseX = 100 + i * (85 + level * 4);
+        const randomOffset = (Math.random() - 0.5) * 40;
 
-      this.platforms.push({
+        const platform: any = {
         x: baseX + randomOffset,
         y: 280 - (i % 4) * heightVariation - Math.floor(level / 2) * 8,
         width: Math.max(95 - level * 5, 42),
         height: 16
-      });
+      };
+
+      // Moving platforms from level 5 onwards
+      if (level >= 5 && i % 2 === 0) {
+        platform.vx = (Math.random() > 0.5 ? 1 : -1) * (1.2 + level * 0.15);
+        platform.startX = platform.x;
+        platform.range = 60 + level * 8;
+      }
+
+      this.platforms.push(platform);
     }
 
     this.spikes = [];
@@ -769,6 +786,58 @@ export class HomeComponent implements AfterViewInit {
     if (level === 8) return './img/background3.webp';      
     if (level === 9) return './img/background4.webp';      
     return './img/background.webp';                        
+  }
+  private getThemeColors(level: number) {
+    if (level <= 4) {
+      return {
+        ground: '#10b981',          // emerald
+        platform: '#5c4033',
+        bamboo: '#eab308',          // golden yellow
+        bambooDark: '#a16207',
+        door: '#eab308',
+        doorDark: '#ca8a04'
+      };
+    }
+    if (level <= 7) {
+      return {
+        ground: '#14532d',
+        platform: '#5c4033',
+        bamboo: '#4ade80',
+        bambooDark: '#166534',
+        door: '#eab308',
+        doorDark: '#ca8a04'
+      };
+    }
+    if (level === 8) {
+      return {
+        ground: '#000000',
+        platform: '#0C2340',
+        bamboo: '#6b7280',
+        bambooDark: '#111827',
+        door: '#6b7280',
+        doorDark: '#111827'
+      };
+    }
+    if (level === 9) {
+      // Rainbow will be handled specially in drawing
+      return {
+        ground: '#4c1d95',
+        platform: '#7c3aed',
+        bamboo: '#ec4899',
+        bambooDark: '#be185d',
+        door: '#f59e0b',
+        doorDark: '#d97706'
+      };
+    }
+    // Level 10
+    return {
+      ground: '#00563F',
+      platform: '#355E3B',
+      bamboo: '#138808',
+      bambooDark: '#0f5c06',
+      door: '#eab308',
+      doorDark: '#ca8a04'
+    };
   }
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
@@ -844,6 +913,27 @@ export class HomeComponent implements AfterViewInit {
       this.player.vy += 0.75;
       this.player.x += this.player.vx;
       this.player.y += this.player.vy;
+      // Move platforms and carry the player
+    for (const p of this.platforms) {
+      if (p.vx) {
+        p.x += p.vx;
+
+        // Reverse direction at the ends
+        if (p.x > p.startX! + p.range! || p.x < p.startX! - p.range!) {
+          p.vx *= -1;
+        }
+
+        // If the player is standing on this platform → move the player too
+        if (
+          !this.player.jumping &&
+          this.player.x + this.player.width > p.x &&
+          this.player.x < p.x + p.width &&
+          Math.abs((this.player.y + this.player.height) - p.y) < 6
+        ) {
+          this.player.x += p.vx;
+        }
+      }
+    }
 
       this.player.jumping = true;
       for (const p of this.platforms) {
@@ -878,22 +968,32 @@ export class HomeComponent implements AfterViewInit {
       // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
-            this.player.x < c.x + 20 &&
-            this.player.x + this.player.width > c.x &&
-            this.player.y < c.y + 20 &&
-            this.player.y + this.player.height > c.y) {
-          
-          c.collected = true;
-          this.playMunchSound();
-          this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
-          this.triggerShake(4);
+          this.player.x < c.x + 20 &&
+          this.player.x + this.player.width > c.x &&
+          this.player.y < c.y + 20 &&
+          this.player.y + this.player.height > c.y) {
+    
+        c.collected = true;
+        this.playMunchSound();
 
-          this.ngZone.run(() => {
-            this.score += 10;
-            this.cdr.detectChanges();
+        // Rainbow particles only on level 9
+        if (this.level === 9) {
+          const rainbowColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7'];
+          rainbowColors.forEach(color => {
+            this.spawnParticles(c.x + 10, c.y + 10, color, 6);
           });
+        } else {
+          this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
         }
+
+        this.triggerShake(4);
+
+        this.ngZone.run(() => {
+          this.score += 10;
+          this.cdr.detectChanges();
+        });
       }
+    }
 
       if (this.player.x > 720) {
         this.ngZone.run(() => {
@@ -973,25 +1073,35 @@ export class HomeComponent implements AfterViewInit {
       return;
     }
 
-    // Platforms
+    // Platforms + Ground
+    const theme = this.getThemeColors(this.level);
+
     for (const p of this.platforms) {
-      this.ctx.fillStyle = p.y >= 320 ? '#14532d' : '#5c4033';
+      // Ground platform
+      if (p.y >= 320) {
+        this.ctx.fillStyle = theme.ground;
+      } else {
+        this.ctx.fillStyle = theme.platform;
+      }
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
+
+      // Small highlight on floating platforms
       if (p.y < 320) {
-        this.ctx.fillStyle = '#7a5c45';
+        this.ctx.fillStyle = 'rgba(255,255,255,0.15)';
         this.ctx.fillRect(p.x, p.y, p.width, 3);
       }
     }
 
     // Bamboo
+    // Bamboo
     for (const s of this.spikes) {
       const stalkHeight = s.tall ? 55 : 35;
       const stalkY = s.y - (s.tall ? 35 : 15);
 
-      this.ctx.fillStyle = '#4ade80';
+      this.ctx.fillStyle = theme.bamboo;
       this.ctx.fillRect(s.x + s.width / 2 - 4, stalkY, 8, stalkHeight);
 
-      this.ctx.strokeStyle = '#166534';
+      this.ctx.strokeStyle = theme.bambooDark;
       this.ctx.lineWidth = 1.5;
       this.ctx.beginPath();
       this.ctx.moveTo(s.x + s.width / 2 - 4, stalkY + 15);
@@ -1002,7 +1112,8 @@ export class HomeComponent implements AfterViewInit {
       }
       this.ctx.stroke();
 
-      this.ctx.fillStyle = '#22c55e';
+      // Leaves
+      this.ctx.fillStyle = theme.bamboo;
       this.ctx.beginPath();
       this.ctx.ellipse(s.x + s.width / 2 - 10, stalkY + 5, 10, 4, -0.5, 0, Math.PI * 2);
       this.ctx.fill();
@@ -1010,7 +1121,6 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.ellipse(s.x + s.width / 2 + 10, stalkY + 8, 10, 4, 0.5, 0, Math.PI * 2);
       this.ctx.fill();
     }
-
     // Chocolates
     for (const c of this.chocolates) {
       if (!c.collected) {
@@ -1018,11 +1128,10 @@ export class HomeComponent implements AfterViewInit {
         this.ctx.fillText('🍫', c.x, c.y + 18);
       }
     }
-
-    // Goal
-    this.ctx.fillStyle = '#eab308';
+    // Goal / Door
+    this.ctx.fillStyle = theme.door;
     this.ctx.fillRect(740, 230, 45, 90);
-    this.ctx.fillStyle = '#ca8a04';
+    this.ctx.fillStyle = theme.doorDark;
     this.ctx.fillRect(755, 260, 15, 25);
 
     // Player
