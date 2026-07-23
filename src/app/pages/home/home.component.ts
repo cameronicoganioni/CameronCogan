@@ -386,7 +386,8 @@ export class HomeComponent implements AfterViewInit {
 
   private playerImage = new Image();
   private backgroundImage = new Image();
-
+  private key = { x: 0, y: 0, collected: false };
+  private hasKey = false;   // whether the player has collected the key for the current level
   private platforms: {
     x: number;
     y: number;
@@ -729,6 +730,7 @@ export class HomeComponent implements AfterViewInit {
     this.shakeIntensity = 0;
 
     this.backgroundImage.src = this.getBackgroundForLevel(level);
+    
 
     // Platforms
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
@@ -778,7 +780,10 @@ export class HomeComponent implements AfterViewInit {
         collected: false
       });
     }
-
+    // Key (required to open door)
+    const keyPos = this.getKeyPosition(level);
+    this.key = { x: keyPos.x, y: keyPos.y, collected: false };
+    this.hasKey = false;
     // Boss only on level 10
     if (level === 10) {
       this.boss.active = true;
@@ -881,6 +886,21 @@ export class HomeComponent implements AfterViewInit {
       doorDark: '#ca8a04'
     };
   }
+  private getKeyPosition(level: number) {
+  switch (level) {
+    case 1: return { x: 220, y: 240 };           // top of first platform
+    case 2: return { x: 380, y: 180 };           // between bamboo 1 and 2
+    case 3: return { x: 520, y: 160 };           // between bamboo 2 and 3
+    case 4: return { x: 460, y: 210 };           // middle platform
+    case 5: return { x: 480, y: 260 };           // below middle platform
+    case 6: return { x: 680, y: 160 };           // just above the door
+    case 7: return { x: 580, y: 170 };           // between bamboo 3 and 4
+    case 8: return { x: 400, y: 180 };           // middle of the screen
+    case 9: return { x: 320, y: 190 };           // left of 6th bamboo
+    case 10: return { x: 520, y: 220 };          // top of fourth platform
+    default: return { x: 300, y: 200 };
+  }
+}
 
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
@@ -930,7 +950,7 @@ export class HomeComponent implements AfterViewInit {
     this.ctx.fill();
   }
 
-  private gameLoop = () => {
+    private gameLoop = () => {
     if (!this.showGame) return;
 
     if (!this.gameOver && this.gameStarted) {
@@ -1030,104 +1050,107 @@ export class HomeComponent implements AfterViewInit {
         }
       }
 
+      // Collect Key
+      if (!this.key.collected &&
+          this.player.x < this.key.x + 24 &&
+          this.player.x + this.player.width > this.key.x &&
+          this.player.y < this.key.y + 24 &&
+          this.player.y + this.player.height > this.key.y) {
+
+        this.key.collected = true;
+        this.hasKey = true;
+        this.playMunchSound();
+        this.spawnParticles(this.key.x + 12, this.key.y + 12, '#a5b4fc', 22);
+        this.triggerShake(4);
+      }
+
       // ===== BOSS MÉJEAN (Level 10 only) =====
-if (this.boss.active && !this.gameOver) {
-  const b = this.boss;
+      if (this.boss.active && !this.gameOver) {
+        const b = this.boss;
 
-  // --- State machine ---
-  if (b.state === 'idle') {
-    b.vx = 0;
-    b.hoverTimer++;
+        if (b.state === 'idle') {
+          b.vx = 0;
+          b.hoverTimer++;
+          if (b.hoverTimer > 100) {
+            b.state = 'jumping';
+            b.vy = -17;
+            b.hoverTimer = 0;
+            this.playBossJumpSound();
 
-    if (b.hoverTimer > 100) {
-      b.state = 'jumping';
-      b.vy = -15;
-      b.hoverTimer = 0;
-      this.playBossJumpSound();
+            if (b.x > 480) {
+              b.facingRight = false;
+              b.vx = -2.8;
+            } else {
+              b.facingRight = true;
+              b.vx = 2.8;
+            }
+          }
+        }
 
-      // Decide direction
-      if (b.x > 480) {
-        b.facingRight = false;
-        b.vx = -2.8;               // go further left
-      } else {
-        b.facingRight = true;
-        b.vx = 2.8;
+        b.vy += 0.38;
+        b.x += b.vx;
+        b.y += b.vy;
+
+        for (const p of this.platforms) {
+          if (
+            b.x + 10 < p.x + p.width &&
+            b.x + b.width - 10 > p.x &&
+            b.y + b.height > p.y &&
+            b.y + b.height < p.y + p.height + 16 &&
+            b.vy >= 0
+          ) {
+            b.y = p.y - b.height;
+            b.vy = 0;
+            if (p.vx) b.x += p.vx;
+
+            if (b.state === 'jumping') {
+              b.vx = 0;
+              b.state = 'idle';
+              b.hoverTimer = 0;
+            }
+          }
+        }
+
+        if (b.x < 40) b.x = 40;
+        if (b.x > 690) b.x = 690;
+
+        if (
+          this.player.x < b.x + b.width - 12 &&
+          this.player.x + this.player.width > b.x + 12 &&
+          this.player.y < b.y + b.height - 8 &&
+          this.player.y + this.player.height > b.y + 8
+        ) {
+          this.die();
+        }
       }
-    }
-  }
 
-  // --- Physics ---
-  b.vy += 0.38;                    // slower gravity = more hover
-  b.x += b.vx;
-  b.y += b.vy;
-
-  // Platform collision + carry on moving platforms
-  for (const p of this.platforms) {
-    if (
-      b.x + 10 < p.x + p.width &&
-      b.x + b.width - 10 > p.x &&
-      b.y + b.height > p.y &&
-      b.y + b.height < p.y + p.height + 16 &&
-      b.vy >= 0
-    ) {
-      b.y = p.y - b.height;
-      b.vy = 0;
-
-      // Carry the boss if the platform is moving
-      if (p.vx) {
-        b.x += p.vx;
-      }
-
-      // Landed → wait
-      if (b.state === 'jumping') {
-        b.vx = 0;
-        b.state = 'idle';
-        b.hoverTimer = 0;
-      }
-    }
-  }
-
-  // Keep inside bounds
-  if (b.x < 30) {
-    b.x = 30;
-    b.facingRight = true;
-  }
-  if (b.x > 700) {
-    b.x = 700;
-    b.facingRight = false;
-  }
-
-  // Collision with player
-  if (
-    this.player.x < b.x + b.width - 12 &&
-    this.player.x + this.player.width > b.x + 12 &&
-    this.player.y < b.y + b.height - 8 &&
-    this.player.y + this.player.height > b.y + 8
-  ) {
-    this.die();
-  }
-}
       // Reach the door
       if (this.player.x > 720) {
-        this.ngZone.run(() => {
-          this.level++;
-          this.cdr.detectChanges();
-          this.playWinSound();
-
-          if (this.level > 10) {
-            this.showVictory = true;
-            this.gameOver = true;
-            if (this.score > this.highScore) {
-              this.highScore = this.score;
-              localStorage.setItem('brookieHighScore', this.highScore.toString());
-            }
-            this.unlockedCode = this.score >= 300 ? 'BROOKIE20' :
-                                this.score >= 200 ? 'PANDA15' : 'CHOCO10';
+        if (!this.hasKey) {
+          // Visual feedback (shake + maybe a small message later)
+          this.triggerShake(3);
+          // Do NOT return — just don't progress
+        } else {
+          this.ngZone.run(() => {
+            this.level++;
             this.cdr.detectChanges();
-            return;
-          }
-          this.loadLevel(this.level);
-        });
+            this.playWinSound();
+
+            if (this.level > 10) {
+              this.showVictory = true;
+              this.gameOver = true;
+              if (this.score > this.highScore) {
+                this.highScore = this.score;
+                localStorage.setItem('brookieHighScore', this.highScore.toString());
+              }
+              this.unlockedCode = this.score >= 300 ? 'BROOKIE20' :
+                                  this.score >= 200 ? 'PANDA15' : 'CHOCO10';
+              this.cdr.detectChanges();
+              return;
+            }
+            this.loadLevel(this.level);
+          });
+        }
       }
     }
 
@@ -1221,6 +1244,12 @@ if (this.boss.active && !this.gameOver) {
       }
     }
 
+    // Key
+    if (!this.key.collected) {
+      this.ctx.font = '26px Arial';
+      this.ctx.fillText('🔑', this.key.x, this.key.y + 20);
+    }
+
     // Door
     this.ctx.fillStyle = theme.door;
     this.ctx.fillRect(740, 230, 45, 90);
@@ -1297,4 +1326,4 @@ if (this.boss.active && !this.gameOver) {
     this.ctx.restore();
     this.animationId = requestAnimationFrame(this.gameLoop);
   };
-  }
+}
