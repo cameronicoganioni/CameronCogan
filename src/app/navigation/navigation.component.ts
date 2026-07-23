@@ -74,8 +74,15 @@ export class NavigationComponent implements OnInit {
     window.location.reload();
   }
 
-  // Open Cookie Policy modal
   openCookiePolicy() {
+  // Direct method - more reliable on mobile
+  const homeComponent = (window as any).homeComponentInstance;
+  if (homeComponent) {
+    homeComponent.showCookiePolicy = true;
+  } else {
+    // fallback
     window.dispatchEvent(new CustomEvent('open-cookie-policy'));
   }
+  this.trackEvent('navigation', 'section_click', 'Cookies');
+}
 }
