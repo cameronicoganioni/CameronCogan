@@ -706,7 +706,7 @@ export class HomeComponent implements AfterViewInit {
     this.ctx = canvas.getContext('2d')!;
     this.playerImage.src = './img/panda.webp';
     this.backgroundImage.src = './img/background.webp';
-    this.bossImage.src = './img/méjean1.webp';
+    this.bossImage.src = './img/méjean.webp';
 
     this.loadLevel(this.level);
 
