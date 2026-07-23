@@ -401,7 +401,19 @@ export class HomeComponent implements AfterViewInit {
   private particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; color: string; size: number }[] = [];
   private shakeIntensity = 0;
   private shakeDecay = 0.82;
-
+  private bossImage = new Image();
+  private boss = {
+    active: false,
+    x: 680,
+    y: 200,
+    width: 70,
+    height: 70,
+    vx: 0,
+    vy: 0,
+    facingRight: false,
+    state: 'idle' as 'idle' | 'jumping' | 'moving',
+    hoverTimer: 0
+  };
   // Audio
   private audioCtx: AudioContext | null = null;
 
@@ -631,7 +643,6 @@ export class HomeComponent implements AfterViewInit {
     this.shakeIntensity = 0;
 
     this.trackEvent('engagement', 'easter_egg_opened', 'Brookie Panda');
-
     setTimeout(() => this.startGame(), 100);
   }
 
@@ -650,6 +661,8 @@ export class HomeComponent implements AfterViewInit {
     this.mobileJump = false;
     this.particles = [];
     this.shakeIntensity = 0;
+    this.boss.active = false;
+
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;
@@ -660,6 +673,10 @@ export class HomeComponent implements AfterViewInit {
 
   retryLevel() {
     this.score = this.levelStartScore;
+    this.keys = {};
+    this.mobileLeft = false;
+    this.mobileRight = false;
+    this.mobileJump = false;
     this.loadLevel(this.level);
     this.ngZone.run(() => this.cdr.detectChanges());
   }
@@ -684,6 +701,7 @@ export class HomeComponent implements AfterViewInit {
     this.ctx = canvas.getContext('2d')!;
     this.playerImage.src = './img/panda.webp';
     this.backgroundImage.src = './img/background.webp';
+    this.bossImage.src = './img/méjean.webp';
 
     this.loadLevel(this.level);
 
@@ -694,36 +712,37 @@ export class HomeComponent implements AfterViewInit {
   }
 
   private loadLevel(level: number) {
-  this.keys = {};
-  this.mobileLeft = false;
-  this.mobileRight = false;
-  this.mobileJump = false;
+    this.keys = {};
+    this.mobileLeft = false;
+    this.mobileRight = false;
+    this.mobileJump = false;
 
-  this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
-  this.gameOver = false;
-  this.levelStartScore = this.score;
-  this.facingRight = true;
-  this.particles = [];
-  this.shakeIntensity = 0;
-  this.backgroundImage.src = this.getBackgroundForLevel(level);
+    this.player = { x: 40, y: 250, width: 40, height: 48, vx: 0, vy: 0, jumping: false };
+    this.gameOver = false;
+    this.levelStartScore = this.score;
+    this.facingRight = true;
+    this.particles = [];
+    this.shakeIntensity = 0;
 
-    this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }]; // ground
+    this.backgroundImage.src = this.getBackgroundForLevel(level);
+
+    // Platforms
+    this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
     const platformCount = Math.min(4 + Math.floor(level * 0.8), 11);
     const heightVariation = 40 + level * 4;
 
-      for (let i = 0; i < platformCount; i++) {
-        const baseX = 100 + i * (85 + level * 4);
-        const randomOffset = (Math.random() - 0.5) * 40;
+    for (let i = 0; i < platformCount; i++) {
+      const baseX = 100 + i * (85 + level * 4);
+      const randomOffset = (Math.random() - 0.5) * 40;
 
-        const platform: any = {
+      const platform: any = {
         x: baseX + randomOffset,
         y: 280 - (i % 4) * heightVariation - Math.floor(level / 2) * 8,
         width: Math.max(95 - level * 5, 42),
         height: 16
       };
 
-      // Moving platforms from level 5 onwards
       if (level >= 5 && i % 2 === 0) {
         platform.vx = (Math.random() > 0.5 ? 1 : -1) * (1.2 + level * 0.15);
         platform.startX = platform.x;
@@ -733,29 +752,41 @@ export class HomeComponent implements AfterViewInit {
       this.platforms.push(platform);
     }
 
+    // Spikes
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
-
     for (let i = 0; i < spikeCount; i++) {
-      const isTall = i === 0 ? false : Math.random() > 0.45;
-
       this.spikes.push({
         x: 180 + i * (140 - level * 3),
         y: 305,
         width: 28 + Math.random() * 12,
-        tall: isTall
+        tall: i === 0 ? false : Math.random() > 0.45
       });
     }
 
+    // Chocolates
     this.chocolates = [];
     const chocolateCount = 5 + Math.floor(level / 1.5);
-
     for (let i = 0; i < chocolateCount; i++) {
       this.chocolates.push({
         x: 140 + i * (110 + level * 3),
         y: 140 + Math.sin(i) * 50 - level * 3,
         collected: false
       });
+    }
+
+    // Boss only on level 10
+    if (level === 10) {
+      this.boss.active = true;
+      this.boss.x = 680;
+      this.boss.y = 200;
+      this.boss.vx = 0;
+      this.boss.vy = 0;
+      this.boss.facingRight = false;
+      this.boss.state = 'idle';
+      this.boss.hoverTimer = 0;
+    } else {
+      this.boss.active = false;
     }
   }
 
@@ -778,21 +809,29 @@ export class HomeComponent implements AfterViewInit {
       28
     );
     this.triggerShake(9);
+
+    this.keys = {};
+    this.mobileLeft = false;
+    this.mobileRight = false;
+    this.mobileJump = false;
+
     this.ngZone.run(() => this.cdr.detectChanges());
   }
+
   private getBackgroundForLevel(level: number): string {
-    if (level <= 4) return './img/background2.webp';       
-    if (level <= 7) return './img/background5.webp';       
-    if (level === 8) return './img/background3.webp';      
-    if (level === 9) return './img/background4.webp';      
-    return './img/background.webp';                        
+    if (level <= 4) return './img/background2.webp';
+    if (level <= 7) return './img/background5.webp';
+    if (level === 8) return './img/background3.webp';
+    if (level === 9) return './img/background4.webp';
+    return './img/background.webp';
   }
+
   private getThemeColors(level: number) {
     if (level <= 4) {
       return {
-        ground: '#10b981',          // emerald
+        ground: '#10b981',
         platform: '#5c4033',
-        bamboo: '#eab308',          // golden yellow
+        bamboo: '#eab308',
         bambooDark: '#a16207',
         door: '#eab308',
         doorDark: '#ca8a04'
@@ -819,7 +858,6 @@ export class HomeComponent implements AfterViewInit {
       };
     }
     if (level === 9) {
-      // Rainbow will be handled specially in drawing
       return {
         ground: '#4c1d95',
         platform: '#7c3aed',
@@ -839,6 +877,7 @@ export class HomeComponent implements AfterViewInit {
       doorDark: '#ca8a04'
     };
   }
+
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
       const life = 45 + Math.random() * 35;
@@ -862,7 +901,6 @@ export class HomeComponent implements AfterViewInit {
   private drawLargeBamboo(x: number, y: number) {
     this.ctx.fillStyle = '#4ade80';
     this.ctx.fillRect(x, y, 18, 180);
-
     this.ctx.strokeStyle = '#166534';
     this.ctx.lineWidth = 2.5;
     this.ctx.beginPath();
@@ -873,7 +911,6 @@ export class HomeComponent implements AfterViewInit {
     this.ctx.moveTo(x, y + 150);
     this.ctx.lineTo(x + 18, y + 150);
     this.ctx.stroke();
-
     this.ctx.fillStyle = '#22c55e';
     this.ctx.beginPath();
     this.ctx.ellipse(x - 18, y + 30, 22, 8, -0.6, 0, Math.PI * 2);
@@ -893,8 +930,8 @@ export class HomeComponent implements AfterViewInit {
     if (!this.showGame) return;
 
     if (!this.gameOver && this.gameStarted) {
+      // Player movement
       this.player.vx = 0;
-
       if (this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A'] || this.mobileLeft) {
         this.player.vx = -5.5;
         this.facingRight = false;
@@ -903,7 +940,6 @@ export class HomeComponent implements AfterViewInit {
         this.player.vx = 5.5;
         this.facingRight = true;
       }
-
       if ((this.keys[' '] || this.keys['ArrowUp'] || this.keys['w'] || this.keys['W'] || this.mobileJump) && !this.player.jumping) {
         this.player.vy = -15;
         this.player.jumping = true;
@@ -913,28 +949,26 @@ export class HomeComponent implements AfterViewInit {
       this.player.vy += 0.75;
       this.player.x += this.player.vx;
       this.player.y += this.player.vy;
-      // Move platforms and carry the player
-    for (const p of this.platforms) {
-      if (p.vx) {
-        p.x += p.vx;
 
-        // Reverse direction at the ends
-        if (p.x > p.startX! + p.range! || p.x < p.startX! - p.range!) {
-          p.vx *= -1;
-        }
-
-        // If the player is standing on this platform → move the player too
-        if (
-          !this.player.jumping &&
-          this.player.x + this.player.width > p.x &&
-          this.player.x < p.x + p.width &&
-          Math.abs((this.player.y + this.player.height) - p.y) < 6
-        ) {
-          this.player.x += p.vx;
+      // Moving platforms + carry player
+      for (const p of this.platforms) {
+        if (p.vx) {
+          p.x += p.vx;
+          if (p.x > p.startX! + p.range! || p.x < p.startX! - p.range!) {
+            p.vx *= -1;
+          }
+          if (
+            !this.player.jumping &&
+            this.player.x + this.player.width > p.x &&
+            this.player.x < p.x + p.width &&
+            Math.abs((this.player.y + this.player.height) - p.y) < 6
+          ) {
+            this.player.x += p.vx;
+          }
         }
       }
-    }
 
+      // Platform collision
       this.player.jumping = true;
       for (const p of this.platforms) {
         if (
@@ -953,6 +987,7 @@ export class HomeComponent implements AfterViewInit {
       if (this.player.x < 0) this.player.x = 0;
       if (this.player.y > 400) this.die();
 
+      // Bamboo collision
       for (const s of this.spikes) {
         const bambooTop = s.y - (s.tall ? 35 : 15);
         if (
@@ -968,53 +1003,121 @@ export class HomeComponent implements AfterViewInit {
       // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
-          this.player.x < c.x + 20 &&
-          this.player.x + this.player.width > c.x &&
-          this.player.y < c.y + 20 &&
-          this.player.y + this.player.height > c.y) {
-    
-        c.collected = true;
-        this.playMunchSound();
+            this.player.x < c.x + 20 &&
+            this.player.x + this.player.width > c.x &&
+            this.player.y < c.y + 20 &&
+            this.player.y + this.player.height > c.y) {
 
-        // Rainbow particles only on level 9
-        if (this.level === 9) {
-          const rainbowColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7'];
-          rainbowColors.forEach(color => {
-            this.spawnParticles(c.x + 10, c.y + 10, color, 6);
+          c.collected = true;
+          this.playMunchSound();
+
+          if (this.level === 9) {
+            const rainbow = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7'];
+            rainbow.forEach(color => this.spawnParticles(c.x + 10, c.y + 10, color, 6));
+          } else {
+            this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
+          }
+
+          this.triggerShake(4);
+          this.ngZone.run(() => {
+            this.score += 10;
+            this.cdr.detectChanges();
           });
-        } else {
-          this.spawnParticles(c.x + 10, c.y + 10, '#fbbf24', 20);
         }
+      }
 
-        this.triggerShake(4);
+      // ===== BOSS MÉJEAN (Level 10 only) =====
+if (this.boss.active && !this.gameOver) {
+  const b = this.boss;
 
-        this.ngZone.run(() => {
-          this.score += 10;
-          this.cdr.detectChanges();
-        });
+  // --- State machine ---
+  if (b.state === 'idle') {
+    b.vx = 0;
+    b.hoverTimer++;
+
+    if (b.hoverTimer > 100) {
+      b.state = 'jumping';
+      b.vy = -15;
+      b.hoverTimer = 0;
+
+      // Decide direction
+      if (b.x > 480) {
+        b.facingRight = false;
+        b.vx = -2.8;               // go further left
+      } else {
+        b.facingRight = true;
+        b.vx = 2.8;
       }
     }
+  }
 
+  // --- Physics ---
+  b.vy += 0.38;                    // slower gravity = more hover
+  b.x += b.vx;
+  b.y += b.vy;
+
+  // Platform collision + carry on moving platforms
+  for (const p of this.platforms) {
+    if (
+      b.x + 10 < p.x + p.width &&
+      b.x + b.width - 10 > p.x &&
+      b.y + b.height > p.y &&
+      b.y + b.height < p.y + p.height + 16 &&
+      b.vy >= 0
+    ) {
+      b.y = p.y - b.height;
+      b.vy = 0;
+
+      // Carry the boss if the platform is moving
+      if (p.vx) {
+        b.x += p.vx;
+      }
+
+      // Landed → wait
+      if (b.state === 'jumping') {
+        b.vx = 0;
+        b.state = 'idle';
+        b.hoverTimer = 0;
+      }
+    }
+  }
+
+  // Keep inside bounds
+  if (b.x < 30) {
+    b.x = 30;
+    b.facingRight = true;
+  }
+  if (b.x > 700) {
+    b.x = 700;
+    b.facingRight = false;
+  }
+
+  // Collision with player
+  if (
+    this.player.x < b.x + b.width - 12 &&
+    this.player.x + this.player.width > b.x + 12 &&
+    this.player.y < b.y + b.height - 8 &&
+    this.player.y + this.player.height > b.y + 8
+  ) {
+    this.die();
+  }
+}
+      // Reach the door
       if (this.player.x > 720) {
         this.ngZone.run(() => {
           this.level++;
           this.cdr.detectChanges();
-
           this.playWinSound();
 
           if (this.level > 10) {
             this.showVictory = true;
             this.gameOver = true;
-
             if (this.score > this.highScore) {
               this.highScore = this.score;
               localStorage.setItem('brookieHighScore', this.highScore.toString());
             }
-
-            // Discount codes based on performance
             this.unlockedCode = this.score >= 300 ? 'BROOKIE20' :
                                 this.score >= 200 ? 'PANDA15' : 'CHOCO10';
-
             this.cdr.detectChanges();
             return;
           }
@@ -1026,10 +1129,8 @@ export class HomeComponent implements AfterViewInit {
     // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
-    // Safe Screen Shake
     let shakeX = 0;
     let shakeY = 0;
-
     if (this.shakeIntensity > 0.3) {
       shakeX = (Math.random() - 0.5) * this.shakeIntensity;
       shakeY = (Math.random() - 0.5) * this.shakeIntensity;
@@ -1055,37 +1156,27 @@ export class HomeComponent implements AfterViewInit {
     if (!this.gameStarted) {
       this.ctx.fillStyle = '#14532d';
       this.ctx.fillRect(0, 320, 800, 80);
-
       this.drawLargeBamboo(120, 140);
       this.drawLargeBamboo(620, 140);
 
       if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
         const size = 260;
-        const x = (800 - size) / 2;
-        const y = (400 - size) / 2 - 10;
         this.ctx.globalAlpha = 0.9;
-        this.ctx.drawImage(this.playerImage, x, y, size, size);
+        this.ctx.drawImage(this.playerImage, (800 - size) / 2, (400 - size) / 2 - 10, size, size);
         this.ctx.globalAlpha = 1;
       }
 
-      this.ctx.restore(); // important!
+      this.ctx.restore();
       this.animationId = requestAnimationFrame(this.gameLoop);
       return;
     }
 
-    // Platforms + Ground
     const theme = this.getThemeColors(this.level);
 
+    // Platforms
     for (const p of this.platforms) {
-      // Ground platform
-      if (p.y >= 320) {
-        this.ctx.fillStyle = theme.ground;
-      } else {
-        this.ctx.fillStyle = theme.platform;
-      }
+      this.ctx.fillStyle = p.y >= 320 ? theme.ground : theme.platform;
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
-
-      // Small highlight on floating platforms
       if (p.y < 320) {
         this.ctx.fillStyle = 'rgba(255,255,255,0.15)';
         this.ctx.fillRect(p.x, p.y, p.width, 3);
@@ -1093,14 +1184,11 @@ export class HomeComponent implements AfterViewInit {
     }
 
     // Bamboo
-    // Bamboo
     for (const s of this.spikes) {
       const stalkHeight = s.tall ? 55 : 35;
       const stalkY = s.y - (s.tall ? 35 : 15);
-
       this.ctx.fillStyle = theme.bamboo;
       this.ctx.fillRect(s.x + s.width / 2 - 4, stalkY, 8, stalkHeight);
-
       this.ctx.strokeStyle = theme.bambooDark;
       this.ctx.lineWidth = 1.5;
       this.ctx.beginPath();
@@ -1111,8 +1199,6 @@ export class HomeComponent implements AfterViewInit {
         this.ctx.lineTo(s.x + s.width / 2 + 4, stalkY + 35);
       }
       this.ctx.stroke();
-
-      // Leaves
       this.ctx.fillStyle = theme.bamboo;
       this.ctx.beginPath();
       this.ctx.ellipse(s.x + s.width / 2 - 10, stalkY + 5, 10, 4, -0.5, 0, Math.PI * 2);
@@ -1121,6 +1207,7 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.ellipse(s.x + s.width / 2 + 10, stalkY + 8, 10, 4, 0.5, 0, Math.PI * 2);
       this.ctx.fill();
     }
+
     // Chocolates
     for (const c of this.chocolates) {
       if (!c.collected) {
@@ -1128,7 +1215,8 @@ export class HomeComponent implements AfterViewInit {
         this.ctx.fillText('🍫', c.x, c.y + 18);
       }
     }
-    // Goal / Door
+
+    // Door
     this.ctx.fillStyle = theme.door;
     this.ctx.fillRect(740, 230, 45, 90);
     this.ctx.fillStyle = theme.doorDark;
@@ -1150,32 +1238,40 @@ export class HomeComponent implements AfterViewInit {
       this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
     }
 
-    // ========== PARTICLES (update + draw) ==========
+    // Boss Méjean
+    if (this.boss.active && this.bossImage.complete) {
+      this.ctx.save();
+      if (this.boss.facingRight) {
+        this.ctx.translate(this.boss.x + this.boss.width, this.boss.y);
+        this.ctx.scale(-1, 1);
+        this.ctx.drawImage(this.bossImage, 0, 0, this.boss.width, this.boss.height);
+      } else {
+        this.ctx.drawImage(this.bossImage, this.boss.x, this.boss.y, this.boss.width, this.boss.height);
+      }
+      this.ctx.restore();
+    }
+
+    // Particles
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.2; // gravity
+      p.vy += 0.2;
       p.life--;
-
       if (p.life <= 0) {
         this.particles.splice(i, 1);
         continue;
       }
-
       const alpha = p.life / p.maxLife;
       this.ctx.globalAlpha = alpha;
       this.ctx.fillStyle = p.color;
-
-      // Draw as circle
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, p.size * alpha, 0, Math.PI * 2);
       this.ctx.fill();
-
       this.ctx.globalAlpha = 1;
     }
 
-    // Game Over (only show if not victory)
+    // Game Over
     if (this.gameOver && !this.showVictory) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
       this.ctx.fillRect(0, 0, 800, 400);
@@ -1193,7 +1289,7 @@ export class HomeComponent implements AfterViewInit {
       this.retryLevel();
     }
 
-    this.ctx.restore(); // always restore
+    this.ctx.restore();
     this.animationId = requestAnimationFrame(this.gameLoop);
   };
-}
+  }
