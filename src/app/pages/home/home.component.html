@@ -106,108 +106,132 @@
   </div>
 
   <!-- Experience Entry 1 - deCogan -->
-  <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+  <a href="https://decogan.fr" 
+     target="_blank" 
+     rel="noopener noreferrer"
+     (click)="trackEvent('experience', 'logo_click', 'deCogan')"
+     class="block mx-auto lg:mx-0">
     <img
       src="./img/logo.webp"
       alt="Cameron C.- Assistant Marketing & Communications at deCogan"
-      class="w-48 h-48 md:w-56 md:h-56 rounded-2xl border border-slate-200 object-cover shadow-lg mx-auto lg:mx-0"
+      class="w-48 h-48 md:w-56 md:h-56 rounded-2xl border border-slate-200 object-cover shadow-lg hover:shadow-xl transition-shadow duration-300"
     />
-    <div>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        {{ t.exp1Title }}
-      </h3>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        {{ t.exp1Date }}
-      </p>
-      <p class="mt-6 leading-8 text-slate-600">
-        {{ t.exp1Text }}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag1 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag2 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag3 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag4 }}</span>
-      </div>
+  </a>
+  <div>
+    <h3 class="mt-3 text-3xl font-bold text-slate-900">
+      {{ t.exp1Title }}
+    </h3>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+      {{ t.exp1Date }}
+    </p>
+    <p class="mt-6 leading-8 text-slate-600">
+      {{ t.exp1Text }}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag1 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag2 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag3 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp1Tag4 }}</span>
     </div>
   </div>
+</div>
 
   <!-- Experience Entry 2 - TourPourLaVie -->
-  <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+  <a href="https://tourpourlavie.fr" 
+     target="_blank" 
+     rel="noopener noreferrer"
+     (click)="trackEvent('experience', 'logo_click', 'TourPourLaVie')"
+     class="block mx-auto lg:mx-0">
     <img
       src="./img/TourPourLaVie.webp"
       alt="Volunteering- Ticket Sales & Media at TourPourLaVie Car Exhibition"
-      class="w-48 h-48 md:w-56 md:h-56 rounded-2xl border border-slate-200 object-cover shadow-lg mx-auto lg:mx-0"
+      class="w-48 h-48 md:w-56 md:h-56 rounded-2xl border border-slate-200 object-cover shadow-lg hover:shadow-xl transition-shadow duration-300"
     />
-    <div>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        {{ t.exp2Title }}
-      </h3>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        {{ t.exp2Date }}
-      </p>
-      <p class="mt-6 leading-8 text-slate-600">
-        {{ t.exp2Text }}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag1 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag2 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag3 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag4 }}</span>
-      </div>
+  </a>
+  <div>
+    <h3 class="mt-3 text-3xl font-bold text-slate-900">
+      {{ t.exp2Title }}
+    </h3>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+      {{ t.exp2Date }}
+    </p>
+    <p class="mt-6 leading-8 text-slate-600">
+      {{ t.exp2Text }}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag1 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag2 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag3 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp2Tag4 }}</span>
     </div>
   </div>
+</div>
 
   <!-- Experience Entry 3 - Complical -->
-  <div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center mb-20">
+  <a href="https://complical.co.uk" 
+     target="_blank" 
+     rel="noopener noreferrer"
+     (click)="trackEvent('experience', 'logo_click', 'Complical')"
+     class="block mx-auto lg:mx-0">
     <img
       src="./img/complical.webp"
       alt="Complical financial compliance site"
-      class="w-48 md:w-56 rounded-2xl border border-slate-200 object-cover shadow-lg mx-auto lg:mx-0"
+      class="w-48 md:w-56 rounded-2xl border border-slate-200 object-cover shadow-lg hover:shadow-xl transition-shadow duration-300"
     />
-    <div>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        {{ t.exp3Title }}
-      </h3>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        {{ t.exp3Date }}
-      </p>
-      <p class="mt-6 leading-8 text-slate-600">
-        {{ t.exp3Text }}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag1 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag2 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag3 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag4 }}</span>
-      </div>
+  </a>
+  <div>
+    <h3 class="mt-3 text-3xl font-bold text-slate-900">
+      {{ t.exp3Title }}
+    </h3>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+      {{ t.exp3Date }}
+    </p>
+    <p class="mt-6 leading-8 text-slate-600">
+      {{ t.exp3Text }}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag1 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag2 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag3 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp3Tag4 }}</span>
     </div>
   </div>
+</div>
 
   <!-- Experience Entry 4 - Aeternum -->
-  <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+<div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+  <a href="https://www.young-enterprise.org.uk" 
+     target="_blank" 
+     rel="noopener noreferrer"
+     (click)="trackEvent('experience', 'logo_click', 'Young Enterprise')"
+     class="block mx-auto lg:mx-0">
     <img
       src="./img/YE.webp"
       alt="Young Enterprise Competition Aeternum"
-      class="w-48 md:w-56 rounded-2xl border border-slate-200 object-cover shadow-lg mx-auto lg:mx-0"
+      class="w-48 md:w-56 rounded-2xl border border-slate-200 object-cover shadow-lg hover:shadow-xl transition-shadow duration-300"
     />
-    <div>
-      <h3 class="mt-3 text-3xl font-bold text-slate-900">
-        {{ t.exp4Title }}
-      </h3>
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
-        {{ t.exp4Date }}
-      </p>
-      <p class="mt-6 leading-8 text-slate-600">
-        {{ t.exp4Text }}
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag1 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag2 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag3 }}</span>
-        <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag4 }}</span>
-      </div>
+  </a>
+  <div>
+    <h3 class="mt-3 text-3xl font-bold text-slate-900">
+      {{ t.exp4Title }}
+    </h3>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-600">
+      {{ t.exp4Date }}
+    </p>
+    <p class="mt-6 leading-8 text-slate-600">
+      {{ t.exp4Text }}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag1 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag2 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag3 }}</span>
+      <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">{{ t.exp4Tag4 }}</span>
     </div>
   </div>
+</div>
 </section>
 
 <section id="contact" class="mx-auto max-w-7xl px-6 py-24 bg-slate-50">
