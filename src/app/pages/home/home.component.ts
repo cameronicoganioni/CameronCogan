@@ -628,6 +628,10 @@ export class HomeComponent implements AfterViewInit {
     this.playTone(180, 0.06, 'square', 0.09);
     setTimeout(() => this.playTone(140, 0.08, 'square', 0.07), 50);
   }
+  private playBossJumpSound() {
+    this.playTone(180, 0.12, 'sawtooth', 0.15); 
+    setTimeout(() => this.playTone(140, 0.18, 'sawtooth', 0.12), 80);
+  }
 
   // ==================== EASTER EGG ====================
   toggleEasterEgg() {
@@ -1039,6 +1043,7 @@ if (this.boss.active && !this.gameOver) {
       b.state = 'jumping';
       b.vy = -15;
       b.hoverTimer = 0;
+      this.playBossJumpSound();
 
       // Decide direction
       if (b.x > 480) {
