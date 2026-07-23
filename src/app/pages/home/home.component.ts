@@ -439,7 +439,10 @@ export class HomeComponent implements AfterViewInit {
     this.showCookiePolicy = true;
     this.cdr.detectChanges();
 });
+  (window as any).homeComponentInstance = this;
   }
+  
+
 
   setLanguage(lang: 'en' | 'fr' | 'de') {
     this.currentLang = lang;
