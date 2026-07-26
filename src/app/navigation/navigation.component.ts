@@ -21,7 +21,8 @@ export class NavigationComponent implements OnInit {
       experience: 'Experience',
       contact: 'Contact',
       cookies: 'Cookies',
-      studentTitle: 'Student in International Business Administration'
+      studentTitle: 'Student in International Business Administration',
+      servicesLabel: 'Services'
     },
     fr: {
       about: 'À propos',
@@ -29,7 +30,8 @@ export class NavigationComponent implements OnInit {
       experience: 'Expérience',
       contact: 'Contact',
       cookies: 'Cookies',
-      studentTitle: 'Étudiant en Administration des Affaires Internationales'
+      studentTitle: 'Étudiant en Administration des Affaires Internationales',
+      servicesLabel: 'Services'
     },
     de: {
       about: 'Über mich',
@@ -37,7 +39,8 @@ export class NavigationComponent implements OnInit {
       experience: 'Erfahrung',
       contact: 'Kontakt',
       cookies: 'Cookies',
-      studentTitle: 'Student der International Business Administration'
+      studentTitle: 'Student der International Business Administration',
+      servicesLabel: 'Dienstleistungen'
     }
   };
 

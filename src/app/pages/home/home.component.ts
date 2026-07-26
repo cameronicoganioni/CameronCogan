@@ -146,6 +146,47 @@ export class HomeComponent implements AfterViewInit {
       gameDiscountUnlocked: 'Discount code unlocked:',
       gamePlayAgain: 'Play Again',
       gameClose: 'Close',
+      servicesLabel: 'Services',
+      servicesTitle: 'Website Creation- coming soon (contact me to prepare)',
+      servicesIntro: 'I design and build responsive websites for businesses, professionals, and organisations. Every website is mobile-friendly, performance-focused, and tailored to your requirements.',
+      starterTitle: 'Starter',
+      starterPrice: '€1000 VAT incl.',
+      starter1: 'One-page template',
+      starter2: 'Basic content',
+      starter3: 'Mobile optimisation',
+      starter4: 'Hosting and domain setup',
+      starter5: 'Basic performance optimisation',
+      starter6: 'Ideal for small businesses',
+      starter7: 'Delivery in 5 days',
+      starter8: 'Deployment to Firebase',
+      recommended: 'Recommended',
+      standardTitle: 'Standard',
+      standardPrice: '€1400 VAT incl.',
+      standard1: 'Custom one-page design',
+      standard2: 'SEO basics',
+      standard3: 'Analytics setup',
+      standard4: 'Cookie policy implementation',
+      standard5: 'Great for small businesses',
+      standard6: 'Mobile optimisation',
+      standard7: 'Deployment to Firebase',
+      premiumTitle: 'Premium',
+      premiumPrice: '€2500 VAT incl.',
+      premium1: 'Custom designs',
+      premium2: 'Extra sections',
+      premium3: 'SEO + AEO/GEO optimisation',
+      premium4: 'Booking and contact integrations',
+      premium5: 'Priority support',
+      premium6: 'LocalBusiness schema',
+      premium7: 'Advanced analytics dashboard',
+      premium8: 'Deployment to Firebase',
+      maintenanceTitle: 'Monthly Maintenance & Management',
+      maintenanceIntro: 'Keep your website updated and performing at its best.',
+      maintenanceStarter: 'Starter',
+      maintenanceStarterPrice: '€250/month VAT incl.',
+      maintenanceStandard: 'Standard',
+      maintenanceStandardPrice: '€450/month VAT incl.',
+      maintenancePremium: 'Premium',
+      maintenancePremiumPrice: '€800/month VAT incl.',
     },
     fr: {
       aboutLabel: 'Management International des Affaires',
@@ -257,6 +298,47 @@ export class HomeComponent implements AfterViewInit {
       gameDiscountUnlocked: 'Code de réduction débloqué :',
       gamePlayAgain: 'Rejouer',
       gameClose: 'Fermer',
+      servicesLabel: 'Services',
+      servicesTitle: 'Création de sites web- Ouverture officielle prochainement (contactez-moi pour préparer votre projet)',
+      servicesIntro: 'Je conçois et développe des sites web modernes, rapides et adaptés aux entreprises, aux professionnels et aux organisations.',
+      starterTitle: 'Essentiel',
+      starterPrice: '1000 € TTC',
+      starter1: 'Modèle d’une page',
+      starter2: 'Contenu de base',
+      starter3: 'Optimisation mobile',
+      starter4: 'Configuration de l’hébergement et du nom de domaine',
+      starter5: 'Optimisation des performances',
+      starter6: 'Adapté aux petites entreprises',
+      starter7: 'Livraison estimée à 5 jours',
+      starter8:'Déploiement sur Firebase',
+      recommended: 'Option recommandée',
+      standardTitle: 'Standard',
+      standardPrice: '1400 € TTC',
+      standard1: 'Design personnalisé d’une page',
+      standard2: 'SEO de base',
+      standard3: 'Configuration de Google Analytics',
+      standard4: 'Mise en place de la politique de cookies',
+      standard5: 'Idéal pour les petites entreprises',
+      standard6: 'Optimisation mobile',
+      standard7:'Déploiement sur Firebase',
+      premiumTitle: 'Premium',
+      premiumPrice: '2500 € TTC',
+      premium1: 'Design entièrement personnalisé',
+      premium2: 'Sections supplémentaires',
+      premium3: 'Optimisation SEO + AEO/GEO',
+      premium4: 'Intégration des réservations et formulaires de contact',
+      premium5: 'Support prioritaire',
+      premium6: 'Schéma LocalBusiness',
+      premium7: 'Tableau de bord analytique avancé',
+      premium8: 'Déploiement sur Firebase',
+      maintenanceTitle: 'Gestion et maintenance mensuelle',
+      maintenanceIntro: 'Gardez votre site à jour et performant.',
+      maintenanceStarter: 'Essentiel',
+      maintenanceStarterPrice: '250 €/mois TTC',
+      maintenanceStandard: 'Standard',
+      maintenanceStandardPrice: '450 €/mois TTC',
+      maintenancePremium: 'Premium',
+      maintenancePremiumPrice: '900 €/mois TTC',
     },
     de: {
       aboutLabel: 'International Business Administration',
@@ -368,6 +450,47 @@ export class HomeComponent implements AfterViewInit {
       gameDiscountUnlocked: 'Rabattcode freigeschaltet:',
       gamePlayAgain: 'Nochmal spielen',
       gameClose: 'Schließen',
+      servicesLabel: 'Dienstleistungen',
+      servicesTitle: 'Webseitenerstellung- Offene Offenlegung des Projekts (kontaktieren Sie mich, um Ihr Projekt vorzubereiten)',
+      servicesIntro: 'Ich entwickle moderne, schnelle und responsive Websites für Unternehmen, Selbstständige und Organisationen.',
+      recommended: 'Empfohlene Option',
+      starterTitle: 'Basis',
+      starterPrice: '1000 € inkl. MwSt.',
+      starter1: 'Einseitige Vorlage',
+      starter2: 'Grundlegende Inhalte',
+      starter3: 'Mobile Optimierung',
+      starter4: 'Hosting- und Domain-Einrichtung',
+      starter5: 'Grundlegende Leistungsoptimierung',
+      starter6: 'Geeignet für kleine Unternehmen',
+      starter7: 'Lieferung in 5 Tagen',
+      starter8: 'Firebase‑Hosting Einrichtung',
+      standardTitle: 'Standard',
+      standardPrice: '1400 € inkl. MwSt.',
+      standard1: 'Individuelles One-Page-Design',
+      standard2: 'SEO-Grundlagen',
+      standard3: 'Google Analytics Einrichtung',
+      standard4: 'Cookie-Richtlinie implementieren',
+      standard5: 'Ideal für kleine Unternehmen',
+      standard6: 'Mobile Optimierung',
+      standard7: 'Firebase‑Hosting Einrichtung',
+      premiumTitle: 'Premium',
+      premiumPrice: '2500 € inkl. MwSt.',
+      premium1: 'Individuelles Design',
+      premium2: 'Zusätzliche Seitenabschnitte',
+      premium3: 'SEO + AEO/GEO-Optimierung',
+      premium4: 'Buchungs- und Kontaktintegration',
+      premium5: 'Priorisierter Support',
+      premium6: 'LocalBusiness-Schema',
+      premium7: 'Erweitertes Analytics-Dashboard',
+      premium8: 'Firebase‑Hosting Einrichtung',
+      maintenanceTitle: 'Monatliche Wartung und Website-Betreuung',
+      maintenanceIntro: 'Halten Sie Ihre Website aktuell und leistungsstark.',
+      maintenanceStarter: 'Starter',
+      maintenanceStarterPrice: '250 €/Monat inkl. MwSt.',
+      maintenanceStandard: 'Standard',
+      maintenanceStandardPrice: '450 €/Monat inkl. MwSt.',
+      maintenancePremium: 'Premium',
+      maintenancePremiumPrice: '900 €./Monat inkl. MwSt.',
     }
   };
 
@@ -415,6 +538,17 @@ export class HomeComponent implements AfterViewInit {
     state: 'idle' as 'idle' | 'jumping' | 'moving',
     hoverTimer: 0
   };
+  private beetleImage = new Image();
+  private beetles: {
+    active: boolean;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    vx: number;
+    vy: number;
+    direction: 'left' | 'right' | 'up' | 'down';
+  }[] = [];
   // Audio
   private audioCtx: AudioContext | null = null;
 
@@ -432,6 +566,7 @@ export class HomeComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.checkCookieConsent();
     this.setupScrollTracking();
+    this.setupRevealAnimations();
 
     // Track the language currently being used
     this.trackEvent('engagement', 'language_view', this.currentLang);
@@ -440,6 +575,58 @@ export class HomeComponent implements AfterViewInit {
     this.cdr.detectChanges();
 });
   }
+    // ==================== SCROLL REVEAL ANIMATIONS ====================
+  private setupRevealAnimations() {
+  // Wait until Angular has finished rendering
+  setTimeout(() => {
+    const elements = Array.from(
+      document.querySelectorAll('.reveal, .reveal-img')
+    ) as HTMLElement[];
+
+    if (elements.length === 0) {
+      console.warn('[Reveal] No .reveal / .reveal-img elements found');
+      return;
+    }
+
+    console.log(`[Reveal] Observing ${elements.length} elements`);
+
+        const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: unobserve after first reveal
+                    // observer.unobserve(entry.target);
+                  } else {
+                    // Remove the class when it leaves → animation can play again later
+                    entry.target.classList.remove('visible');
+                  }
+                });
+              },
+            {
+              threshold: 0.1,
+              rootMargin: '0px 0px -20px 0px'
+            }
+          );
+
+          elements.forEach((el) => observer.observe(el));
+
+          // Safety net: force-visible any element already in the viewport
+          // (helps with elements that are above the fold on first load)
+          requestAnimationFrame(() => {
+            elements.forEach((el) => {
+              const rect = el.getBoundingClientRect();
+              const inView =
+                rect.top < window.innerHeight * 0.9 &&
+                rect.bottom > 0;
+
+              if (inView) {
+                el.classList.add('visible');
+              }
+            });
+          });
+        }, 400); // 400 ms is usually safe
+      }
 
   setLanguage(lang: 'en' | 'fr' | 'de') {
     this.currentLang = lang;
@@ -633,6 +820,11 @@ export class HomeComponent implements AfterViewInit {
     this.playTone(180, 0.12, 'sawtooth', 0.15); 
     setTimeout(() => this.playTone(140, 0.18, 'sawtooth', 0.12), 80);
   }
+  private playBeetleHitSound() {
+    this.playTone(220, 0.08, 'sawtooth', 0.12);
+    setTimeout(() => this.playTone(140, 0.12, 'sawtooth', 0.1), 60);
+    setTimeout(() => this.playTone(90, 0.15, 'square', 0.08), 130);
+  }
 
   // ==================== EASTER EGG ====================
   toggleEasterEgg() {
@@ -707,6 +899,7 @@ export class HomeComponent implements AfterViewInit {
     this.playerImage.src = './img/panda.webp';
     this.backgroundImage.src = './img/background.webp';
     this.bossImage.src = './img/méjean.webp';
+    this.beetleImage.src = './img/beetle.webp';
 
     this.loadLevel(this.level);
 
@@ -796,6 +989,24 @@ export class HomeComponent implements AfterViewInit {
       this.boss.hoverTimer = 0;
     } else {
       this.boss.active = false;
+    }
+    // Beetles from level 6 onwards
+    this.beetles = [];
+    if (level >= 6) {
+      for (let i = 0; i < 3; i++) {
+        const beetle = {
+          active: true,
+          x: 120 + i * 200 + Math.random() * 80,
+          y: 100 + Math.random() * 140,
+          width: 40,
+          height: 45,
+          vx: 0,
+          vy: 0,
+          direction: 'right' as 'left' | 'right' | 'up' | 'down'
+        };
+        this.setBeetleDirection(beetle, this.randomBeetleDirection());
+        this.beetles.push(beetle);
+      }
     }
   }
 
@@ -901,7 +1112,93 @@ export class HomeComponent implements AfterViewInit {
     default: return { x: 300, y: 200 };
   }
 }
+private randomBeetleDirection(): 'left' | 'right' | 'up' | 'down' {
+  const dirs: ('left' | 'right' | 'up' | 'down')[] = ['left', 'right', 'up', 'down'];
+  return dirs[Math.floor(Math.random() * dirs.length)];
+}
 
+private setBeetleDirection(
+  beetle: { direction: string; vx: number; vy: number },
+  dir: 'left' | 'right' | 'up' | 'down'
+) {
+  beetle.direction = dir;
+  const speed = 2.2 + this.level * 0.15;
+
+  beetle.vx = 0;
+  beetle.vy = 0;
+
+  switch (dir) {
+    case 'left':  beetle.vx = -speed; break;
+    case 'right': beetle.vx =  speed; break;
+    case 'up':    beetle.vy = -speed; break;
+    case 'down':  beetle.vy =  speed; break;
+  }
+}
+
+private pickNewBeetleDirection(
+  beetle: { direction: string; vx: number; vy: number },
+  exclude?: string
+) {
+  let newDir: 'left' | 'right' | 'up' | 'down';
+  do {
+    newDir = this.randomBeetleDirection();
+  } while (newDir === exclude);
+
+  this.setBeetleDirection(beetle, newDir);
+}
+
+private beetleWouldCollide(
+  beetle: { width: number; height: number },
+  nx: number,
+  ny: number
+): boolean {
+  const margin = 2;
+
+  // Screen edges
+  if (nx < 0 || nx + beetle.width > 800 || ny < 0 || ny + beetle.height > 320) {
+    return true;
+  }
+
+  // Platforms + ground
+  for (const p of this.platforms) {
+    if (
+      nx + margin < p.x + p.width &&
+      nx + beetle.width - margin > p.x &&
+      ny + margin < p.y + p.height &&
+      ny + beetle.height - margin > p.y
+    ) {
+      return true;
+    }
+  }
+
+  // Bamboo spikes
+  for (const s of this.spikes) {
+    const bambooTop = s.y - (s.tall ? 35 : 15);
+    if (
+      nx + margin < s.x + s.width &&
+      nx + beetle.width - margin > s.x &&
+      ny + margin < s.y + 20 &&
+      ny + beetle.height - margin > bambooTop
+    ) {
+      return true;
+    }
+  }
+
+  // Méjean (boss)
+  if (this.boss.active) {
+    const boss = this.boss;
+    if (
+      nx + margin < boss.x + boss.width - 10 &&
+      nx + beetle.width - margin > boss.x + 10 &&
+      ny + margin < boss.y + boss.height - 8 &&
+      ny + beetle.height - margin > boss.y + 8
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
       const life = 45 + Math.random() * 35;
@@ -1123,6 +1420,43 @@ export class HomeComponent implements AfterViewInit {
           this.die();
         }
       }
+      // ===== BEETLES (Level 6+) =====
+      for (const b of this.beetles) {
+        if (!b.active || this.gameOver) continue;
+
+        const nextX = b.x + b.vx;
+        const nextY = b.y + b.vy;
+
+        if (this.beetleWouldCollide(b, nextX, nextY)) {
+          this.pickNewBeetleDirection(b, b.direction);
+        } else {
+          b.x = nextX;
+          b.y = nextY;
+        }
+
+        // Collision with panda → bounce the panda away
+        if (
+          this.player.x < b.x + b.width &&
+          this.player.x + this.player.width > b.x &&
+          this.player.y < b.y + b.height &&
+          this.player.y + this.player.height > b.y
+        ) {
+          const dx = (this.player.x + this.player.width / 2) - (b.x + b.width / 2);
+          const dy = (this.player.y + this.player.height / 2) - (b.y + b.height / 2);
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+          const force = 9;
+          this.player.vx = (dx / dist) * force;
+          this.player.vy = (dy / dist) * force - 3;
+          this.player.jumping = true;
+
+          this.playBeetleHitSound();
+          this.triggerShake(5);
+          this.spawnParticles(b.x + b.width / 2, b.y + b.height / 2, '#a78bfa', 12);
+
+          this.pickNewBeetleDirection(b, b.direction);
+        }
+      }
 
       // Reach the door
       if (this.player.x > 720) {
@@ -1284,7 +1618,34 @@ export class HomeComponent implements AfterViewInit {
       }
       this.ctx.restore();
     }
+    // Beetles
+    if (this.beetleImage.complete && this.beetleImage.naturalWidth > 0) {
+      for (const b of this.beetles) {
+        if (!b.active) continue;
 
+        this.ctx.save();
+        this.ctx.translate(b.x + b.width / 2, b.y + b.height / 2);
+
+        let rotation = 0;
+        switch (b.direction) {
+          case 'up':    rotation = 0; break;
+          case 'right': rotation = Math.PI / 2; break;
+          case 'down':  rotation = Math.PI; break;
+          case 'left':  rotation = -Math.PI / 2; break;
+        }
+        this.ctx.rotate(rotation);
+
+        this.ctx.drawImage(
+          this.beetleImage,
+          -b.width / 2,
+          -b.height / 2,
+          b.width,
+          b.height
+        );
+
+        this.ctx.restore();
+      }
+    }
     // Particles
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
