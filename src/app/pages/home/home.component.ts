@@ -179,7 +179,7 @@ export class HomeComponent implements AfterViewInit {
       premium6: 'LocalBusiness schema',
       premium7: 'Advanced analytics dashboard',
       premium8: 'Deployment to Firebase- free, subject to Google\'s terms of use',
-      maintenanceTitle: 'Flexible Monthly Maintenance & Management (Pay-as-you-go',
+      maintenanceTitle: 'Flexible Monthly Maintenance & Management (Pay-as-you-go)',
       maintenanceIntro: 'Keep your website updated and performing at its best, when you need it.',
       maintenanceStarter: 'Starter',
       maintenanceStarterPrice: '€250/month VAT incl.',
