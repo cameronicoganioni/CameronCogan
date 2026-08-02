@@ -27,7 +27,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-                
               }
             ],
             "styles": ["src/tailwind.css", "src/styles.scss"]
