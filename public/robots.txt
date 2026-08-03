@@ -1,6 +1,3 @@
-User-agent: *
-Allow: /
-
 # OpenAI
 User-agent: GPTBot
 Disallow: /
