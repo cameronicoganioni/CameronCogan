@@ -6,7 +6,7 @@ User-agent: ChatGPT-User
 Allow: /
 
 User-agent: GPTBot
-Disallow: /
+Allow: /
 # Anthropic
 User-agent: Claude-SearchBot
 Allow: /
