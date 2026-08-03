@@ -1,30 +1,36 @@
 User-agent: *
 Allow: /
 
-# Traditional search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# AI Search Crawlers
+# OpenAI
 User-agent: GPTBot
-Allow: /
+Disallow: /
 
 User-agent: OAI-SearchBot
 Allow: /
 
+# Anthropic
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: ClaudeBot
+# Google
+User-agent: Googlebot
 Allow: /
 
 User-agent: Google-Extended
-Allow: /
+Disallow: /
 
+# Amazon
 User-agent: Amazonbot
-Allow: /
+Disallow: /
 
 Sitemap: https://cameroncogan.com/sitemap.xml
