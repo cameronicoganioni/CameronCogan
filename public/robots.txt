@@ -1,12 +1,10 @@
 # OpenAI
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
+User-agent: OpenAI-SearchBot
 Allow: /
 
 User-agent: GPTBot
 Allow: /
+
 # Anthropic
 User-agent: Claude-SearchBot
 Allow: /
@@ -34,5 +32,12 @@ Disallow: /
 # Amazon
 User-agent: Amazonbot
 Disallow: /
+
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
 
 Sitemap: https://cameroncogan.com/sitemap.xml
