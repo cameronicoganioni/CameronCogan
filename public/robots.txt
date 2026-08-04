@@ -9,17 +9,8 @@ Allow: /
 User-agent: Claude-SearchBot
 Allow: /
 
-User-agent: Claude-User
-Allow: /
-
-User-agent: ClaudeBot
-Disallow: /
-
 # Perplexity
 User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
 Allow: /
 
 # Google
@@ -27,11 +18,11 @@ User-agent: Googlebot
 Allow: /
 
 User-agent: Google-Extended
-Disallow: /
+Allow: /
 
 # Amazon
 User-agent: Amazonbot
-Disallow: /
+Allow: /
 
 
 User-agent: Bingbot
