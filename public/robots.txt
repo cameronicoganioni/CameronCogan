@@ -1,7 +1,4 @@
 # OpenAI
-User-agent: OAI-SearchBot
-Allow: /
-
 User-agent: GPTBot
 Allow: /
 
