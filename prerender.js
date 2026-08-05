@@ -153,13 +153,23 @@ async function runPrerender() {
 
       // 3. Extract final HTML and strip splash as a safety net
       let html = await page.content();
+      // After stripping the splash screen
       html = html.replace(/<app-splash-screen[\s\S]*?<\/app-splash-screen>/gi, '');
+      // Optional: hide cookie banner so it doesn't appear in the static snapshot
+      html = html.replace(
+        /id="cookie-banner"[^>]*class="([^"]*)"/,
+        'id="cookie-banner" class="$1 hidden"'
+      );
+      // or more aggressively remove it:
+      // html = html.replace(/<div[^>]*id="cookie-banner"[\s\S]*?<\/div>\s*(?=<footer|<\/app-home)/i, '');
 
       // ─── Verification checks ───────────────────────────────────
       const checks = {
         hasAppRoot: html.includes('<app-root'),
         hasAboutSection: html.includes('id="about"') || html.includes("id='about'"),
         hasProjectsSection: html.includes('id="projects"') || html.includes("id='projects'"),
+        hasServicesSection: html.includes('id="services"') || html.includes("id='services'"),
+        hasExperienceSection: html.includes('id="experience"') || html.includes("id='experience'"),
         hasContactSection: html.includes('id="contact"') || html.includes("id='contact'"),
         hasRealContent: html.length > 15000,
         noSplash: !html.includes('app-splash-screen')
@@ -178,6 +188,8 @@ async function runPrerender() {
       console.log(`   has <app-root>     : ${checks.hasAppRoot ? '✅' : '❌'}`);
       console.log(`   has #about         : ${checks.hasAboutSection ? '✅' : '❌'}`);
       console.log(`   has #projects      : ${checks.hasProjectsSection ? '✅' : '❌'}`);
+      console.log(`   has #services      : ${checks.hasServicesSection ? '✅' : '❌'}`);
+      console.log(`   has #experience    : ${checks.hasExperienceSection ? '✅' : '❌'}`);
       console.log(`   has #contact       : ${checks.hasContactSection ? '✅' : '❌'}`);
       console.log(`   substantial size   : ${checks.hasRealContent ? '✅' : '❌'}`);
       console.log(`   splash removed     : ${checks.noSplash ? '✅' : '❌'}`);
