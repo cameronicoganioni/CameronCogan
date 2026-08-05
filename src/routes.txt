@@ -1,0 +1,3 @@
+# Public Routes
+
+/ - Home page

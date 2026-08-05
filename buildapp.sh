@@ -1,2 +1,5 @@
+echo "starting build!"
 npm ci && npm run build
-echo "build app complete"
+echo "npm Clean Install and npm Runbuild Successful!"
+node prerender.js
+echo "Prerender Complete!"
