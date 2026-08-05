@@ -5,6 +5,12 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 # Anthropic
 User-agent: Claude-SearchBot
 Allow: /
