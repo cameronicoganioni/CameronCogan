@@ -1,5 +1,6 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -48,11 +49,30 @@ export class NavigationComponent implements OnInit {
     return this.translations[this.currentLang];
   }
 
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.currentLang = this.getLangFromUrl();
+    localStorage.setItem('preferredLang', this.currentLang);
+  }
+
   ngOnInit() {
-    const savedLang = localStorage.getItem('preferredLang') as 'en' | 'fr' | 'de';
-    if (savedLang) {
-      this.currentLang = savedLang;
+    this.router.events.subscribe(() => {
+      const lang = this.getLangFromUrl();
+      if (lang !== this.currentLang) {
+        this.currentLang = lang;
+        localStorage.setItem('preferredLang', lang);
+      }
+    });
+  }
+
+  private getLangFromUrl(): 'en' | 'fr' | 'de' {
+    const segment = this.router.url.split('/').filter(Boolean)[0];
+    if (segment === 'en' || segment === 'fr' || segment === 'de') {
+      return segment;
     }
+    return 'en';
   }
 
   toggleMenu() {
@@ -69,15 +89,17 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  // Language switcher
+  // Language switcher – navigate instead of reloading
   setLanguage(lang: 'en' | 'fr' | 'de') {
+    if (this.currentLang === lang) return;
+
     this.currentLang = lang;
     localStorage.setItem('preferredLang', lang);
-    // Reload so the Home component picks up the new language
-    window.location.reload();
+    this.trackEvent('engagement', 'language_select', lang);
+    this.router.navigate(['/', lang]);
   }
 
-    // Open Cookie Policy modal
+  // Open Cookie Policy modal
   openCookiePolicy() {
     window.dispatchEvent(new CustomEvent('open-cookie-policy'));
   }

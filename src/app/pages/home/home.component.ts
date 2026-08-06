@@ -1,6 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild, ElementRef, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -44,7 +45,6 @@ export class HomeComponent implements AfterViewInit {
       projectsLabel: 'Projects',
       projectsTitle: 'Featured Work',
       projectsIntro: 'A selection of projects demonstrating my experience in business analytics, marketing strategy, and development.',
-      // Project 1
       project1Category: 'Business Analytics',
       project1Title: 'Export Analytics Dashboard',
       project1Text: 'This graph was created using imported Google and LinkedIn analytics to observe website use in relation to invites to follow deCogan. Results show a correlation between active users on a site and accepted invitations to follow. Results show that having a website could lead to higher success rates in follow invites.',
@@ -52,7 +52,6 @@ export class HomeComponent implements AfterViewInit {
       project1Tag2: 'Data Visualisation',
       project1Tag3: 'Google Analytics Export',
       project1Tag4: 'LinkedIn Analytics Export',
-      // Project 2
       project2Category: 'Web Analytics',
       project2Title: 'Google Analytics Setup on cameroncogan.com',
       project2Text: 'This image shows detailed custom event tracking.',
@@ -63,7 +62,6 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Experience',
       experienceTitle: 'Professional Journey',
       experienceIntro: 'Roles and contributions in marketing, communications, and international business.',
-      // Project 3
       project3Category: 'Interactive Marketing',
       project3Title: 'Brookie Panda Game Easter Egg',
       project3Text: 'An interactive retro style game hidden on the website as an Easter egg. Visitors who engage with the game can unlock discount codes, turning a playful experience into a practical marketing tool that rewards attention and increases time spent on the site.',
@@ -71,7 +69,6 @@ export class HomeComponent implements AfterViewInit {
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Marketing Engagement',
       project3Tag4: 'Discount Codes',
-      // Experience 1 - deCogan
       exp1Title: 'Assistant Marketing and Communication, deCogan',
       exp1Date: '06/26-08/26 (3 months)',
       exp1Text: 'Supporting marketing strategies and communication initiatives, managing social media and completed LinkedIn outreach at deCogan. Focused on content creation, CRM, brand development and data-driven insights (including Google & LinkedIn analytics), SEO- thereby meeting my first year study requirements.',
@@ -79,7 +76,6 @@ export class HomeComponent implements AfterViewInit {
       exp1Tag2: 'Content Creation',
       exp1Tag3: 'Analytics',
       exp1Tag4: 'Brand Development',
-      // Experience 2 - TourPourLaVie
       exp2Title: 'Ticket Sales Volunteer, Photos & Videos, TourPourLaVie',
       exp2Date: '16/05/26',
       exp2Text: 'Volunteered as Ticket Sales Assistant for a charity car exhibition benefiting sick and disabled children. Managed ticket sales and visitor flow while also helping the promotional videos and photographs of the displayed vehicles. The event was organized by TourPourLaVie to raise funds for Sourire à la Vie.',
@@ -87,7 +83,6 @@ export class HomeComponent implements AfterViewInit {
       exp2Tag2: 'Ticket Sales',
       exp2Tag3: 'Photography & Videography',
       exp2Tag4: 'Volunteering',
-      // Experience 3 - Complical
       exp3Title: 'Application Tester (Skill-based Volunteering), Complical',
       exp3Date: '04/25-05/25',
       exp3Text: 'Provided user-based feedback and identified bugs while testing the Complical site. Used Jira as the main project management tool to document issues, track tasks, and contribute to product improvements.',
@@ -95,7 +90,6 @@ export class HomeComponent implements AfterViewInit {
       exp3Tag2: 'Jira',
       exp3Tag3: 'Bug Reporting',
       exp3Tag4: 'Quality Assurance',
-      // Experience 4 - Aeternum
       exp4Title: 'Marketing Director, Aeternum',
       exp4Date: '09/22-06/23',
       exp4Text: 'Acted as Marketing Director in a high school business project competition. Contributed skills in graphic design to media displays and social media. Participated in the West Berkshire round of Young Enterprise competition. Completed market research, attended trade fairs, managed YouTube account.',
@@ -196,7 +190,6 @@ export class HomeComponent implements AfterViewInit {
       projectsLabel: 'Projets',
       projectsTitle: 'Portfolio',
       projectsIntro: 'Une sélection de projets démontrant mon expérience en analyse commerciale, stratégie marketing et développement.',
-      // Project 1
       project1Category: 'Analyse commerciale',
       project1Title: 'Export Analytics',
       project1Text: 'Ce graphique a été créé à l\'aide des données de Google Analytics et de LinkedIn afin d\'analyser le lien entre l\'activité sur le site web et les invitations à suivre la page deCogan. On observe une corrélation entre le nombre d\'utilisateurs actifs et le nombre d\'invitations acceptées. Cela laisse penser que la présence d\'un site web pourrait favoriser un meilleur taux d\'acceptation des invitations.',
@@ -204,7 +197,6 @@ export class HomeComponent implements AfterViewInit {
       project1Tag2: 'Visualisation de données',
       project1Tag3: 'Export Google Analytics',
       project1Tag4: 'Export LinkedIn Analytics',
-      // Project 2
       project2Category: 'Analyse web',
       project2Title: 'Mise en place de Google Analytics sur cameroncogan.com',
       project2Text: 'Cette image montre le suivi détaillé d\'événements personnalisés.',
@@ -215,7 +207,6 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Expérience',
       experienceTitle: 'Parcours professionnel',
       experienceIntro: 'Rôles et contributions en marketing, communication et commerce international.',
-      // Project 3
       project3Category: 'Marketing interactif',
       project3Title: 'Jeu caché Brookie Panda',
       project3Text: 'Un jeu interactif style retro caché sur le site comme Easter egg. Les visiteurs qui y jouent peuvent débloquer des codes de réduction, transformant une expérience ludique en outil marketing qui récompense l\'attention et augmente le temps passé sur le site.',
@@ -223,7 +214,6 @@ export class HomeComponent implements AfterViewInit {
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Engagement marketing',
       project3Tag4: 'Codes de réduction',
-      // Experience 1
       exp1Title: 'Assistant Marketing et Communication, deCogan',
       exp1Date: '06/26-08/26 (3 mois)',
       exp1Text: 'Soutien aux stratégies marketing et initiatives de communication, gestion des réseaux sociaux et outreach LinkedIn chez deCogan. Axé sur la création de contenu, le CRM, le développement de la marque et les insights data-driven (Google & LinkedIn analytics), ainsi que le SEO, répondant ainsi aux exigences de ma première année d\'études.',
@@ -231,7 +221,6 @@ export class HomeComponent implements AfterViewInit {
       exp1Tag2: 'Création de contenu',
       exp1Tag3: 'Analytics',
       exp1Tag4: 'Développement de marque',
-      // Experience 2
       exp2Title: 'Bénévole billetterie, photos & vidéos, TourPourLaVie',
       exp2Date: '16/05/26',
       exp2Text: 'Bénévole en tant qu\'assistant billetterie pour une exposition automobile caritative au profit d\'enfants malades et handicapés. Gestion des ventes de billets et du flux de visiteurs, tout en aidant aux vidéos promotionnelles et photographies des véhicules exposés. L\'événement était organisé par TourPourLaVie pour collecter des fonds en faveur de Sourire à la Vie.',
@@ -239,7 +228,6 @@ export class HomeComponent implements AfterViewInit {
       exp2Tag2: 'Vente de billets',
       exp2Tag3: 'Photo & Vidéo',
       exp2Tag4: 'Bénévolat',
-      // Experience 3
       exp3Title: 'Testeur d\'application (bénévolat de compétences), Complical',
       exp3Date: '04/25-05/25',
       exp3Text: 'Fourniture de retours utilisateurs et identification de bugs lors des tests du site Complical. Utilisation de Jira comme outil principal de gestion de projet pour documenter les problèmes, suivre les tâches et contribuer aux améliorations du produit.',
@@ -247,7 +235,6 @@ export class HomeComponent implements AfterViewInit {
       exp3Tag2: 'Jira',
       exp3Tag3: 'Rapport de bugs',
       exp3Tag4: 'Assurance qualité',
-      // Experience 4
       exp4Title: 'Directeur Marketing, Aeternum',
       exp4Date: '09/22-06/23',
       exp4Text: 'Directeur Marketing dans un projet entrepreneurial au lycée. Contribution en design graphique pour les supports médias et les réseaux sociaux. Participation à la phase West Berkshire du concours Young Enterprise. Réalisation d\'études de marché, participation à des salons professionnels et gestion du compte YouTube.',
@@ -310,7 +297,7 @@ export class HomeComponent implements AfterViewInit {
       starter5: 'Optimisation des performances',
       starter6: 'Adapté aux petites entreprises',
       starter7: 'Livraison estimée à 5 jours',
-      starter8:'Déploiement sur Firebase- gratuit, sous réserve des conditions d\'utilisation de Google',
+      starter8: 'Déploiement sur Firebase- gratuit, sous réserve des conditions d\'utilisation de Google',
       recommended: 'Option recommandée',
       standardTitle: 'Standard',
       standardPrice: '1400 € TTC',
@@ -320,7 +307,7 @@ export class HomeComponent implements AfterViewInit {
       standard4: 'Mise en place de la politique de cookies',
       standard5: 'Idéal pour les petites entreprises',
       standard6: 'Optimisation mobile',
-      standard7:'Déploiement sur Firebase- gratuit, sous réserve des conditions d\'utilisation de Google',
+      standard7: 'Déploiement sur Firebase- gratuit, sous réserve des conditions d\'utilisation de Google',
       premiumTitle: 'Premium',
       premiumPrice: '2500 € TTC',
       premium1: 'Design entièrement personnalisé',
@@ -348,7 +335,6 @@ export class HomeComponent implements AfterViewInit {
       projectsLabel: 'Projekte',
       projectsTitle: 'Ausgewählte Arbeiten',
       projectsIntro: 'Eine Auswahl an Projekten, die meine Erfahrung in Business Analytics, Marketingstrategie und Entwicklung zeigen.',
-      // Project 1
       project1Category: 'Business Analytics',
       project1Title: 'Export Analytics Dashboard',
       project1Text: 'Dieses Diagramm wurde mit importierten Google und LinkedIn-Analytics erstellt, um die Website-Nutzung im Verhältnis zu Follow-Einladungen für deCogan zu beobachten. Die Ergebnisse zeigen eine Korrelation zwischen aktiven Nutzern einer Website und akzeptierten Einladungen. Eine eigene Website kann die Erfolgsquote von Follow-Einladungen erhöhen.',
@@ -356,7 +342,6 @@ export class HomeComponent implements AfterViewInit {
       project1Tag2: 'Datenvisualisierung',
       project1Tag3: 'Google Analytics Export',
       project1Tag4: 'LinkedIn Analytics Export',
-      // Project 2
       project2Category: 'Web Analytics',
       project2Title: 'Google Analytics Setup auf cameroncogan.com',
       project2Text: 'Dieses Bild zeigt detailliertes Custom-Event-Tracking.',
@@ -367,7 +352,6 @@ export class HomeComponent implements AfterViewInit {
       experienceLabel: 'Erfahrung',
       experienceTitle: 'Beruflicher Werdegang',
       experienceIntro: 'Rollen und Beiträge in Marketing, Kommunikation und internationalem Business.',
-      // Project 3
       project3Category: 'Interaktives Marketing',
       project3Title: 'Brookie Panda Spiel-Easter-Egg',
       project3Text: 'Ein interaktives retro-Spiel, das als Easter Egg auf der Website versteckt ist. Besucher, die mit dem Spiel interagieren, können Rabattcodes freischalten, so wird ein spielerisches Erlebnis zu einem praktischen Marketing-Tool, das Aufmerksamkeit belohnt und die Verweildauer auf der Seite erhöht.',
@@ -375,7 +359,6 @@ export class HomeComponent implements AfterViewInit {
       project3Tag2: 'Easter Egg',
       project3Tag3: 'Marketing-Engagement',
       project3Tag4: 'Rabattcodes',
-      // Experience 1
       exp1Title: 'Assistent Marketing und Kommunikation, deCogan',
       exp1Date: '06/26-08/26 (3 Monate)',
       exp1Text: 'Unterstützung von Marketingstrategien und Kommunikationsinitiativen, Verwaltung von Social Media und LinkedIn-Outreach bei deCogan. Fokus auf Content-Erstellung, CRM, Markenentwicklung und datengetriebene Insights (inkl. Google- & LinkedIn-Analytics) sowie SEO, damit erfüllte ich die Anforderungen meines ersten Studienjahres.',
@@ -383,7 +366,6 @@ export class HomeComponent implements AfterViewInit {
       exp1Tag2: 'Content-Erstellung',
       exp1Tag3: 'Analytics',
       exp1Tag4: 'Markenentwicklung',
-      // Experience 2
       exp2Title: 'Ticketverkauf-Volunteer, Fotos & Videos, TourPourLaVie',
       exp2Date: '16/05/26',
       exp2Text: 'Ehrenamtlicher Einsatz als Ticketverkaufs-Assistent bei einer Charity-Autoausstellung zugunsten kranker und behinderter Kinder. Verwaltung des Ticketverkaufs und des Besucherflusses sowie Unterstützung bei Werbevideos und Fotografien der ausgestellten Fahrzeuge. Die Veranstaltung wurde von TourPourLaVie organisiert, um Spenden für Sourire à la Vie zu sammeln.',
@@ -391,7 +373,6 @@ export class HomeComponent implements AfterViewInit {
       exp2Tag2: 'Ticketverkauf',
       exp2Tag3: 'Fotografie & Videografie',
       exp2Tag4: 'Ehrenamt',
-      // Experience 3
       exp3Title: 'Application Tester (kompetenzbasiertes Volunteering), Complical',
       exp3Date: '04/25-05/25',
       exp3Text: 'Bereitstellung von Nutzerfeedback und Identifikation von Bugs beim Testen der Complical-Website. Verwendung von Jira als zentrales Projektmanagement-Tool zur Dokumentation von Problemen, Nachverfolgung von Aufgaben und Beitrag zu Produktverbesserungen.',
@@ -399,7 +380,6 @@ export class HomeComponent implements AfterViewInit {
       exp3Tag2: 'Jira',
       exp3Tag3: 'Bug-Reporting',
       exp3Tag4: 'Qualitätssicherung',
-      // Experience 4
       exp4Title: 'Marketing Director, Aeternum',
       exp4Date: '09/22-06/23',
       exp4Text: 'Marketing Director in einem schulischen Unternehmensprojekt-Wettbewerb. Beitrag mit Grafikdesign-Kenntnissen für Mediendisplays und Social Media. Teilnahme an der West-Berkshire-Runde des Young-Enterprise-Wettbewerbs. Durchführung von Marktforschung, Besuch von Messen und Verwaltung des YouTube-Kanals.',
@@ -510,15 +490,15 @@ export class HomeComponent implements AfterViewInit {
   private playerImage = new Image();
   private backgroundImage = new Image();
   private key = { x: 0, y: 0, collected: false };
-  private hasKey = false;   // whether the player has collected the key for the current level
+  private hasKey = false;
   private platforms: {
     x: number;
     y: number;
     width: number;
     height: number;
-    vx?: number;        // horizontal speed (for moving platforms)
-    startX?: number;    // original x (to move back and forth)
-    range?: number;     // how far it can travel
+    vx?: number;
+    startX?: number;
+    range?: number;
   }[] = [];
   private chocolates: { x: number; y: number; collected: boolean }[] = [];
   private spikes: { x: number; y: number; width: number; tall: boolean }[] = [];
@@ -549,18 +529,28 @@ export class HomeComponent implements AfterViewInit {
     vy: number;
     direction: 'left' | 'right' | 'up' | 'down';
   }[] = [];
-  // Audio
   private audioCtx: AudioContext | null = null;
 
   constructor(
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    // Load language as early as possible
-    const savedLang = localStorage.getItem('preferredLang') as 'en' | 'fr' | 'de';
-    if (savedLang) {
-      this.currentLang = savedLang;
-    }
+    this.currentLang = this.getLangFromUrl();
+    localStorage.setItem('preferredLang', this.currentLang);
+    this.updateSeo();
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe(() => {
+      const lang = this.getLangFromUrl();
+      if (lang !== this.currentLang) {
+        this.currentLang = lang;
+        localStorage.setItem('preferredLang', lang);
+        this.updateSeo();
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -568,75 +558,121 @@ export class HomeComponent implements AfterViewInit {
     this.setupScrollTracking();
     this.setupRevealAnimations();
 
-    // Track the language currently being used
     this.trackEvent('engagement', 'language_view', this.currentLang);
     window.addEventListener('open-cookie-policy', () => {
-    this.showCookiePolicy = true;
-    this.cdr.detectChanges();
-});
+      this.showCookiePolicy = true;
+      this.cdr.detectChanges();
+    });
   }
-    // ==================== SCROLL REVEAL ANIMATIONS ====================
-  private setupRevealAnimations() {
-  // Wait until Angular has finished rendering
-  setTimeout(() => {
-    const elements = Array.from(
-      document.querySelectorAll('.reveal, .reveal-img')
-    ) as HTMLElement[];
 
-    if (elements.length === 0) {
-      console.warn('[Reveal] No .reveal / .reveal-img elements found');
-      return;
+  private getLangFromUrl(): 'en' | 'fr' | 'de' {
+    const segment = this.router.url.split('/').filter(Boolean)[0];
+    if (segment === 'en' || segment === 'fr' || segment === 'de') {
+      return segment;
+    }
+    return 'en';
+  }
+
+  private updateSeo() {
+    const titles = {
+      en: 'Cameron Cogan | Digital Marketing, SEO & Business Portfolio',
+      fr: 'Cameron Cogan | Marketing Digital, SEO & Portfolio Business',
+      de: 'Cameron Cogan | Digitales Marketing, SEO & Business Portfolio'
+    };
+
+    const descriptions = {
+      en: 'Cameron Cogan- International Business Administration student at Montpellier Business School. Specialising in digital marketing, SEO, analytics, AI and automation.',
+      fr: 'Cameron Cogan- étudiant en BIBA à Montpellier Business School. Spécialisé en marketing digital, SEO, analytics, IA et automatisation.',
+      de: 'Cameron Cogan- Student der BIBA an der Montpellier Business School. Schwerpunkt: digitales Marketing, SEO, Analytics, KI und Automatisierung.'
+    };
+
+    document.documentElement.lang = this.currentLang;
+    document.title = titles[this.currentLang];
+
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute('content', descriptions[this.currentLang]);
     }
 
-    console.log(`[Reveal] Observing ${elements.length} elements`);
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', `https://cameroncogan.com/${this.currentLang}`);
+    }
 
-        const observer = new IntersectionObserver(
-              (entries) => {
-                entries.forEach((entry) => {
-                  if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Optional: unobserve after first reveal
-                    // observer.unobserve(entry.target);
-                  } else {
-                    // Remove the class when it leaves → animation can play again later
-                    entry.target.classList.remove('visible');
-                  }
-                });
-              },
-            {
-              threshold: 0.1,
-              rootMargin: '0px 0px -20px 0px'
-            }
-          );
+    this.setMetaProperty('og:url', `https://cameroncogan.com/${this.currentLang}`);
+    this.setMetaProperty('og:title', titles[this.currentLang]);
+    this.setMetaProperty('og:description', descriptions[this.currentLang]);
+    this.setMetaProperty(
+      'og:locale',
+      this.currentLang === 'en' ? 'en_GB' : this.currentLang === 'fr' ? 'fr_FR' : 'de_DE'
+    );
+  }
 
-          elements.forEach((el) => observer.observe(el));
+  private setMetaProperty(property: string, content: string) {
+    let el = document.querySelector(`meta[property="${property}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('property', property);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  }
 
-          // Safety net: force-visible any element already in the viewport
-          // (helps with elements that are above the fold on first load)
-          requestAnimationFrame(() => {
-            elements.forEach((el) => {
-              const rect = el.getBoundingClientRect();
-              const inView =
-                rect.top < window.innerHeight * 0.9 &&
-                rect.bottom > 0;
+  private setupRevealAnimations() {
+    setTimeout(() => {
+      const elements = Array.from(
+        document.querySelectorAll('.reveal, .reveal-img')
+      ) as HTMLElement[];
 
-              if (inView) {
-                el.classList.add('visible');
-              }
-            });
-          });
-        }, 400); // 400 ms is usually safe
+      if (elements.length === 0) {
+        console.warn('[Reveal] No .reveal / .reveal-img elements found');
+        return;
       }
 
+      console.log(`[Reveal] Observing ${elements.length} elements`);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            } else {
+              entry.target.classList.remove('visible');
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -20px 0px'
+        }
+      );
+
+      elements.forEach((el) => observer.observe(el));
+
+      requestAnimationFrame(() => {
+        elements.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          const inView =
+            rect.top < window.innerHeight * 0.9 &&
+            rect.bottom > 0;
+
+          if (inView) {
+            el.classList.add('visible');
+          }
+        });
+      });
+    }, 400);
+  }
+
   setLanguage(lang: 'en' | 'fr' | 'de') {
+    if (this.currentLang === lang) return;
+
     this.currentLang = lang;
     localStorage.setItem('preferredLang', lang);
 
-    // Track language switch
     this.trackEvent('engagement', 'language_select', lang);
-
-    // Reload so the Home component picks up the new language
-    window.location.reload();
+    this.updateSeo();
+    this.router.navigate(['/', lang]);
   }
 
   // ==================== COOKIE + GOOGLE ANALYTICS ====================
@@ -817,7 +853,7 @@ export class HomeComponent implements AfterViewInit {
     setTimeout(() => this.playTone(140, 0.08, 'square', 0.07), 50);
   }
   private playBossJumpSound() {
-    this.playTone(180, 0.12, 'sawtooth', 0.15); 
+    this.playTone(180, 0.12, 'sawtooth', 0.15);
     setTimeout(() => this.playTone(140, 0.18, 'sawtooth', 0.12), 80);
   }
   private playBeetleHitSound() {
@@ -923,9 +959,7 @@ export class HomeComponent implements AfterViewInit {
     this.shakeIntensity = 0;
 
     this.backgroundImage.src = this.getBackgroundForLevel(level);
-    
 
-    // Platforms
     this.platforms = [{ x: 0, y: 320, width: 800, height: 80 }];
 
     const platformCount = Math.min(4 + Math.floor(level * 0.8), 11);
@@ -951,7 +985,6 @@ export class HomeComponent implements AfterViewInit {
       this.platforms.push(platform);
     }
 
-    // Spikes
     this.spikes = [];
     const spikeCount = 3 + Math.floor(level * 1.2);
     for (let i = 0; i < spikeCount; i++) {
@@ -963,7 +996,6 @@ export class HomeComponent implements AfterViewInit {
       });
     }
 
-    // Chocolates
     this.chocolates = [];
     const chocolateCount = 5 + Math.floor(level / 1.5);
     for (let i = 0; i < chocolateCount; i++) {
@@ -973,11 +1005,11 @@ export class HomeComponent implements AfterViewInit {
         collected: false
       });
     }
-    // Key (required to open door)
+
     const keyPos = this.getKeyPosition(level);
     this.key = { x: keyPos.x, y: keyPos.y, collected: false };
     this.hasKey = false;
-    // Boss only on level 10
+
     if (level === 10) {
       this.boss.active = true;
       this.boss.x = 680;
@@ -990,7 +1022,7 @@ export class HomeComponent implements AfterViewInit {
     } else {
       this.boss.active = false;
     }
-    // Beetles from level 6 onwards
+
     this.beetles = [];
     if (level >= 6) {
       for (let i = 0; i < 3; i++) {
@@ -1087,7 +1119,6 @@ export class HomeComponent implements AfterViewInit {
         doorDark: '#d97706'
       };
     }
-    // Level 10
     return {
       ground: '#00563F',
       platform: '#355E3B',
@@ -1097,108 +1128,107 @@ export class HomeComponent implements AfterViewInit {
       doorDark: '#ca8a04'
     };
   }
+
   private getKeyPosition(level: number) {
-  switch (level) {
-    case 1: return { x: 220, y: 240 };           // top of first platform
-    case 2: return { x: 380, y: 180 };           // between bamboo 1 and 2
-    case 3: return { x: 520, y: 160 };           // between bamboo 2 and 3
-    case 4: return { x: 460, y: 210 };           // middle platform
-    case 5: return { x: 480, y: 260 };           // below middle platform
-    case 6: return { x: 680, y: 160 };           // just above the door
-    case 7: return { x: 580, y: 170 };           // between bamboo 3 and 4
-    case 8: return { x: 400, y: 180 };           // middle of the screen
-    case 9: return { x: 320, y: 190 };           // left of 6th bamboo
-    case 10: return { x: 520, y: 220 };          // top of fourth platform
-    default: return { x: 300, y: 200 };
-  }
-}
-private randomBeetleDirection(): 'left' | 'right' | 'up' | 'down' {
-  const dirs: ('left' | 'right' | 'up' | 'down')[] = ['left', 'right', 'up', 'down'];
-  return dirs[Math.floor(Math.random() * dirs.length)];
-}
-
-private setBeetleDirection(
-  beetle: { direction: string; vx: number; vy: number },
-  dir: 'left' | 'right' | 'up' | 'down'
-) {
-  beetle.direction = dir;
-  const speed = 2.2 + this.level * 0.15;
-
-  beetle.vx = 0;
-  beetle.vy = 0;
-
-  switch (dir) {
-    case 'left':  beetle.vx = -speed; break;
-    case 'right': beetle.vx =  speed; break;
-    case 'up':    beetle.vy = -speed; break;
-    case 'down':  beetle.vy =  speed; break;
-  }
-}
-
-private pickNewBeetleDirection(
-  beetle: { direction: string; vx: number; vy: number },
-  exclude?: string
-) {
-  let newDir: 'left' | 'right' | 'up' | 'down';
-  do {
-    newDir = this.randomBeetleDirection();
-  } while (newDir === exclude);
-
-  this.setBeetleDirection(beetle, newDir);
-}
-
-private beetleWouldCollide(
-  beetle: { width: number; height: number },
-  nx: number,
-  ny: number
-): boolean {
-  const margin = 2;
-
-  // Screen edges
-  if (nx < 0 || nx + beetle.width > 800 || ny < 0 || ny + beetle.height > 320) {
-    return true;
-  }
-
-  // Platforms + ground
-  for (const p of this.platforms) {
-    if (
-      nx + margin < p.x + p.width &&
-      nx + beetle.width - margin > p.x &&
-      ny + margin < p.y + p.height &&
-      ny + beetle.height - margin > p.y
-    ) {
-      return true;
+    switch (level) {
+      case 1: return { x: 220, y: 240 };
+      case 2: return { x: 380, y: 180 };
+      case 3: return { x: 520, y: 160 };
+      case 4: return { x: 460, y: 210 };
+      case 5: return { x: 480, y: 260 };
+      case 6: return { x: 680, y: 160 };
+      case 7: return { x: 580, y: 170 };
+      case 8: return { x: 400, y: 180 };
+      case 9: return { x: 320, y: 190 };
+      case 10: return { x: 520, y: 220 };
+      default: return { x: 300, y: 200 };
     }
   }
 
-  // Bamboo spikes
-  for (const s of this.spikes) {
-    const bambooTop = s.y - (s.tall ? 35 : 15);
-    if (
-      nx + margin < s.x + s.width &&
-      nx + beetle.width - margin > s.x &&
-      ny + margin < s.y + 20 &&
-      ny + beetle.height - margin > bambooTop
-    ) {
-      return true;
+  private randomBeetleDirection(): 'left' | 'right' | 'up' | 'down' {
+    const dirs: ('left' | 'right' | 'up' | 'down')[] = ['left', 'right', 'up', 'down'];
+    return dirs[Math.floor(Math.random() * dirs.length)];
+  }
+
+  private setBeetleDirection(
+    beetle: { direction: string; vx: number; vy: number },
+    dir: 'left' | 'right' | 'up' | 'down'
+  ) {
+    beetle.direction = dir;
+    const speed = 2.2 + this.level * 0.15;
+
+    beetle.vx = 0;
+    beetle.vy = 0;
+
+    switch (dir) {
+      case 'left':  beetle.vx = -speed; break;
+      case 'right': beetle.vx =  speed; break;
+      case 'up':    beetle.vy = -speed; break;
+      case 'down':  beetle.vy =  speed; break;
     }
   }
 
-  // Méjean (boss)
-  if (this.boss.active) {
-    const boss = this.boss;
-    if (
-      nx + margin < boss.x + boss.width - 10 &&
-      nx + beetle.width - margin > boss.x + 10 &&
-      ny + margin < boss.y + boss.height - 8 &&
-      ny + beetle.height - margin > boss.y + 8
-    ) {
-      return true;
-    }
+  private pickNewBeetleDirection(
+    beetle: { direction: string; vx: number; vy: number },
+    exclude?: string
+  ) {
+    let newDir: 'left' | 'right' | 'up' | 'down';
+    do {
+      newDir = this.randomBeetleDirection();
+    } while (newDir === exclude);
+
+    this.setBeetleDirection(beetle, newDir);
   }
 
-  return false;
-}
+  private beetleWouldCollide(
+    beetle: { width: number; height: number },
+    nx: number,
+    ny: number
+  ): boolean {
+    const margin = 2;
+
+    if (nx < 0 || nx + beetle.width > 800 || ny < 0 || ny + beetle.height > 320) {
+      return true;
+    }
+
+    for (const p of this.platforms) {
+      if (
+        nx + margin < p.x + p.width &&
+        nx + beetle.width - margin > p.x &&
+        ny + margin < p.y + p.height &&
+        ny + beetle.height - margin > p.y
+      ) {
+        return true;
+      }
+    }
+
+    for (const s of this.spikes) {
+      const bambooTop = s.y - (s.tall ? 35 : 15);
+      if (
+        nx + margin < s.x + s.width &&
+        nx + beetle.width - margin > s.x &&
+        ny + margin < s.y + 20 &&
+        ny + beetle.height - margin > bambooTop
+      ) {
+        return true;
+      }
+    }
+
+    if (this.boss.active) {
+      const boss = this.boss;
+      if (
+        nx + margin < boss.x + boss.width - 10 &&
+        nx + beetle.width - margin > boss.x + 10 &&
+        ny + margin < boss.y + boss.height - 8 &&
+        ny + beetle.height - margin > boss.y + 8
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   private spawnParticles(x: number, y: number, color: string, count = 16) {
     for (let i = 0; i < count; i++) {
       const life = 45 + Math.random() * 35;
@@ -1247,11 +1277,10 @@ private beetleWouldCollide(
     this.ctx.fill();
   }
 
-    private gameLoop = () => {
+  private gameLoop = () => {
     if (!this.showGame) return;
 
     if (!this.gameOver && this.gameStarted) {
-      // Player movement
       this.player.vx = 0;
       if (this.keys['ArrowLeft'] || this.keys['a'] || this.keys['A'] || this.mobileLeft) {
         this.player.vx = -5.5;
@@ -1271,7 +1300,6 @@ private beetleWouldCollide(
       this.player.x += this.player.vx;
       this.player.y += this.player.vy;
 
-      // Moving platforms + carry player
       for (const p of this.platforms) {
         if (p.vx) {
           p.x += p.vx;
@@ -1289,7 +1317,6 @@ private beetleWouldCollide(
         }
       }
 
-      // Platform collision
       this.player.jumping = true;
       for (const p of this.platforms) {
         if (
@@ -1308,7 +1335,6 @@ private beetleWouldCollide(
       if (this.player.x < 0) this.player.x = 0;
       if (this.player.y > 400) this.die();
 
-      // Bamboo collision
       for (const s of this.spikes) {
         const bambooTop = s.y - (s.tall ? 35 : 15);
         if (
@@ -1321,7 +1347,6 @@ private beetleWouldCollide(
         }
       }
 
-      // Collect chocolates
       for (const c of this.chocolates) {
         if (!c.collected &&
             this.player.x < c.x + 20 &&
@@ -1347,7 +1372,6 @@ private beetleWouldCollide(
         }
       }
 
-      // Collect Key
       if (!this.key.collected &&
           this.player.x < this.key.x + 24 &&
           this.player.x + this.player.width > this.key.x &&
@@ -1361,7 +1385,6 @@ private beetleWouldCollide(
         this.triggerShake(4);
       }
 
-      // ===== BOSS MÉJEAN (Level 10 only) =====
       if (this.boss.active && !this.gameOver) {
         const b = this.boss;
 
@@ -1420,7 +1443,7 @@ private beetleWouldCollide(
           this.die();
         }
       }
-      // ===== BEETLES (Level 6+) =====
+
       for (const b of this.beetles) {
         if (!b.active || this.gameOver) continue;
 
@@ -1434,7 +1457,6 @@ private beetleWouldCollide(
           b.y = nextY;
         }
 
-        // Collision with panda → bounce the panda away
         if (
           this.player.x < b.x + b.width &&
           this.player.x + this.player.width > b.x &&
@@ -1458,12 +1480,9 @@ private beetleWouldCollide(
         }
       }
 
-      // Reach the door
       if (this.player.x > 720) {
         if (!this.hasKey) {
-          // Visual feedback (shake + maybe a small message later)
           this.triggerShake(3);
-          // Do NOT return — just don't progress
         } else {
           this.ngZone.run(() => {
             this.level++;
@@ -1488,7 +1507,6 @@ private beetleWouldCollide(
       }
     }
 
-    // ========== DRAW ==========
     this.ctx.clearRect(0, 0, 800, 400);
 
     let shakeX = 0;
@@ -1514,7 +1532,6 @@ private beetleWouldCollide(
       this.ctx.fillRect(0, 0, 800, 400);
     }
 
-    // START SCREEN
     if (!this.gameStarted) {
       this.ctx.fillStyle = '#14532d';
       this.ctx.fillRect(0, 320, 800, 80);
@@ -1535,7 +1552,6 @@ private beetleWouldCollide(
 
     const theme = this.getThemeColors(this.level);
 
-    // Platforms
     for (const p of this.platforms) {
       this.ctx.fillStyle = p.y >= 320 ? theme.ground : theme.platform;
       this.ctx.fillRect(p.x, p.y, p.width, p.height);
@@ -1545,7 +1561,6 @@ private beetleWouldCollide(
       }
     }
 
-    // Bamboo
     for (const s of this.spikes) {
       const stalkHeight = s.tall ? 55 : 35;
       const stalkY = s.y - (s.tall ? 35 : 15);
@@ -1570,7 +1585,6 @@ private beetleWouldCollide(
       this.ctx.fill();
     }
 
-    // Chocolates
     for (const c of this.chocolates) {
       if (!c.collected) {
         this.ctx.font = '22px Arial';
@@ -1578,19 +1592,16 @@ private beetleWouldCollide(
       }
     }
 
-    // Key
     if (!this.key.collected) {
       this.ctx.font = '26px Arial';
       this.ctx.fillText('🔑', this.key.x, this.key.y + 20);
     }
 
-    // Door
     this.ctx.fillStyle = theme.door;
     this.ctx.fillRect(740, 230, 45, 90);
     this.ctx.fillStyle = theme.doorDark;
     this.ctx.fillRect(755, 260, 15, 25);
 
-    // Player
     if (this.playerImage.complete && this.playerImage.naturalWidth > 0) {
       this.ctx.save();
       if (this.facingRight) {
@@ -1606,7 +1617,6 @@ private beetleWouldCollide(
       this.ctx.fillRect(this.player.x, this.player.y, this.player.width, this.player.height);
     }
 
-    // Boss Méjean
     if (this.boss.active && this.bossImage.complete) {
       this.ctx.save();
       if (this.boss.facingRight) {
@@ -1618,7 +1628,7 @@ private beetleWouldCollide(
       }
       this.ctx.restore();
     }
-    // Beetles
+
     if (this.beetleImage.complete && this.beetleImage.naturalWidth > 0) {
       for (const b of this.beetles) {
         if (!b.active) continue;
@@ -1646,7 +1656,7 @@ private beetleWouldCollide(
         this.ctx.restore();
       }
     }
-    // Particles
+
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
       p.x += p.vx;
@@ -1666,7 +1676,6 @@ private beetleWouldCollide(
       this.ctx.globalAlpha = 1;
     }
 
-    // Game Over
     if (this.gameOver && !this.showVictory) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
       this.ctx.fillRect(0, 0, 800, 400);

@@ -22,6 +22,32 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml'
 };
 
+function simplifyHtml(html) {
+  return html
+    // Remove Angular host / content attributes
+    .replace(/\s+_nghost-[a-zA-Z0-9-]+(="[^"]*")?/g, '')
+    .replace(/\s+_ngcontent-[a-zA-Z0-9-]+(="[^"]*")?/g, '')
+    .replace(/\s+ng-version="[^"]*"/g, '')
+
+    // Remove Angular empty comments
+    .replace(/<!--\s*-->/g, '')
+
+    // Remove empty router-outlet
+    .replace(/<router-outlet><\/router-outlet>/g, '')
+
+    // Remove data-beasties-container if present
+    .replace(/\s+data-beasties-container(="[^"]*")?/g, '')
+
+    // Remove easter-egg / game overlay if present in the snapshot
+    .replace(/<div[^>]*class="[^"]*fixed inset-0 bg-black\/95[^"]*"[^>]*>[\s\S]*?<\/div>/gi, '')
+    .replace(/<canvas[^>]*id="gameCanvas"[^>]*>[\s\S]*?<\/canvas>/gi, '')
+    .replace(/<canvas[^>]*#gameCanvas[^>]*>[\s\S]*?<\/canvas>/gi, '')
+
+    // Collapse excess blank lines
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 async function runPrerender() {
   // Clean route parsing:
   // - skip empty lines
@@ -45,8 +71,10 @@ async function runPrerender() {
   const PORT = 4210;
 
   const server = http.createServer((req, res) => {
-    const reqPath = req.url.split('?')[0];
-    let filePath = path.join(DIST_DIR, reqPath);
+  console.log(`[SERVER] ${req.method} ${req.url}`);
+
+  const reqPath = req.url.split('?')[0];
+  let filePath = path.join(DIST_DIR, reqPath);
 
     // Try fallback to basename if nested asset directory path isn't found directly
     if (path.extname(reqPath) && !fs.existsSync(filePath)) {
@@ -80,12 +108,13 @@ async function runPrerender() {
 
   const page = await browser.newPage();
 
-  // Enable request interception to block fonts and non-local requests
+  // Enable request interception to block fonts, game assets, and non-local requests
   await page.setRequestInterception(true);
   page.on('request', (req) => {
     const resourceType = req.resourceType();
     const url = req.url();
 
+    // Block fonts
     if (
       resourceType === 'font' ||
       url.endsWith('.woff') ||
@@ -93,11 +122,28 @@ async function runPrerender() {
       url.endsWith('.ttf')
     ) {
       return req.abort();
-    } else if (!url.startsWith(`http://localhost:${PORT}`)) {
-      return req.abort();
-    } else {
-      req.continue();
     }
+
+    // Block easter-egg / game assets (not needed in static HTML)
+    if (
+      url.includes('panda.webp') ||
+      url.includes('background.webp') ||
+      url.includes('background2.webp') ||
+      url.includes('background3.webp') ||
+      url.includes('background4.webp') ||
+      url.includes('background5.webp') ||
+      url.includes('beetle.webp') ||
+      url.includes('m%C3%A9jean.webp') ||
+      url.includes('méjean.webp')
+    ) {
+      return req.abort();
+    }
+
+    if (!url.startsWith(`http://localhost:${PORT}`)) {
+      return req.abort();
+    }
+
+    req.continue();
   });
 
   // Console logging for debugging (ignore blocked resource noise)
@@ -124,7 +170,7 @@ async function runPrerender() {
     try {
       // 1. Wait for network requests to settle
       await page.goto(targetUrl, { waitUntil: 'networkidle0', timeout: 30000 });
-
+    
       // 2. Wait for Angular stability + real content + splash screen gone
       await page.waitForFunction(
         () => {
@@ -151,6 +197,19 @@ async function runPrerender() {
       // Small extra delay for any final animations / removals
       await new Promise(resolve => setTimeout(resolve, 600));
 
+      // Ensure the easter-egg game is closed before snapshotting
+      await page.evaluate(() => {
+        // Hide any open game overlay in the DOM
+        document.querySelectorAll('.fixed.inset-0').forEach(el => {
+          const cls = el.className || '';
+          if (cls.includes('bg-black/95') || cls.includes('z-[200]')) {
+            el.remove();
+          }
+        });
+        // Remove any game canvas
+        document.querySelectorAll('canvas').forEach(c => c.remove());
+      });
+
       // 3. Extract final HTML and strip splash as a safety net
       let html = await page.content();
       // After stripping the splash screen
@@ -162,6 +221,9 @@ async function runPrerender() {
       );
       // or more aggressively remove it:
       // html = html.replace(/<div[^>]*id="cookie-banner"[\s\S]*?<\/div>\s*(?=<footer|<\/app-home)/i, '');
+
+      // Make HTML simpler for AI / crawlers (also strips game markup)
+      html = simplifyHtml(html);
 
       // ─── Verification checks ───────────────────────────────────
       const checks = {
