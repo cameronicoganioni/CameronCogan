@@ -180,7 +180,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       maintenanceStandard: 'Standard',
       maintenanceStandardPrice: '€450/month VAT incl.',
       maintenancePremium: 'Premium',
-      maintenancePremiumPrice: '€800/month VAT incl.',
+      maintenancePremiumPrice: '€900/month VAT incl.',
     },
     fr: {
       aboutLabel: 'Management International des Affaires',
