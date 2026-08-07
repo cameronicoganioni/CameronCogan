@@ -78,16 +78,12 @@ Important projects include:
 - Interactive Marketing game for increasing interactions with the site. Winners get discounts of 20 euros.
 
 ## Website Pages
+# Cameron Cogan
+> International Business student- digital marketing, SEO, analytics, website services.
 
-Main pages:
+Services: https://cameroncogan.com/en/services
+About: https://cameroncogan.com/en/about
+Projects: https://cameroncogan.com/en/projects
+Contact: https://cameroncogan.com/en/contact
 
-- https://cameroncogan.com/#about
-- https://cameroncogan.com/#projects
-- https://cameroncogan.com/#experience
-- https://cameroncogan.com/#services
-- https://cameroncogan.com/#contact
-
-## Contact
-
-For professional enquiries:
-https://cameroncogan.com/#contact
+Languages: /en /fr /de
