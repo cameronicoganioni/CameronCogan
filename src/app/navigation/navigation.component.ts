@@ -58,13 +58,25 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe(() => {
-      const lang = this.getLangFromUrl();
-      if (lang !== this.currentLang) {
-        this.currentLang = lang;
-        localStorage.setItem('preferredLang', lang);
+    this.syncLanguageFromUrl();
+
+    this.router.events.subscribe(event => {
+      if (event.constructor.name === 'NavigationEnd') {
+        this.syncLanguageFromUrl();
       }
     });
+
+    this.route.paramMap.subscribe(() => {
+      this.syncLanguageFromUrl();
+    });
+  }
+
+  private syncLanguageFromUrl() {
+    const lang = this.getLangFromUrl();
+    if (lang !== this.currentLang) {
+      this.currentLang = lang;
+      localStorage.setItem('preferredLang', lang);
+    }
   }
 
   private getLangFromUrl(): 'en' | 'fr' | 'de' {
@@ -78,7 +90,6 @@ export class NavigationComponent implements OnInit {
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
   }
-
   // Google Analytics event tracking
   trackEvent(category: string, action: string, label: string = '') {
     if (localStorage.getItem('analyticsCookies') === 'true' && (window as any).gtag) {

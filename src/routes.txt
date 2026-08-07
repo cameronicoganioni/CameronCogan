@@ -2,3 +2,19 @@
 /en
 /fr
 /de
+# Section paths
+/en/about
+/en/projects
+/en/experience
+/en/services
+/en/contact
+/fr/about
+/fr/projects
+/fr/experience
+/fr/services
+/fr/contact
+/de/about
+/de/projects
+/de/experience
+/de/services
+/de/contact

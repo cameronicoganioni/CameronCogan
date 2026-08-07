@@ -551,6 +551,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.updateSeo();
       }
     });
+
+    // Scroll to section when URL is /en/about, /fr/projects, etc. (no hashtag)
+    this.route.paramMap.subscribe(params => {
+      const section = params.get('section');
+      const valid = ['about', 'projects', 'experience', 'services', 'contact'];
+      if (section && valid.includes(section)) {
+        setTimeout(() => {
+          document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+        }, 400);
+      }
+    });
   }
 
   ngAfterViewInit() {
@@ -574,34 +585,88 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   private updateSeo() {
-    const titles = {
-      en: 'Cameron Cogan | Digital Marketing, SEO & Business Portfolio',
-      fr: 'Cameron Cogan | Marketing Digital, SEO & Portfolio Business',
-      de: 'Cameron Cogan | Digitales Marketing, SEO & Business Portfolio'
+    const section = this.route.snapshot.paramMap.get('section');
+    const valid = ['about', 'projects', 'experience', 'services', 'contact'];
+    const activeSection = section && valid.includes(section) ? section : null;
+
+    // Titles ~50–60 chars | Descriptions ~140–155 chars
+    const titles: Record<'en' | 'fr' | 'de', Record<string, string>> = {
+      en: {
+        default: 'Cameron Cogan | Digital Marketing & AEO Portfolio',
+        about: 'About Cameron Cogan | Business & Marketing Student',
+        projects: 'Projects | Cameron Cogan- Analytics & Marketing',
+        experience: 'Experience | Cameron Cogan- Marketing & Comms',
+        services: 'Web Services | Cameron Cogan- Design & AEO',
+        contact: 'Contact Cameron Cogan | Get in Touch'
+      },
+      fr: {
+        default: 'Cameron Cogan | Marketing Digital, AEO & Portfolio',
+        about: 'À propos | Cameron Cogan- Étudiant Marketing',
+        projects: 'Projets | Cameron Cogan- Analytics & Marketing',
+        experience: 'Expérience | Cameron Cogan- Marketing & Comms',
+        services: 'Services web | Cameron Cogan- Sites & SEO',
+        contact: 'Contact | Cameron Cogan- Me contacter'
+      },
+      de: {
+        default: 'Cameron Cogan | Digitales Marketing, SEO & Portfolio',
+        about: 'Über mich | Cameron Cogan- Business-Student',
+        projects: 'Projekte | Cameron Cogan- Analytics & Marketing',
+        experience: 'Erfahrung | Cameron Cogan- Marketing & Komms',
+        services: 'Webservices | Cameron Cogan- Design & SEO',
+        contact: 'Kontakt | Cameron Cogan- Schreiben Sie mir'
+      }
     };
 
-    const descriptions = {
-      en: 'Cameron Cogan- International Business Administration student at Montpellier Business School. Specialising in digital marketing, SEO, analytics, AI and automation.',
-      fr: 'Cameron Cogan- étudiant en BIBA à Montpellier Business School. Spécialisé en marketing digital, SEO, analytics, IA et automatisation.',
-      de: 'Cameron Cogan- Student der BIBA an der Montpellier Business School. Schwerpunkt: digitales Marketing, SEO, Analytics, KI und Automatisierung.'
+    const descriptions: Record<'en' | 'fr' | 'de', Record<string, string>> = {
+      en: {
+        default: 'Cameron Cogan- International Business student at Montpellier Business School. Digital marketing, AEO, analytics, AI and automation.',
+        about: 'Cameron Cogan, International Business student at Montpellier Business School, specialising in digital marketing, SEO and analytics.',
+        projects: 'Projects by Cameron Cogan: analytics dashboards, Google Analytics setup and interactive marketing tools.',
+        experience: 'Cameron Cogan’s experience in digital marketing, communications, volunteering and business projects.',
+        services: 'Website creation by Cameron Cogan- responsive design, AEO, analytics and free Firebase hosting. Packages from €1000.',
+        contact: 'Contact Cameron Cogan for website projects, collaborations or professional opportunities.'
+      },
+      fr: {
+        default: 'Cameron Cogan- étudiant en BIBA à Montpellier Business School. Marketing digital, AEO, analytics, IA et automatisation.',
+        about: 'Cameron Cogan, étudiant en management international à Montpellier Business School, spécialisé en marketing digital et AEO.',
+        projects: 'Projets de Cameron Cogan : tableaux de bord analytics, Google Analytics et marketing interactif.',
+        experience: 'Parcours de Cameron Cogan en marketing digital, communication, bénévolat et projets d’entreprise.',
+        services: 'Création de sites par Cameron Cogan- design responsive, AEO, analytics et hébergement Firebase. Dès 1000 €.',
+        contact: 'Contactez Cameron Cogan pour des projets web, collaborations ou opportunités professionnelles.'
+      },
+      de: {
+        default: 'Cameron Cogan- BIBA-Student an der Montpellier Business School. Digitales Marketing, AEO, Analytics, KI und Automatisierung.',
+        about: 'Cameron Cogan, Student der International Business Administration, Fokus auf digitales Marketing, AEO und Analytics.',
+        projects: 'Projekte von Cameron Cogan: Analytics-Dashboards, Google-Analytics-Setup und interaktives Marketing.',
+        experience: 'Erfahrung von Cameron Cogan in digitalem Marketing, Kommunikation, Ehrenamt und Business-Projekten.',
+        services: 'Webseitenerstellung von Cameron Cogan- responsives Design, AEO, Analytics und Firebase-Hosting. Ab 1000 €.',
+        contact: 'Kontaktieren Sie Cameron Cogan für Webprojekte, Kooperationen oder berufliche Möglichkeiten.'
+      }
     };
+
+    const titleKey = activeSection ?? 'default';
+    const title = titles[this.currentLang][titleKey];
+    const description = descriptions[this.currentLang][titleKey];
+    const path = activeSection
+      ? `https://cameroncogan.com/${this.currentLang}/${activeSection}`
+      : `https://cameroncogan.com/${this.currentLang}`;
 
     document.documentElement.lang = this.currentLang;
-    document.title = titles[this.currentLang];
+    document.title = title;
 
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
-      meta.setAttribute('content', descriptions[this.currentLang]);
+      meta.setAttribute('content', description);
     }
 
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) {
-      canonical.setAttribute('href', `https://cameroncogan.com/${this.currentLang}`);
+      canonical.setAttribute('href', path);
     }
 
-    this.setMetaProperty('og:url', `https://cameroncogan.com/${this.currentLang}`);
-    this.setMetaProperty('og:title', titles[this.currentLang]);
-    this.setMetaProperty('og:description', descriptions[this.currentLang]);
+    this.setMetaProperty('og:url', path);
+    this.setMetaProperty('og:title', title);
+    this.setMetaProperty('og:description', description);
     this.setMetaProperty(
       'og:locale',
       this.currentLang === 'en' ? 'en_GB' : this.currentLang === 'fr' ? 'fr_FR' : 'de_DE'
@@ -672,7 +737,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.trackEvent('engagement', 'language_select', lang);
     this.updateSeo();
-    this.router.navigate(['/', lang]);
+
+    const section = this.route.snapshot.paramMap.get('section');
+    if (section) {
+      this.router.navigate(['/', lang, section]);
+    } else {
+      this.router.navigate(['/', lang]);
+    }
   }
 
   // ==================== COOKIE + GOOGLE ANALYTICS ====================

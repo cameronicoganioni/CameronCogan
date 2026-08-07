@@ -48,6 +48,12 @@ function simplifyHtml(html) {
     .trim();
 }
 
+function langFromRoute(route) {
+  const segment = route.split('/').filter(Boolean)[0];
+  if (segment === 'en' || segment === 'fr' || segment === 'de') return segment;
+  return 'en';
+}
+
 async function runPrerender() {
   // Clean route parsing:
   // - skip empty lines
@@ -163,14 +169,27 @@ async function runPrerender() {
 
   for (const route of routes) {
     const targetUrl = `http://localhost:${PORT}${route}`;
+    const expectedLang = langFromRoute(route);
+
     console.log(`\n────────────────────────────────────────`);
     console.log(`Capturing: ${route}`);
     console.log(`URL: ${targetUrl}`);
+    console.log(`Expected lang: ${expectedLang}`);
 
     try {
-      // 1. Wait for network requests to settle
+      // Force preferred language before any scripts run on this navigation
+      await page.evaluateOnNewDocument((lang) => {
+        localStorage.setItem('preferredLang', lang);
+      }, expectedLang);
+
+      // 1. Navigate
       await page.goto(targetUrl, { waitUntil: 'networkidle0', timeout: 30000 });
-    
+
+      // Reinforce language after load (in case of stale state from previous route)
+      await page.evaluate((lang) => {
+        localStorage.setItem('preferredLang', lang);
+      }, expectedLang);
+
       // 2. Wait for Angular stability + real content + splash screen gone
       await page.waitForFunction(
         () => {
@@ -194,33 +213,27 @@ async function runPrerender() {
         { timeout: 25000 }
       );
 
-      // Small extra delay for any final animations / removals
-      await new Promise(resolve => setTimeout(resolve, 600));
+      // Small extra delay for any final animations / removals + language sync
+      await new Promise(resolve => setTimeout(resolve, 800));
 
       // Ensure the easter-egg game is closed before snapshotting
       await page.evaluate(() => {
-        // Hide any open game overlay in the DOM
         document.querySelectorAll('.fixed.inset-0').forEach(el => {
           const cls = el.className || '';
           if (cls.includes('bg-black/95') || cls.includes('z-[200]')) {
             el.remove();
           }
         });
-        // Remove any game canvas
         document.querySelectorAll('canvas').forEach(c => c.remove());
       });
 
       // 3. Extract final HTML and strip splash as a safety net
       let html = await page.content();
-      // After stripping the splash screen
       html = html.replace(/<app-splash-screen[\s\S]*?<\/app-splash-screen>/gi, '');
-      // Optional: hide cookie banner so it doesn't appear in the static snapshot
       html = html.replace(
         /id="cookie-banner"[^>]*class="([^"]*)"/,
         'id="cookie-banner" class="$1 hidden"'
       );
-      // or more aggressively remove it:
-      // html = html.replace(/<div[^>]*id="cookie-banner"[\s\S]*?<\/div>\s*(?=<footer|<\/app-home)/i, '');
 
       // Make HTML simpler for AI / crawlers (also strips game markup)
       html = simplifyHtml(html);
@@ -234,7 +247,14 @@ async function runPrerender() {
         hasExperienceSection: html.includes('id="experience"') || html.includes("id='experience'"),
         hasContactSection: html.includes('id="contact"') || html.includes("id='contact'"),
         hasRealContent: html.length > 15000,
-        noSplash: !html.includes('app-splash-screen')
+        noSplash: !html.includes('app-splash-screen'),
+        // Language markers in the rendered page
+        correctLang:
+          expectedLang === 'en'
+            ? (html.includes('lang="en"') || html.includes("lang='en'"))
+            : expectedLang === 'fr'
+              ? (html.includes('lang="fr"') || html.includes('À propos') || html.includes('Projets'))
+              : (html.includes('lang="de"') || html.includes('Über mich') || html.includes('Projekte'))
       };
 
       // Get a short preview of the actual rendered text for debugging
@@ -255,6 +275,7 @@ async function runPrerender() {
       console.log(`   has #contact       : ${checks.hasContactSection ? '✅' : '❌'}`);
       console.log(`   substantial size   : ${checks.hasRealContent ? '✅' : '❌'}`);
       console.log(`   splash removed     : ${checks.noSplash ? '✅' : '❌'}`);
+      console.log(`   correct language   : ${checks.correctLang ? '✅' : '❌'} (${expectedLang})`);
       console.log(`   Text preview       : "${textPreview}..."`);
 
       if (!allPassed) {

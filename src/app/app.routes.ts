@@ -9,7 +9,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
 
-  // Language routes – all load the same page
+  // Language only – e.g. /en, /fr, /de
   {
     path: 'en',
     component: HomeComponent
@@ -20,6 +20,20 @@ export const routes: Routes = [
   },
   {
     path: 'de',
+    component: HomeComponent
+  },
+
+  // Language + section – e.g. /en/about, /fr/projects (no hashtag)
+  {
+    path: 'en/:section',
+    component: HomeComponent
+  },
+  {
+    path: 'fr/:section',
+    component: HomeComponent
+  },
+  {
+    path: 'de/:section',
     component: HomeComponent
   },
 

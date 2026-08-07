@@ -13,23 +13,23 @@
 
     <!-- Desktop Navigation -->
     <nav class="hidden items-center gap-8 md:flex">
-      <a [attr.href]="'/' + currentLang + '#about'"
+      <a [attr.href]="'/' + currentLang + '/about'"
          (click)="trackEvent('navigation', 'section_click', 'About')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.about }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#projects'"
+      <a [attr.href]="'/' + currentLang + '/projects'"
          (click)="trackEvent('navigation', 'section_click', 'Projects')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.projects }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#experience'"
+      <a [attr.href]="'/' + currentLang + '/experience'"
          (click)="trackEvent('navigation', 'section_click', 'Experience')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.experience }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#services'"
+      <a [attr.href]="'/' + currentLang + '/services'"
          (click)="trackEvent('navigation', 'section_click', 'Services')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.servicesLabel }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#contact'"
+      <a [attr.href]="'/' + currentLang + '/contact'"
          (click)="trackEvent('navigation', 'section_click', 'Contact')"
          class="text-sm font-medium text-slate-600 transition hover:text-emerald-600">{{ t.contact }}</a>
 
@@ -91,23 +91,23 @@
     </div>
 
     <nav class="mt-8 space-y-2">
-      <a [attr.href]="'/' + currentLang + '#about'"
+      <a [attr.href]="'/' + currentLang + '/about'"
          (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'About')"
          class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">{{ t.about }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#projects'"
+      <a [attr.href]="'/' + currentLang + '/projects'"
          (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Projects')"
          class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">{{ t.projects }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#experience'"
+      <a [attr.href]="'/' + currentLang + '/experience'"
          (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Experience')"
          class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">{{ t.experience }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#services'"
+      <a [attr.href]="'/' + currentLang + '/services'"
          (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Services')"
          class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">{{ t.servicesLabel }}</a>
 
-      <a [attr.href]="'/' + currentLang + '#contact'"
+      <a [attr.href]="'/' + currentLang + '/contact'"
          (click)="toggleMenu(); trackEvent('navigation', 'section_click', 'Contact')"
          class="block rounded-lg px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-100 hover:text-emerald-600">{{ t.contact }}</a>
 
